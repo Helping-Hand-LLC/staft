@@ -7,7 +7,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-    res.send('register');
+    res.render('register');
 });
 
 router.get('/forgot', (req, res) => {

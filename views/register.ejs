@@ -1,0 +1,28 @@
+<div id="display-img">
+    <!-- TODO: <img src="" class="img-fluid" alt="Responsive image"> -->
+</div>
+<div class="card text-center w-75 mx-auto mt-3">
+    <div class="card-body">
+        <form action="/users/register" method="POST" class="mb-4">
+            <h2 class="card-title">Sign Up with Email and Phone Number</h2>
+            <div class="form-group">
+                <input type="email" name="email" id="email" class="form-control text-center" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="tel" name="phone" id="phone" class="form-control text-center" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" class="form-control text-center"
+                    placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password-confirm" id="password-confirm" class="form-control text-center"
+                    placeholder="Confirm Password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
+        </form>
+        <small>
+            <a href="/users/login" class="text-dark">Already have an account? Sign In</a>
+        </small>
+    </div>
+</div>
