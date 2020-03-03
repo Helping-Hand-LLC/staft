@@ -1,0 +1,27 @@
+{
+  "name": "staft",
+  "version": "1.0.0",
+  "description": "A Staffing Organization's Operations Automation Web Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Helping-Hand-LLC/staft.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongoose",
+    "passport",
+    "ejs",
+    "automation"
+  ],
+  "author": "Skye Brown",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Helping-Hand-LLC/staft/issues"
+  },
+  "homepage": "https://github.com/Helping-Hand-LLC/staft#readme"
+}
