@@ -1,0 +1,26 @@
+<div id="display-img">
+    <!-- TODO: <img src="" class="img-fluid" alt="Responsive image"> -->
+</div>
+<h1 class="display-4 text-center my-3">Staft</h1>
+<div class="card text-center w-50 mx-auto mt-3">
+    <div class="card-body">
+        <h2 class="card-title">Welcome</h2>
+        <p class="card-subtitle mb-2 lead">Please login to continue.</p>
+        <form action="/users/login" method="POST">
+            <div class="form-group">
+                <input type="email" name="email" id="email" class="form-control text-center" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="password" class="form-control text-center"
+                    placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        <p class="mt-4">
+            <a href="/users/forgot" class="text-dark">Forgot Password?</a>
+        </p>
+        <small class="mt-2">
+            <a href="/users/register" class="text-dark">Create an Account</a>
+        </small>
+    </div>
+</div>
