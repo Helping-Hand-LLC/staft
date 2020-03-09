@@ -4,5 +4,6 @@ dotenv.config();
 const env = process.env;
 
 module.exports = {
-    mongoUri: env.MONGO_URI
+    mongoUri: env.MONGO_URI,
+    privateKey: env.PRIVATE_KEY
 };
