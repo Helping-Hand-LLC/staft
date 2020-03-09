@@ -3,15 +3,12 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
-const { sessionSecret } = require('./config/keys');
+const { mongoUri, sessionSecret } = require('./config/keys');
 
 const app = express();
 
-// db config
-const db = require('./config/keys').mongoUri;
-
 // mongodb connection
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.error(err));
 
