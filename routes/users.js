@@ -26,14 +26,17 @@ router.post('/login', (req, res) => {
 });
 
 // registration handler
-router.post('/registration', async (req, res) => {
+router.post('/register', async (req, res) => {
     // validate worker
     const errors = validate(req.body);
     if (errors.length > 0) return res.status(400).send(errors.forEach(err => err.msg)); // TODO: show error message on registration page
 
     // find existing worker
     let worker = await Worker.findOne({ email: req.body.email });
-    if (worker) return res.status(400).send('Email already registered.'); // TODO: show error message on registration page
+    if (worker) {
+        req.flash('error_msg', 'Email already registered.');
+        return res.redirect('/users/register');
+    }
 
     // create new Worker
     worker = new Worker({
@@ -58,13 +61,16 @@ router.post('/registration', async (req, res) => {
                     // store auth token in Local Storage for later usage
                     localStorage.setItem('staft-auth-token', token);
 
-                    // TODO: show success message to user
+                    // show success message to user
+                    req.flash('success_msg', 'Registration successful. Please log in.');
+
                     // redirect user to login
                     res.redirect('/users/login');
                 })
                 .catch(err => {
                     console.error(err);
-                    // TODO: show error message to user
+                    req.flash('error_msg', 'Something went wrong. Please try again.');
+                    res.redirect('/users/register');
                 });
         });
     });
