@@ -43,19 +43,19 @@ router.post('/register', async (req, res) => {
         name: req.body.name,
         phone: req.body.phone,
         email: req.body.email,
-        password = req.body.password
+        password: req.body.password
     });
 
     // encrypt password
     bcrypt.genSalt(10, (err, salt) => {
         if (err) console.error(err);
-        bcrypt.hash(worker.password, salt, (err, hash) => {
+        bcrypt.hash(worker.password, salt, async (err, hash) => {
             if (err) throw err;
             worker.password = hash;
             // save new Worker
             await worker
                 .save()
-                .then(user => {
+                .then(async user => {
                     // generate authorization token
                     const token = await worker.generateAuthToken();
 

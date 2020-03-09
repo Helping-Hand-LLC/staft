@@ -1,9 +1,26 @@
 <div id="display-img">
-    <!-- TODO: <img src="" class="img-fluid" alt="Responsive image"> -->
+
 </div>
 <div class="card text-center w-75 mx-auto mt-3">
     <div class="card-body">
-        <%- include('partials/messages') %>
+
+        <% if(success_msg != '') { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= success_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+        <% if(error_msg != '') { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error_msg %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <% } %>
+
         <form action="/users/register" method="POST" class="mb-4">
             <h2 class="card-title">Sign Up with Email and Phone Number</h2>
             <div class="form-group">

@@ -8,7 +8,7 @@ const { mongoUri, sessionSecret } = require('./config/keys');
 const app = express();
 
 // mongodb connection
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.error(err));
 
