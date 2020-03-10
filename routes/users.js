@@ -28,9 +28,21 @@ router.post('/login', (req, res) => {
 // registration handler
 router.post('/register', async (req, res) => {
     console.log(req.body);
-    // // validate worker
-    // const errors = validate(req.body);
-    // if (errors.length > 0) return res.status(400).send(errors.forEach(err => err.msg)); // TODO: show error message on registration page
+    // validate worker
+    const errors = validate(req.body);
+    if (errors.length > 0) {
+        // send back errors and field values to not clear register form
+        res.render('register', { 
+            errors,
+            email: req.body.email,
+            phone: req.body.phone,
+            password: req.body.password,
+            passwordConfirm: req.body.passwordConfirm
+        });
+    }
+    else {
+        res.send('pass');
+    }
 
     // // find existing worker
     // let worker = await Worker.findOne({ email: req.body.email });

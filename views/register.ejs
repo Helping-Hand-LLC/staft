@@ -23,10 +23,14 @@
             <% } %>
 
             <form action="/users/register" method="POST">
-                <input type="email" name="email" id="email" placeholder="Email">
-                <input type="tel" name="phone" id="phone" placeholder="Phone Number">
-                <input type="password" name="password" id="password" placeholder="Password">
-                <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password">
+                <input type="email" name="email" id="email" placeholder="Email"
+                    value="<%= typeof email != 'undefined' ? email : '' %>">
+                <input type="tel" name="phone" id="phone" placeholder="Phone Number"
+                    value="<%= typeof phone != 'undefined' ? phone : '' %>">
+                <input type="password" name="password" id="password" placeholder="Password"
+                    value="<%= typeof password != 'undefined' ? password : '' %>">
+                <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"
+                    value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>">
                 <button type="submit">Sign Up</button>
             </form>
         </section>
