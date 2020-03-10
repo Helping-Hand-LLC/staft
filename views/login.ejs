@@ -1,11 +1,11 @@
-<div id="display-img">
-
-</div>
-<h1 class="display-4 text-center my-3">Staft</h1>
-<div class="card text-center w-50 mx-auto mt-3">
-    <div class="card-body">
-        <h2 class="card-title">Welcome</h2>
-        <p class="card-subtitle mb-2 lead">Please login to continue.</p>
+<div class="login-wrapper">
+    <section id="display-img">
+        <i class="far fa-handshake"></i>
+        <h6>Staffing App</h6>
+    </section>
+    <section class="content">
+        <h2>Welcome</h2>
+        <p>Please login to continue.</p>
 
         <% if(success_msg != '') { %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -25,20 +25,15 @@
         <% } %>
 
         <form action="/users/login" method="POST">
-            <div class="form-group">
-                <input type="email" name="email" id="email" class="form-control text-center" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" id="password" class="form-control text-center"
-                    placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <button type="submit">Sign In</button>
         </form>
-        <p class="mt-4">
-            <a href="/users/forgot" class="text-dark">Forgot Password?</a>
+        <p id="forgot">
+            <a href="/users/forgot">Forgot Password?</a>
         </p>
-        <small class="mt-2">
-            <a href="/users/register" class="text-dark">Create an Account</a>
+        <small>
+            <a href="/users/register">Create an Account</a>
         </small>
-    </div>
+    </section>
 </div>
