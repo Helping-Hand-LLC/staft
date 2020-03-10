@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
 
     // create new Worker
     worker = new Worker({
-        name: req.body.name,
+        name: req.body.email.split('@')[0],
         phone: req.body.phone,
         email: req.body.email,
         password: req.body.password
