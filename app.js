@@ -16,6 +16,9 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true, us
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 
+// static files
+app.use(express.static(__dirname + '/public'));
+
 // body parser
 app.use(express.json());
 
