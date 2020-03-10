@@ -3,7 +3,7 @@ const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
-const { mongoUri, sessionSecret } = require('./config/keys');
+const { port, mongoUri, sessionSecret } = require('./config/keys');
 
 const app = express();
 
@@ -43,6 +43,6 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 
-const PORT = 3000;
+const PORT = port || 3000;
 
 app.listen(PORT, console.log(`Express server listening on port ${PORT}...`));
