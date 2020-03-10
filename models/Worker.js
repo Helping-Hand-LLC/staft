@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/keys');
 
 // TODO: format validation
-const workerSchema = mongoose.Schema({
+const workerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
