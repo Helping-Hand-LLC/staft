@@ -58,40 +58,40 @@ router.post('/register', async (req, res) => {
     });
     console.log(newWorker);
 
-    // // encrypt password
-    // bcrypt.genSalt(10, (err, salt) => {
-    //     if (err) console.error(err);
-    //     bcrypt.hash(worker.password, salt, async (err, hash) => {
-    //         if (err) throw err;
-    //         worker.password = hash;
-    //         // save new Worker
-    //         await worker
-    //             .save()
-    //             .then(async user => {
-    //                 // generate authorization token
-    //                 const token = await worker.generateAuthToken();
+    // encrypt password
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) console.error(err);
+        bcrypt.hash(newWorker.password, salt, (err, hash) => {
+            if (err) throw err;
+            newWorker.password = hash;
+            // save new Worker
+            newWorker
+                .save()
+                .then(user => {
+                    // generate authorization token
+                    // const token = await newWorker.generateAuthToken();
 
-    //                 // store auth token in Local Storage for later usage
-    //                 localStorage.setItem('staft-auth-token', token);
-    //                 console.log(`worker auth token: ${token}`);
+                    // store auth token in Local Storage for later usage
+                    // localStorage.setItem('staft-auth-token', token);
+                    // console.log(`newWorker auth token: ${token}`);
 
-    //                 // show success message to user
-    //                 req.flash('success_msg', 'Registration successful. Please log in.');
+                    // show success message to user
+                    // req.flash('success_msg', 'Registration successful. Please log in.');
 
-    //                 // redirect user to login page
-    //                 res.redirect('/users/login');
-    //             })
-    //             .catch(err => {
-    //                 console.error(err);
+                    // redirect user to login page
+                    res.redirect('/users/login');
+                })
+                .catch(err => {
+                    console.error(err);
 
-    //                 // show error message to user
-    //                 req.flash('error_msg', 'Something went wrong. Please try again.');
+                    // show error message to user
+                    // req.flash('error_msg', 'Something went wrong. Please try again.');
 
-    //                 // redirect back to register page
-    //                 res.redirect('/users/register');
-    //             });
-    //     });
-    // });
+                    // redirect back to register page
+                    res.redirect('/users/register');
+                });
+        });
+    });
 });
 
 module.exports = router;
