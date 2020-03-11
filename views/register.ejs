@@ -1,32 +1,37 @@
 <div class="register-wrapper">
+
+    <% if (typeof errors != 'undefined') { %>
+        <% errors.forEach(function(err) { %>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <%= err.msg %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% }); %>
+    <% } %>
+    <% if (success_msg != '') { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <%= success_msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <% } %>
+    <% if (error_msg != '') { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= error_msg %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <% } %>
+
     <div class="content-wrapper">
         <section id="display">
             <h2><span>Sign up</span> with email and phone number</h2>
         </section>
         <section class="content">
-
-            <% if (typeof errors != 'undefined') { %>
-                <% errors.forEach(function(err) { %>
-                    <%= err.msg %>
-                <% }); %>
-            <% } %>
-            <% if (success_msg != '') { %>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <%= success_msg %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <% } %>
-            <% if (error_msg != '') { %>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <%= error_msg %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <% } %>
-
             <form action="/users/register" method="POST">
                 <input type="email" name="email" id="email" placeholder="Email"
                     value="<%= typeof email != 'undefined' ? email : '' %>">
