@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { Worker, validate } = require('../models/Worker');
+const { Worker, validate, findExisting } = require('../models/Worker');
 
 const router = express.Router();
 
@@ -27,37 +27,36 @@ router.post('/login', (req, res) => {
 
 // registration handler
 router.post('/register', async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
+    const { email, phone, password, passwordConfirm } = req.body;
     // validate worker
     const errors = validate(req.body);
-    if (errors.length > 0) {
-        // send back errors and field values to not clear register form
-        res.render('register', { 
-            errors,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password,
-            passwordConfirm: req.body.passwordConfirm
-        });
-    }
-    else {
-        res.send('pass');
-    }
+    if (errors.length > 0) return res.render('register', {
+        errors,
+        email,
+        phone,
+        password,
+        passwordConfirm
+    });
 
-    // // find existing worker
-    // let worker = await Worker.findOne({ email: req.body.email });
-    // if (worker) {
-    //     req.flash('error_msg', 'Email already registered.');
-    //     return res.redirect('/users/register');
-    // }
+    // form validation passed; check for previously registered worker
+    const errors2 = findExisting(req.body);
+    if (errors2.length > 0) return res.render('register', {
+        errors: errors2,
+        email,
+        phone,
+        password,
+        passwordConfirm
+    });
 
-    // // create new Worker
-    // worker = new Worker({
-    //     name: req.body.email.split('@')[0],
-    //     phone: req.body.phone,
-    //     email: req.body.email,
-    //     password: req.body.password
-    // });
+    // email not previously registered; create new Worker
+    let newWorker = new Worker({
+        name: email.split('@')[0],
+        phone,
+        email,
+        password
+    });
+    console.log(newWorker);
 
     // // encrypt password
     // bcrypt.genSalt(10, (err, salt) => {

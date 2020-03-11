@@ -81,7 +81,23 @@ const validate = (worker) => {
     return errors;
 }
 
+const findExisting = (worker) => {
+    let errors = [];
+
+    // find existing worker
+    Worker.findOne({ email: worker.email })
+        .then(res => {
+            if (res) {
+                // req.flash('error_msg', 'Email already registered.');
+                errors.push({ msg: 'Email already registered.' });
+            }
+        });
+
+    return errors;
+}
+
 module.exports = {
     Worker,
-    validate
+    validate,
+    findExisting
 };
