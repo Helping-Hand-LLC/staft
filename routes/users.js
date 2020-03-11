@@ -89,7 +89,7 @@ router.post('/register', async (req, res) => {
                                     console.error(err);
 
                                     // show error message to user
-                                    // req.flash('error_msg', 'Something went wrong. Please try again.');
+                                    req.flash('error_msg', 'Something went wrong. Please try again.');
 
                                     // redirect back to register page
                                     res.redirect('/users/register');
