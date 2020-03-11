@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
                                     // console.log(`newWorker auth token: ${token}`);
 
                                     // show success message to user
-                                    // req.flash('success_msg', 'Registration successful. Please log in.');
+                                    req.flash('success_msg', 'Registration successful. Please log in.');
 
                                     // redirect user to login page
                                     res.redirect('/users/login');

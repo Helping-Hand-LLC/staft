@@ -97,7 +97,7 @@ a:hover {
     border-bottom-right-radius: 5px;
 }
 
-.login-wrapper button {
+.login-wrapper button[type="submit"] {
     background: rgb(94, 46, 186);
     width: 80%;
     margin: 10px auto;
@@ -108,7 +108,7 @@ a:hover {
     border-radius: 5px;
 }
 
-.login-wrapper button:hover {
+.login-wrapper button[type="submit"]:hover {
     cursor: pointer;
 }
 
