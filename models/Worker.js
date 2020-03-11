@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { privateKey } = require('../config/keys');
 
 // TODO: format validation
-const workerSchema = mongoose.Schema({
+const workerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -60,17 +60,20 @@ workerSchema.methods.generateAuthToken = () => {
 const Worker = mongoose.model('Worker', workerSchema);
 
 const validate = (worker) => {
-    const { name, phone, email, password, passwordConfirm } = worker;
+    const { email, phone, password, passwordConfirm } = worker;
     let errors = [];
 
-    if (!name || !phone || !email || !password) {
+    // check all required fields
+    if (!email || !phone || !password || !passwordConfirm) {
         errors.push({ msg: 'Please fill in all fields.' });
     }
 
+    // check password match
     if (password !== passwordConfirm) {
         errors.push({ msg: 'Passwords do not match.' });
     }
 
+    // check password min length
     if (password.length < 6) {
         errors.push({ msg: 'Password must be at least 6 characters.' });
     }

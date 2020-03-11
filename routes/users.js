@@ -27,59 +27,78 @@ router.post('/login', (req, res) => {
 
 // registration handler
 router.post('/register', async (req, res) => {
+    // console.log(req.body);
+    const { email, phone, password, passwordConfirm } = req.body;
     // validate worker
-    const errors = validate(req.body);
-    if (errors.length > 0) return res.status(400).send(errors.forEach(err => err.msg)); // TODO: show error message on registration page
-
-    // find existing worker
-    let worker = await Worker.findOne({ email: req.body.email });
-    if (worker) {
-        req.flash('error_msg', 'Email already registered.');
-        return res.redirect('/users/register');
-    }
-
-    // create new Worker
-    worker = new Worker({
-        name: req.body.name,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: req.body.password
-    });
-
-    // encrypt password
-    bcrypt.genSalt(10, (err, salt) => {
-        if (err) console.error(err);
-        bcrypt.hash(worker.password, salt, async (err, hash) => {
-            if (err) throw err;
-            worker.password = hash;
-            // save new Worker
-            await worker
-                .save()
-                .then(async user => {
-                    // generate authorization token
-                    const token = await worker.generateAuthToken();
-
-                    // store auth token in Local Storage for later usage
-                    localStorage.setItem('staft-auth-token', token);
-                    console.log(`worker auth token: ${token}`);
-
-                    // show success message to user
-                    req.flash('success_msg', 'Registration successful. Please log in.');
-
-                    // redirect user to login page
-                    res.redirect('/users/login');
-                })
-                .catch(err => {
-                    console.error(err);
-
-                    // show error message to user
-                    req.flash('error_msg', 'Something went wrong. Please try again.');
-
-                    // redirect back to register page
-                    res.redirect('/users/register');
-                });
+    let errors = validate(req.body);
+    if (errors.length > 0) {
+        res.render('register', {
+            errors,
+            email,
+            phone,
+            password,
+            passwordConfirm
         });
-    });
+    } else {
+        // form validation passed; check for previously registered worker
+        Worker.findOne({ email: email })
+            .then(result => {
+                if (result) {
+                    errors.push({ msg: 'Email already exists.' });
+                    res.render('register', {
+                        errors,
+                        email,
+                        phone,
+                        password,
+                        passwordConfirm
+                    });
+                } else {
+                    // email not previously registered; create new Worker
+                    const newWorker = new Worker({
+                        name: email.split('@')[0],
+                        phone,
+                        email,
+                        password
+                    });
+                    console.log(newWorker);
+
+                    // encrypt password
+                    bcrypt.genSalt(10, (err, salt) => {
+                        if (err) console.error(err);
+                        bcrypt.hash(newWorker.password, salt, (err, hash) => {
+                            if (err) throw err;
+                            newWorker.password = hash;
+                            // save new Worker
+                            newWorker
+                                .save()
+                                .then(worker => {
+                                    // generate authorization token
+                                    // const token = await newWorker.generateAuthToken();
+
+                                    // store auth token in Local Storage for later usage
+                                    // localStorage.setItem('staft-auth-token', token);
+                                    // console.log(`newWorker auth token: ${token}`);
+
+                                    // show success message to user
+                                    // req.flash('success_msg', 'Registration successful. Please log in.');
+
+                                    // redirect user to login page
+                                    res.redirect('/users/login');
+                                })
+                                .catch(err => {
+                                    console.error(err);
+
+                                    // show error message to user
+                                    // req.flash('error_msg', 'Something went wrong. Please try again.');
+
+                                    // redirect back to register page
+                                    res.redirect('/users/register');
+                                });
+                        });
+                    });
+                }
+            });
+    }
 });
 
 module.exports = router;
