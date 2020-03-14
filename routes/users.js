@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
                                     // console.log(`newWorker auth token: ${token}`);
 
                                     // show success message to user
-                                    // req.flash('success_msg', 'Registration successful. Please log in.');
+                                    req.flash('success_msg', 'Registration successful. Please log in.');
 
                                     // redirect user to login page
                                     res.redirect('/users/login');
@@ -89,7 +89,7 @@ router.post('/register', async (req, res) => {
                                     console.error(err);
 
                                     // show error message to user
-                                    // req.flash('error_msg', 'Something went wrong. Please try again.');
+                                    req.flash('error_msg', 'Something went wrong. Please try again.');
 
                                     // redirect back to register page
                                     res.redirect('/users/register');
