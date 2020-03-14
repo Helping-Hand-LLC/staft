@@ -29,6 +29,13 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+// logout handler
+router.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You have successfully logged out.');
+    res.redirect('/users/login');
+});
+
 // registration handler
 router.post('/register', async (req, res) => {
     // console.log(req.body);

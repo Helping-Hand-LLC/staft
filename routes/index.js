@@ -7,7 +7,7 @@ router.get('/', (req, res) => res.redirect('/users/login'));
 
 // dashboard
 router.get('/dashboard', (req, res) => {
-    res.send('dashboard');
+    res.render('dashboard');
 });
 
 module.exports = router;
