@@ -1,6 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 const { Worker, validate } = require('../models/Worker');
 
 const router = express.Router();
@@ -21,8 +21,12 @@ router.get('/forgot', (req, res) => {
 });
 
 // login handler
-router.post('/login', (req, res) => {
-    // TODO: implement me
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/users/login',
+        failureFlash: true
+    })(req, res, next);
 });
 
 // registration handler
