@@ -1,13 +1,20 @@
 module.exports = {
   theme: {
-    colors: {
-      primary: '#001634',
-      secondary: '#00b4a6',
-      lightgrey: '#bebcbc',
-      lightergrey: '#f0f0f0',
-      white: '#fdfffc'
+    fontSize: {
+      '8xl': '8rem'
     },
-    extend: {},
+    boxShadow: {
+      'top': '0 -5px 20px 0 rgba(26, 11, 56, 0.15)'
+    },
+    extend: {
+      colors: {
+        primary: '#001634',
+        secondary: '#00b4a6',
+        newlightgrey: '#bebcbc',
+        newlightergrey: '#f0f0f0',
+        newwhite: '#fdfffc'
+      }
+    },
   },
   variants: {},
   plugins: [],

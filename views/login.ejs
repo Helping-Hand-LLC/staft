@@ -1,4 +1,4 @@
-<div>
+<div class="h-screen flex flex-col">
 
     <% if (error != '') { %>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -16,19 +16,19 @@
     </div>
     <% } %>
 
-    <section>
-        <i class="far fa-handshake"></i>
-        <h6>Staffing App</h6>
+    <section class="w-3/4 my-8 mx-auto text-center">
+        <i class="far fa-handshake text-8xl text-secondary"></i>
+        <h6 class="text-sm font-hairline uppercase">Staffing App</h6>
     </section>
-    <section>
-        <h2>Welcome</h2>
-        <p>Please login to continue.</p>
+    <section class="rounded-lg shadow-top p-8 text-center flex-1">
+        <h2 class="text-secondary text-3xl font-normal mb-2px">Welcome,</h2>
+        <p class="text-secondary text-base font-normal mb-8">Please login to continue.</p>
         <form action="/users/login" method="POST">
-            <input type="email" name="email" id="email" placeholder="Email">
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button type="submit">Sign In</button>
+            <input class="form-input rounded-t-md" type="email" name="email" id="email" placeholder="Email">
+            <input class="form-input rounded-b-md" type="password" name="password" id="password" placeholder="Password">
+            <button class="bg-primary w-5/6 my-10px mx-auto py-4 px-0 text-newwhite text-base border-0 rounded" type="submit">Sign In</button>
         </form>
-        <p>
+        <p class="my-12px mx-0">
             <a href="/users/forgot">Forgot Password?</a>
         </p>
         <small>
