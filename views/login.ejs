@@ -1,35 +1,26 @@
-<div class="login-wrapper">
+<div>
 
     <% if (error != '') { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= error %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= error %></span>
     </div>
     <% } %>
     <% if (success_msg != '') { %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <%= success_msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= success_msg %></span>
     </div>
     <% } %>
     <% if (error_msg != '') { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= error_msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= error_msg %></span>
     </div>
     <% } %>
 
-    <section id="display-img">
+    <section>
         <i class="far fa-handshake"></i>
         <h6>Staffing App</h6>
     </section>
-    <section class="content">
+    <section>
         <h2>Welcome</h2>
         <p>Please login to continue.</p>
         <form action="/users/login" method="POST">
@@ -37,7 +28,7 @@
             <input type="password" name="password" id="password" placeholder="Password">
             <button type="submit">Sign In</button>
         </form>
-        <p id="forgot">
+        <p>
             <a href="/users/forgot">Forgot Password?</a>
         </p>
         <small>
