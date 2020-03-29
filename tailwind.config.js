@@ -1,11 +1,5 @@
 module.exports = {
   theme: {
-    fontSize: {
-      '8xl': '8rem'
-    },
-    boxShadow: {
-      'top': '0 -5px 20px 0 rgba(26, 11, 56, 0.15)'
-    },
     extend: {
       colors: {
         primary: '#001634',
@@ -13,7 +7,22 @@ module.exports = {
         newlightgrey: '#bebcbc',
         newlightergrey: '#f0f0f0',
         newwhite: '#fdfffc'
-      }
+      },
+      height: {
+        'img': '200px'
+      },
+      fontSize: {
+        '8xl': '8rem'
+      },
+      boxShadow: {
+        'top': '0 -5px 20px 0 rgba(26, 11, 56, 0.15)'
+      },
+      placeholderColor: {
+        primary: '#475c98'
+      },
+      borderColor: {
+        light: '#bcc5e3'
+      },
     },
   },
   variants: {},

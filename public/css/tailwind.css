@@ -3,7 +3,7 @@
 @tailwind components;
 
 .form-input {
-    @apply block bg-newlightergrey w-5/6 my-0 mx-auto text-center py-4 px-0 text-primary outline-none border-solid border-newlightgrey;
+    @apply block bg-newlightergrey w-full my-0 mx-auto text-center py-4 px-0 text-primary outline-none border border-solid border-light;
 }
 
 @tailwind utilities;
