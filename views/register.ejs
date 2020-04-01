@@ -1,4 +1,4 @@
-<div>
+<div class="h-screen p-3">
 
     <% if (typeof errors != 'undefined') { %>
     <% errors.forEach(function(err) { %>
@@ -18,25 +18,25 @@
     </div>
     <% } %>
 
-    <div>
-        <section>
-            <h2><span>Sign up</span> with email and phone number</h2>
+    <div class="h-content flex flex-col rounded content-wrapper">
+        <section class="bg-secondary p-8 rounded-t" id="display">
+            <h2 class="font-hairline text-4xl"><span class="font-bold">Sign up</span> with email and phone number</h2>
         </section>
-        <section>
-            <form action="/users/register" method="POST">
-                <input type="email" name="email" id="email" placeholder="Email"
+        <section class="flex-1">
+            <form class="h-full flex flex-col justify-evenly items-center" action="/users/register" method="POST">
+                <input class="register-input" type="email" name="email" id="email" placeholder="Email"
                     value="<%= typeof email != 'undefined' ? email : '' %>">
-                <input type="tel" name="phone" id="phone" placeholder="Phone Number"
+                <input class="register-input" type="tel" name="phone" id="phone" placeholder="Phone Number"
                     value="<%= typeof phone != 'undefined' ? phone : '' %>">
-                <input type="password" name="password" id="password" placeholder="Password"
+                <input class="register-input" type="password" name="password" id="password" placeholder="Password"
                     value="<%= typeof password != 'undefined' ? password : '' %>">
-                <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"
+                <input class="register-input" type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"
                     value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>">
-                <button type="submit">Sign Up</button>
+                <button class="bg-primary text-newwhite uppercase text-base font-normal w-4/5 mx-auto my-2 px-0 py-3 block rounded border-none outline-none" type="submit">Sign Up</button>
             </form>
         </section>
     </div>
-    <small>
+    <small class="block text-center mt-4">
         <a href="/users/login">Already have an account? Sign In</a>
     </small>
 </div>

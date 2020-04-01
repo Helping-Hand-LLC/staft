@@ -623,7 +623,7 @@ video {
   }
 }
 
-.form-input {
+.login-input {
   display: block;
   background-color: #f0f0f0;
   width: 100%;
@@ -641,6 +641,22 @@ video {
   border-width: 1px;
   border-style: solid;
   border-color: #bcc5e3;
+}
+
+.register-input {
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  outline: 0;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #edf2f7;
 }
 
 .sr-only {
@@ -4055,6 +4071,10 @@ video {
 
 .h-img {
   height: 200px;
+}
+
+.h-content {
+  height: 95%;
 }
 
 .leading-3 {
@@ -17791,6 +17811,10 @@ video {
 
   .sm\:h-img {
     height: 200px;
+  }
+
+  .sm\:h-content {
+    height: 95%;
   }
 
   .sm\:leading-3 {
@@ -31530,6 +31554,10 @@ video {
     height: 200px;
   }
 
+  .md\:h-content {
+    height: 95%;
+  }
+
   .md\:leading-3 {
     line-height: .75rem;
   }
@@ -45267,6 +45295,10 @@ video {
     height: 200px;
   }
 
+  .lg\:h-content {
+    height: 95%;
+  }
+
   .lg\:leading-3 {
     line-height: .75rem;
   }
@@ -59002,6 +59034,10 @@ video {
 
   .xl\:h-img {
     height: 200px;
+  }
+
+  .xl\:h-content {
+    height: 95%;
   }
 
   .xl\:leading-3 {

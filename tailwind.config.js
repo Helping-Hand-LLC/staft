@@ -9,7 +9,8 @@ module.exports = {
         newwhite: '#fdfffc'
       },
       height: {
-        'img': '200px'
+        'img': '200px',
+        'content': '95%'
       },
       fontSize: {
         '8xl': '8rem'
