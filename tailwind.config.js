@@ -24,6 +24,9 @@ module.exports = {
       borderColor: {
         light: '#bcc5e3'
       },
+      transitionProperty: {
+        width: 'width'
+      },
     },
   },
   variants: {},

@@ -1,19 +1,121 @@
-<div class="h-screen flex">
+<div class="h-screen flex overflow-x-hidden">
     <!-- sidebar -->
-    <section class="h-screen w-11/12 bg-newlightergrey flex flex-col justify-between">
-        <ul>
-            <li><a href="#">Schedule</a></li>
-            <li><a href="#">Direct Messages</a></li>
+    <section class="h-screen w-0 bg-newlightergrey flex flex-col justify-between duration-500 transition-width" id="sidebar">
+        <ul class="p-4">
+            <li class="sidebar-link">
+                <i class="far fa-calendar-alt"></i>
+                &nbsp;
+                <a href="#">Schedule</a>
+            </li>
+            <li class="sidebar-link">
+                <i class="fas fa-comment-dots"></i>
+                &nbsp;
+                <a href="#">Direct Messages</a>
+            </li>
         </ul>
-        <div class="bg-primary text-newwhite flex">
-            <img src="https://via.placeholder.com/50.png/FFFFFF" alt="Worker Profile Image">
-            <div>
+        <div class="bg-primary text-newwhite flex py-2 px-3">
+            <img class="rounded-full mr-3" src="https://via.placeholder.com/50.png/FFFFFF" alt="Worker Profile Image">
+            <div class="flex-1">
                 <h6><%= name %></h6>
-                <small>Team Member</small>
+                <small class="text-newlightgrey">Team Member</small>
             </div>
-            <a href="/users/logout">Logout</a>
+            <small class="inline-block"><a href="/users/logout">Logout</a></small>
         </div>
     </section>
-    <!-- main -->
-    <section class="h-screen w-1/12 bg-newwhite"></section>
+    <!-- schedule -->
+    <section class="h-screen w-screen bg-newwhite">
+        <!-- header -->
+        <div class="p-4 flex">
+            <button><i class="fas fa-bars inline-block"></i></button>
+            <h4 class="flex-1 text-center">Schedule</h4>
+        </div>
+        <!-- tabs -->
+        <div class="bg-newlightergrey rounded w-11/12 mx-auto p-1 flex justify-evenly">
+            <!-- TODO: look into tailwindcss navigation -->
+            <span class="tab-link bg-newwhite">Current</span>
+            <span class="tab-link">Past</span>
+        </div>
+        <!-- body / list -->
+        <ul class="px-4">
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+            <li class="event-card">
+                <h4 class="event-heading">Wednesday, April 8, 2020</h4>
+                <div class="event-content">
+                    <h6>Townhomes Newtown Crossing</h6>
+                    <small>Created by John Appleseed</small>
+                </div>
+            </li>
+        </ul>
+    </section>
 </div>
+<!-- sidebar functionality -->
+<script>
+    const menu = document.querySelector('.fa-bars').parentElement;
+    const sidebar = document.querySelector('#sidebar');
+    let isOpen = false;
+
+    menu.addEventListener('click', (e) => {
+        e.preventDefault();
+        isOpen ? closeSidebar() : openSidebar();
+    });
+
+    const openSidebar = () => {
+        sidebar.classList.remove('w-0');
+        sidebar.classList.add('w-11/12');
+        isOpen = true;
+    }
+
+    const closeSidebar = () => {
+        sidebar.classList.remove('w-11/12');
+        sidebar.classList.add('w-0');
+        isOpen = false;
+    }
+</script>

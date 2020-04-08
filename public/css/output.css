@@ -659,6 +659,51 @@ video {
   border-color: #edf2f7;
 }
 
+.sidebar-link {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tab-link {
+  display: inline-block;
+  border-radius: 0.25rem;
+  flex: 1 1 0%;
+  text-align: center;
+  color: #00b4a6;
+  font-size: 0.875rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.event-card {
+  height: 10rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.event-heading {
+  background-color: #bebcbc;
+  color: #fdfffc;
+  padding: 1.5rem;
+  text-align: right;
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
+.event-content {
+  margin-top: auto;
+  color: #00b4a6;
+  padding: 0.5rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -14348,6 +14393,10 @@ video {
 
 .transition-transform {
   transition-property: transform;
+}
+
+.transition-marginLeft {
+  transition-property: margin-left;
 }
 
 .ease-linear {
@@ -28088,6 +28137,10 @@ video {
 
   .sm\:transition-transform {
     transition-property: transform;
+  }
+
+  .sm\:transition-marginLeft {
+    transition-property: margin-left;
   }
 
   .sm\:ease-linear {
@@ -41831,6 +41884,10 @@ video {
     transition-property: transform;
   }
 
+  .md\:transition-marginLeft {
+    transition-property: margin-left;
+  }
+
   .md\:ease-linear {
     transition-timing-function: linear;
   }
@@ -55572,6 +55629,10 @@ video {
     transition-property: transform;
   }
 
+  .lg\:transition-marginLeft {
+    transition-property: margin-left;
+  }
+
   .lg\:ease-linear {
     transition-timing-function: linear;
   }
@@ -69311,6 +69372,10 @@ video {
 
   .xl\:transition-transform {
     transition-property: transform;
+  }
+
+  .xl\:transition-marginLeft {
+    transition-property: margin-left;
   }
 
   .xl\:ease-linear {
