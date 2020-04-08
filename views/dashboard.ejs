@@ -1,5 +1,19 @@
-<div>
-    <h1>Dashboard</h1>
-    <h5>Welcome <%= name %>!</h5>
-    <a href="/users/logout">Logout</a>
+<div class="h-screen flex">
+    <!-- sidebar -->
+    <section class="h-screen w-11/12 bg-newlightergrey flex flex-col justify-between">
+        <ul>
+            <li><a href="#">Schedule</a></li>
+            <li><a href="#">Direct Messages</a></li>
+        </ul>
+        <div class="bg-primary text-newwhite flex">
+            <img src="https://via.placeholder.com/50.png/FFFFFF" alt="Worker Profile Image">
+            <div>
+                <h6><%= name %></h6>
+                <small>Team Member</small>
+            </div>
+            <a href="/users/logout">Logout</a>
+        </div>
+    </section>
+    <!-- main -->
+    <section class="h-screen w-1/12 bg-newwhite"></section>
 </div>
