@@ -1,6 +1,6 @@
-<div class="h-screen flex overflow-x-hidden">
+<div class="h-screen flex flex-no-wrap overflow-x-hidden">
     <!-- sidebar -->
-    <section class="h-screen w-0 bg-newlightergrey flex flex-col justify-between duration-500 transition-width" id="sidebar">
+    <section class="relative h-screen w-64 -ml-64 bg-newlightergrey flex flex-col justify-between duration-500 transition-marginLeft" id="sidebar">
         <ul class="p-4">
             <li class="sidebar-link">
                 <i class="far fa-calendar-alt"></i>
@@ -23,10 +23,10 @@
         </div>
     </section>
     <!-- schedule -->
-    <section class="h-screen w-screen bg-newwhite">
+    <section class="h-screen w-full bg-newwhite mr-0 duration-500 transition-marginRight" id="schedule">
         <!-- header -->
         <div class="p-4 flex">
-            <button><i class="fas fa-bars inline-block"></i></button>
+            <button class="inline-block"><i class="fas fa-bars"></i></button>
             <h4 class="flex-1 text-center">Schedule</h4>
         </div>
         <!-- tabs -->
@@ -100,6 +100,7 @@
 <script>
     const menu = document.querySelector('.fa-bars').parentElement;
     const sidebar = document.querySelector('#sidebar');
+    const schedule = document.querySelector('#schedule');
     let isOpen = false;
 
     menu.addEventListener('click', (e) => {
@@ -108,14 +109,22 @@
     });
 
     const openSidebar = () => {
-        sidebar.classList.remove('w-0');
-        sidebar.classList.add('w-11/12');
+        sidebar.classList.remove('-ml-64');
+        sidebar.classList.add('ml-0');
+
+        schedule.classList.remove('mr-0');
+        schedule.classList.add('-mr-64');
+
         isOpen = true;
     }
 
     const closeSidebar = () => {
-        sidebar.classList.remove('w-11/12');
-        sidebar.classList.add('w-0');
+        sidebar.classList.remove('ml-0');
+        sidebar.classList.add('-ml-64');
+
+        schedule.classList.remove('-mr-64');
+        schedule.classList.add('mr-0');
+
         isOpen = false;
     }
 </script>

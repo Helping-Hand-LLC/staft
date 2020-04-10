@@ -25,7 +25,8 @@ module.exports = {
         light: '#bcc5e3'
       },
       transitionProperty: {
-        width: 'width'
+        marginLeft: 'margin-left',
+        marginRight: 'margin-right'
       },
     },
   },
