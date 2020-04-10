@@ -4,7 +4,7 @@ const { ensureAuthenticated } = require('../config/auth');
 const router = express.Router();
 
 // home route redirects to login page
-router.get('/', (req, res) => res.redirect('/users/login'));
+router.get('/', (req, res) => res.render('index'));
 
 // dashboard
 router.get('/dashboard', ensureAuthenticated , (req, res) => {

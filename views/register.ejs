@@ -1,51 +1,42 @@
-<div class="register-wrapper">
+<div class="h-screen p-3">
 
     <% if (typeof errors != 'undefined') { %>
-        <% errors.forEach(function(err) { %>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <%= err.msg %>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <% }); %>
+    <% errors.forEach(function(err) { %>
+    <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= err.msg %></span>
+    </div>
+    <% }); %>
     <% } %>
     <% if (success_msg != '') { %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <%= success_msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= success_msg %></span>
     </div>
     <% } %>
     <% if (error_msg != '') { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= error_msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <span class="block sm:inline"><%= error_msg %></span>
     </div>
     <% } %>
 
-    <div class="content-wrapper">
-        <section id="display">
-            <h2><span>Sign up</span> with email and phone number</h2>
+    <div class="h-content flex flex-col rounded content-wrapper">
+        <section class="bg-secondary p-8 rounded-t" id="display">
+            <h2 class="font-hairline text-4xl"><span class="font-bold">Sign up</span> with email and phone number</h2>
         </section>
-        <section class="content">
-            <form action="/users/register" method="POST">
-                <input type="email" name="email" id="email" placeholder="Email"
+        <section class="flex-1">
+            <form class="h-full flex flex-col justify-evenly items-center" action="/users/register" method="POST">
+                <input class="register-input" type="email" name="email" id="email" placeholder="Email"
                     value="<%= typeof email != 'undefined' ? email : '' %>">
-                <input type="tel" name="phone" id="phone" placeholder="Phone Number"
+                <input class="register-input" type="tel" name="phone" id="phone" placeholder="Phone Number"
                     value="<%= typeof phone != 'undefined' ? phone : '' %>">
-                <input type="password" name="password" id="password" placeholder="Password"
+                <input class="register-input" type="password" name="password" id="password" placeholder="Password"
                     value="<%= typeof password != 'undefined' ? password : '' %>">
-                <input type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"
+                <input class="register-input" type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm Password"
                     value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>">
-                <button type="submit">Sign Up</button>
+                <button class="bg-primary text-newwhite uppercase text-base font-normal w-4/5 mx-auto my-2 px-0 py-3 block rounded border-none outline-none" type="submit">Sign Up</button>
             </form>
         </section>
     </div>
-    <small>
+    <small class="block text-center">
         <a href="/users/login">Already have an account? Sign In</a>
     </small>
 </div>
