@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const workerSchema = new mongoose.Schema({
   name: {
@@ -42,28 +41,6 @@ const workerSchema = new mongoose.Schema({
   w4: String,
   i9: String
 });
-
-workerSchema.pre('save', (next) => {
-  const user = this;
-
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) console.error(err);
-    bcrypt.hash(user.password, salt, (err, hash) => {
-      if (err) throw err;
-      user.password = hash;
-      next();
-    });
-  });
-});
-
-workerSchema.methods.isValidPassword = (password) => {
-  const user = this;
-
-  bcrypt.compare(password, user.password, (err, isMatch) => {
-    if (err) throw err;
-    return isMatch ? true : false;
-  });
-}
 
 const Worker = mongoose.model('Worker', workerSchema);
 

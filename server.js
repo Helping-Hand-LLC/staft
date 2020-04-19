@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const { port, mongoUri } = require('./config/keys');
 
 const app = express();
@@ -9,11 +10,19 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true, us
   .then(() => console.log('mongodb connected...'))
   .catch(err => console.error(err));
 
+// passport config
+require('./config/passport');
+
 // body parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.route('/')
-  .get((req, res) => res.send('hello world!'));
+// initialize passport
+app.use(passport.initialize());
+
+// routes
+app.use('/', require('./routes/public'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/protected'));
 
 app.listen(port, () => console.log(`express server listening on port ${port}...`));
