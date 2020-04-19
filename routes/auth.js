@@ -5,7 +5,7 @@ const { privateKey } = require('../config/keys');
 const router = express.Router();
 
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', { session: false }, (err, worker, info) => {
+  passport.authenticate('login', { session: false }, (err, worker, info) => {
     // db error
     if (err) return res.status(500).json({ msg: 'Something went wrong.' });
     // bad request
@@ -19,6 +19,17 @@ router.post('/login', (req, res, next) => {
         res.json({ worker, token });
       });
     });
+  })(req, res, next);
+});
+
+router.post('/register', (req, res, next) => {
+  passport.authenticate('register', { session: false }, (err, worker, info) => {
+    // db error
+    if (err) return res.status(500).json({ msg: 'Something went wrong.' });
+    // bad request
+    if (!worker) return res.status(400).json(info.message);
+
+    return res.json({ worker, message: info.message });
   })(req, res, next);
 });
 
