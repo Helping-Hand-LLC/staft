@@ -44,19 +44,6 @@ const workerSchema = new mongoose.Schema({
   i9: String
 });
 
-workerSchema.pre('save', (next) => {
-  if (this.isNew) {
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) console.error(err);
-      bcrypt.hash(this.password, salt, (err, hash) => {
-        if (err) throw err;
-        this.password = hash;
-      });
-    });
-  }
-  next();
-})
-
 const Worker = mongoose.model('Worker', workerSchema);
 
 module.exports = Worker;

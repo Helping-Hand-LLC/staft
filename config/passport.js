@@ -43,7 +43,18 @@ passport.use('register', new LocalStrategy({ usernameField: 'email', passReqToCa
         if (res) return done(null, false, { message: 'Email already registered.' });
         // create new Worker
         Worker.create({ name: email.split('@')[0], phone, email, password })
-          .then(worker => done(null, worker, { message: 'Registration successful. Please log in.' }))
+          .then(worker => {
+            // encrypt password
+            bcrypt.genSalt(10, (err, salt) => {
+              if (err) console.error(err);
+              bcrypt.hash(worker.password, salt, (err, hash) => {
+                if (err) throw err;
+                worker.password = hash;
+                worker.save()
+                  .then(worker => done(null, worker, { message: 'Registration successful. Please log in.' }))
+              });
+            });
+          })
           .catch(err => done(err))
       })
       .catch(err => console.error(err))
