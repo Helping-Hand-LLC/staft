@@ -21,7 +21,6 @@ app.use(express.json());
 app.use(passport.initialize());
 
 // routes
-app.use('/', require('./routes'));
 app.use('/auth', require('./routes/auth'));
 app.use('/user', passport.authenticate('jwt', { session: false }), require('./routes/user'));
 

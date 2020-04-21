@@ -14,7 +14,7 @@ passport.use('login', new LocalStrategy({ usernameField: 'email' }, (email, pass
     .then(worker => {
       if (!worker) return done(null, false, { message: 'Email not registered.' });
       bcrypt.compare(password, worker.password, (err, isMatch) => {
-        if (err) throw err;
+        if (err) done(err);
         if (!isMatch) return done(null, false, { message: 'Password incorrect.' });
         return done(null, worker);
       })
@@ -46,9 +46,9 @@ passport.use('register', new LocalStrategy({ usernameField: 'email', passReqToCa
           .then(worker => {
             // encrypt password
             bcrypt.genSalt(10, (err, salt) => {
-              if (err) console.error(err);
+              if (err) done(err);
               bcrypt.hash(worker.password, salt, (err, hash) => {
-                if (err) throw err;
+                if (err) done(err);
                 worker.password = hash;
                 worker.save()
                   .then(worker => done(null, worker, { message: 'Registration successful. Please log in.' }))
@@ -57,7 +57,7 @@ passport.use('register', new LocalStrategy({ usernameField: 'email', passReqToCa
           })
           .catch(err => done(err))
       })
-      .catch(err => console.error(err))
+      .catch(err => done(err))
   }
 ));
 
