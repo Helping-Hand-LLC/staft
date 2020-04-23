@@ -6,7 +6,12 @@ const { port, mongoUri } = require('./config/keys');
 const app = express();
 
 // mongodb connection
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose
+  .connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
   .then(() => console.log('mongodb connected...'))
   .catch(err => console.error(err));
 
@@ -22,6 +27,22 @@ app.use(passport.initialize());
 
 // routes
 app.use('/auth', require('./routes/auth'));
-app.use('/user', passport.authenticate('jwt', { session: false }), require('./routes/user'));
+app.use(
+  '/user',
+  passport.authenticate('jwt', { session: false }),
+  require('./routes/user')
+);
+app.use(
+  '/messages',
+  passport.authenticate('jwt', { session: false }),
+  require('./routes/messages')
+);
+app.use(
+  '/events',
+  passport.authenticate('jwt', { session: false }),
+  require('./routes/events')
+);
 
-app.listen(port, () => console.log(`express server listening on port ${port}...`));
+app.listen(port, () =>
+  console.log(`express server listening on port ${port}...`)
+);

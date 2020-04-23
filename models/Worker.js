@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 const workerSchema = new mongoose.Schema({
   name: {
@@ -27,7 +26,7 @@ const workerSchema = new mongoose.Schema({
     enum: ['male', 'female', 'n/a']
   },
   ssn: {
-    type: String,
+    type: String
     // TODO: encrypt?
   },
   isManager: {
