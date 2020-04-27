@@ -1,19 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const passport = require('passport');
-const { port, mongoUri } = require('./config/keys');
+const connectdb = require('./config/db');
+const { port } = require('./config/keys');
 
 const app = express();
 
 // mongodb connection
-mongoose
-  .connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
-  .then(() => console.log('mongodb connected...'))
-  .catch(err => console.error(err));
+connectdb();
 
 // passport config
 require('./config/passport');
@@ -31,16 +24,6 @@ app.use(
   '/user',
   passport.authenticate('jwt', { session: false }),
   require('./routes/user')
-);
-app.use(
-  '/messages',
-  passport.authenticate('jwt', { session: false }),
-  require('./routes/messages')
-);
-app.use(
-  '/events',
-  passport.authenticate('jwt', { session: false }),
-  require('./routes/events')
 );
 
 app.listen(port, () =>

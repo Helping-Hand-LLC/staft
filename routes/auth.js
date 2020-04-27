@@ -1,60 +1,107 @@
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const { check, validationResult } = require('express-validator');
 const { privateKey } = require('../config/keys');
 const router = express.Router();
 
 /**
  * POST /auth/login
- * 
- * @returns {JSON} containing the logged in worker information and their generated JWT
+ *
+ * @returns {JSON} containing the logged in user information and their generated JWT
  */
 router.post('/login', (req, res, next) => {
-  passport.authenticate('login', { session: false }, (err, worker, info) => {
+  passport.authenticate('login', { session: false }, (err, user, info) => {
     // db error
     if (err) next(err);
     // bad request
-    if (!worker) return res.status(400).json(info.message);
+    if (!user) return res.status(400).json(info);
 
-    req.login(worker, { session: false }, (err) => {
+    req.login(user, { session: false }, err => {
       if (err) next(err);
       // jwt
-      jwt.sign({
-        _id: worker._id,
-        isManager: worker.isManager,
-        isAdmin: worker.isAdmin,
-        expiresIn: '2 days'
-      }, privateKey, (err, token) => {
-        if (err) next(err);
-        res.json({ worker, token });
-      });
+      jwt.sign(
+        {
+          id: user.id,
+          expiresIn: '2 days'
+        },
+        privateKey,
+        (err, token) => {
+          if (err) next(err);
+          res.json({ token });
+        }
+      );
     });
   })(req, res, next);
 });
 
 /**
  * POST /auth/register
- * 
- * @returns {JSON} containing the newly registered worker information and a success message
+ *
+ * @returns {JSON} containing the newly registered user information and a success message
  */
-router.post('/register', (req, res, next) => {
-  passport.authenticate('register', { session: false }, (err, worker, info) => {
-    // db error
-    if (err) next(err);
-    // bad request
-    if (!worker) return res.status(400).json(info.message);
+router.post(
+  '/register',
+  [
+    check('email')
+      .isEmail()
+      .normalizeEmail()
+      .withMessage('Please enter a valid email'),
+    check('password')
+      .escape()
+      .isLength({ min: 6 })
+      .withMessage('Password must be at least 6 characters'),
+    check('passwordConfirm')
+      .escape()
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Passwords do not match');
+        }
+        // Indicates the success of this synchronous custom validator
+        return true;
+      })
+  ],
+  (req, res, next) => {
+    // validate
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).json({ errors: errors.array() });
+    }
 
-    return res.json({ worker, message: info.message });
-  })(req, res, next);
-});
+    passport.authenticate('register', { session: false }, (err, user, info) => {
+      // db error
+      if (err) next(err);
+      // bad request
+      if (!user) return res.status(400).json(info);
+
+      // login newly registered user
+      req.login(user, { session: false }, err => {
+        if (err) next(err);
+        // jwt
+        jwt.sign(
+          {
+            id: user.id,
+            expiresIn: '2 days'
+          },
+          privateKey,
+          (err, token) => {
+            if (err) next(err);
+            res.json({ token });
+          }
+        );
+      });
+    })(req, res, next);
+  }
+);
 
 /**
  * GET /auth/logout
- * 
- * @description logs out the currently loggen in worker
+ *
+ * @description logs out the currently loggen in user
  */
 router.get('/logout', (req, res) => {
   // TODO: delete the stored jwt token client-side
+
   // remove req.user
   req.logout();
 });

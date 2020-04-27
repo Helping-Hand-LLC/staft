@@ -1,78 +1,86 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
-const Worker = require('../models/Worker');
+const User = require('../models/User');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const { privateKey } = require('./keys');
 
 // middleware to configure our passport local strategy
-passport.use('login', new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-  // check if user exists
-  Worker.findOne({ email: email })
-    .then(worker => {
-      if (!worker) return done(null, false, { message: 'Email not registered.' });
-      bcrypt.compare(password, worker.password, (err, isMatch) => {
-        if (err) done(err);
-        if (!isMatch) return done(null, false, { message: 'Password incorrect.' });
-        return done(null, worker);
-      })
-    })
-    .catch(err => done(err))
-}));
+passport.use(
+  'login',
+  new LocalStrategy(
+    { usernameField: 'email' },
+    async (email, password, done) => {
+      // check if user exists
+      const user = await User.findOne({ email }).catch(err => done(err));
 
-passport.use('register', new LocalStrategy({ usernameField: 'email', passReqToCallback: true },
-  (req, email, password, done) => {
-    const { phone, passwordConfirm } = req.body;
-    // validate user input
-    // REVIEW: Worker.validate() may throw some of these errors already
-    if (!email || !phone || !password || !passwordConfirm) {
-      return done(null, false, { message: 'Please fill in all fields.' });
+      // email not registered
+      if (!user)
+        return done(null, false, { errors: [{ msg: 'Invalid credentials' }] });
+
+      // compare hashed password
+      const isMatch = bcrypt
+        .compare(password, user.password)
+        .catch(err => done(err));
+
+      // incorrect password
+      if (!isMatch)
+        return done(null, false, { errors: [{ msg: 'Invalid credentials' }] });
+
+      // valid user
+      return done(null, user);
     }
-    if (password !== passwordConfirm) {
-      return done(null, false, { message: 'Passwords do not match.' });
+  )
+);
+
+passport.use(
+  'register',
+  new LocalStrategy(
+    { usernameField: 'email' },
+    async (email, password, done) => {
+      // check if user exists
+      let user = await User.findOne({ email }).catch(err => done(err));
+
+      // email already registered
+      if (user)
+        return done(null, false, {
+          errors: [{ msg: 'Email already registered' }]
+        });
+
+      // create new user
+      user = new User({ email, password }).catch(err => done(err));
+
+      // encrypt password
+      const salt = await bcrypt.genSalt(10).catch(err => done(err));
+      user.password = await bcrypt.hash(password, salt).catch(err => done(err));
+      await user.save().catch(err => done(err));
+
+      // user successfully registered
+      return done(null, user);
     }
-    if (password.length < 6) {
-      return done(null, false, { message: 'Password must be at least 6 characters.' });
+  )
+);
+
+passport.use(
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: privateKey
+    },
+    (jwtPayload, done) => {
+      // retrieve user
+      const user = User.findById(jwtPayload.id)
+        .select('-password')
+        .catch(err => done(err));
+
+      // invalid token
+      if (!user)
+        return done(null, false, { errors: [{ msg: 'Invalid token' }] });
+
+      // valid token
+      return done(null, user);
     }
-
-    // check if user exists
-    Worker.findOne({ email: email })
-      .then(res => {
-        if (res) return done(null, false, { message: 'Email already registered.' });
-        // create new Worker
-        Worker.create({ name: email.split('@')[0], phone, email, password })
-          .then(worker => {
-            // encrypt password
-            bcrypt.genSalt(10, (err, salt) => {
-              if (err) done(err);
-              bcrypt.hash(worker.password, salt, (err, hash) => {
-                if (err) done(err);
-                worker.password = hash;
-                worker.save()
-                  .then(worker => done(null, worker, { message: 'Registration successful. Please log in.' }))
-              });
-            });
-          })
-          .catch(err => done(err))
-      })
-      .catch(err => done(err))
-  }
-));
-
-passport.use(new JWTStrategy({
-  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: privateKey
-},
-  (jwtPayload, done) => {
-    Worker.findById(jwtPayload._id)
-      .then(worker => {
-        if (!worker) return done(null, false);
-        return done(null, worker);
-      })
-      .catch(err => done(err))
-  }
-));
-
-// NOTE: the done() verify callback is implemented in passport.authenticate() if auth succeeds, else passport returns 401 Unauthorized
+  )
+);
