@@ -8,7 +8,9 @@ const router = express.Router();
 /**
  * POST /organization
  *
- * @returns {JSON} create new organization
+ * @desc create a new organization
+ * @returns {JSON} newly created organization
+ * @access public
  */
 router.post(
   '/',
@@ -17,6 +19,7 @@ router.post(
       .escape()
       .isLength({ min: 4 })
       .withMessage('uid must be at least 4 characters'),
+    check('isPrivate').toBoolean(),
     check('adminEmail')
       .isEmail()
       .normalizeEmail()

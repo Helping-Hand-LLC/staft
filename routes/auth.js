@@ -7,7 +7,9 @@ const router = express.Router();
 /**
  * POST /auth/login
  *
- * @returns {JSON} containing the logged in user information and their generated JWT
+ * @desc login a previously registered user
+ * @returns {JSON} newly generated JWT
+ * @access public
  */
 router.post(
   '/login',
@@ -44,7 +46,9 @@ router.post(
 /**
  * POST /auth/register
  *
- * @returns {JSON} containing the newly registered user information and a success message
+ * @desc register a new user to the database and automatically login that user
+ * @returns {JSON} newly generated JWT
+ * @access public
  */
 router.post(
   '/register',
@@ -94,13 +98,19 @@ router.post(
 /**
  * GET /auth/logout
  *
- * @description logs out the currently loggen in user
+ * @desc logs out the currently loggen in user
+ * @returns {null}
+ * @access private
  */
-router.get('/logout', (req, res) => {
-  // TODO: delete the stored jwt token client-side
+router.get(
+  '/logout',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // TODO: delete the stored jwt token client-side
 
-  // remove req.user
-  req.logout();
-});
+    // remove req.user
+    req.logout();
+  }
+);
 
 module.exports = router;
