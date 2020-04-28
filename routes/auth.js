@@ -1,8 +1,7 @@
 const express = require('express');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
-const { privateKey } = require('../config/keys');
+const generateUserJwt = require('../config/jwt');
 const router = express.Router();
 
 /**
@@ -10,30 +9,37 @@ const router = express.Router();
  *
  * @returns {JSON} containing the logged in user information and their generated JWT
  */
-router.post('/login', (req, res, next) => {
-  passport.authenticate('login', { session: false }, (err, user, info) => {
-    // db error
-    if (err) next(err);
-    // bad request
-    if (!user) return res.status(400).json(info);
+router.post(
+  '/login',
+  [
+    check('email')
+      .isEmail()
+      .normalizeEmail()
+      .withMessage('Please enter a valid email'),
+    check('password').escape()
+  ],
+  (req, res, next) => {
+    // validate
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    req.login(user, { session: false }, err => {
+    passport.authenticate('login', { session: false }, (err, user, info) => {
+      // db error
       if (err) next(err);
-      // jwt
-      jwt.sign(
-        {
-          id: user.id,
-          expiresIn: '2 days'
-        },
-        privateKey,
-        (err, token) => {
-          if (err) next(err);
-          res.json({ token });
-        }
-      );
-    });
-  })(req, res, next);
-});
+      // bad request
+      if (!user) return res.status(400).json(info);
+
+      req.login(user, { session: false }, err => {
+        if (err) next(err);
+        // jwt
+        const token = generateUserJwt(user);
+        return res.json({ token });
+      });
+    })(req, res, next);
+  }
+);
 
 /**
  * POST /auth/register
@@ -65,7 +71,7 @@ router.post(
     // validate
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(500).json({ errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
 
     passport.authenticate('register', { session: false }, (err, user, info) => {
@@ -78,17 +84,8 @@ router.post(
       req.login(user, { session: false }, err => {
         if (err) next(err);
         // jwt
-        jwt.sign(
-          {
-            id: user.id,
-            expiresIn: '2 days'
-          },
-          privateKey,
-          (err, token) => {
-            if (err) next(err);
-            res.json({ token });
-          }
-        );
+        const token = generateUserJwt(user);
+        return res.json({ token });
       });
     })(req, res, next);
   }

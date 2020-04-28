@@ -25,6 +25,7 @@ app.use(
   passport.authenticate('jwt', { session: false }),
   require('./routes/user')
 );
+app.use('/organization', require('./routes/organization'));
 
 app.listen(port, () =>
   console.log(`express server listening on port ${port}...`)

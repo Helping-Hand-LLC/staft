@@ -50,12 +50,12 @@ passport.use(
         });
 
       // create new user
-      user = new User({ email, password }).catch(err => done(err));
+      user = new User({ email, password });
 
       // encrypt password
       const salt = await bcrypt.genSalt(10).catch(err => done(err));
       user.password = await bcrypt.hash(password, salt).catch(err => done(err));
-      await user.save().catch(err => done(err));
+      await user.save();
 
       // user successfully registered
       return done(null, user);
