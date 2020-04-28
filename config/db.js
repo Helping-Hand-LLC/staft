@@ -6,7 +6,8 @@ const connectdb = () => {
     .connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
+      useFindAndModify: false
     })
     .then(() => console.log('mongodb connected...'))
     .catch(err => console.error(err));

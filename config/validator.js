@@ -3,25 +3,30 @@ const { check, validationResult } = require('express-validator');
 const loginRules = () => {
   return [
     check('email')
+      .notEmpty()
       .isEmail()
       .normalizeEmail()
       .withMessage('Please enter a valid email'),
-    check('password').escape()
+    check('password').notEmpty().escape().withMessage('Password is required')
   ];
 };
 
 const registerRules = () => {
   return [
     check('email')
+      .notEmpty()
       .isEmail()
       .normalizeEmail()
       .withMessage('Please enter a valid email'),
     check('password')
+      .notEmpty()
       .escape()
       .isLength({ min: 6 })
       .withMessage('Password must be at least 6 characters'),
     check('passwordConfirm')
+      .notEmpty()
       .escape()
+      .withMessage('Password confirmation is required')
       .custom((value, { req }) => {
         if (value !== req.body.password) {
           throw new Error('Passwords do not match');
@@ -49,6 +54,7 @@ const newOrgRules = () => {
       .withMessage('uid must be at least 4 characters'),
     check('isPrivate').toBoolean(),
     check('adminEmail')
+      .notEmpty()
       .isEmail()
       .normalizeEmail()
       .withMessage('Please enter a valid email')
@@ -58,19 +64,26 @@ const newOrgRules = () => {
 const newProfileRules = () => {
   return [
     check('organization').escape(),
-    check('name').escape(),
-    check('address').isJSON(),
-    check('address.street').escape().notEmpty(),
-    check('address.city').escape().notEmpty(),
+    check('name').escape().notEmpty().withMessage('Name is required'),
+    check('address.street')
+      .escape()
+      .notEmpty()
+      .withMessage('Please enter a valid street address'),
+    check('address.city')
+      .escape()
+      .notEmpty()
+      .withMessage('Please enter a valid city'),
     check('address.state').escape().notEmpty(),
-    check('address.zip').notEmpty(),
-    check('address.country').escape(),
+    check('address.zip').notEmpty().withMessage('Zip code is required'),
     check('phone')
       .notEmpty()
       .isMobilePhone()
       .withMessage('Please enter a valid phone number'),
-    check('birthday').toDate(),
-    check('gender').isIn(['male', 'female']),
+    check('birthday').notEmpty().toDate().withMessage('Birthday is required'),
+    check('gender')
+      .notEmpty()
+      .isIn(['male', 'female'])
+      .withMessage('Gender is required'),
     check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
   ];
 };

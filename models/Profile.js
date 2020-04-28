@@ -18,22 +18,28 @@ const profileSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
   address: {
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },
-    zip: { type: String, required: true },
-    country: { type: String, required: true, default: 'United States' }
+    zip: { type: String, required: true }
   },
   phone: {
     type: String,
     required: true
   },
-  birthday: Date,
+  birthday: {
+    type: Date,
+    required: true
+  },
   gender: {
     type: String,
-    enum: ['male', 'female']
+    enum: ['male', 'female'],
+    required: true
   },
   ssn: {
     type: String,

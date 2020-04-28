@@ -10,8 +10,18 @@ const router = express.Router();
  * @returns {JSON} user profile information
  * @access private
  */
-router.get('/profile', (req, res) => {
-  // TODO: return user profile with specific fields
+router.get('/profile', async (req, res, next) => {
+  const profile = await Profile.findOne({ user: req.user.id }).catch(err =>
+    next(err)
+  );
+
+  if (!profile)
+    return res
+      .status(404)
+      .json({ errors: [{ msg: 'Profile could not be found for this user' }] });
+
+  const result = profile.populate('user', ['type']);
+  return res.json({ result });
 });
 
 /**
@@ -21,32 +31,42 @@ router.get('/profile', (req, res) => {
  * @returns {JSON} newly created / updated user profile information
  * @access private
  */
-router.post('/profile', newProfileRules(), expValidate, async (req, res) => {
-  const {
-    organization,
-    name,
-    address,
-    phone,
-    birthday,
-    gender,
-    ssn
-  } = req.body;
+router.post(
+  '/profile',
+  newProfileRules(),
+  expValidate,
+  async (req, res, next) => {
+    let { organization } = req.body;
+    const { name, address, phone, birthday, gender, ssn } = req.body;
 
-  // build profileFields
-  let profileFields = {};
+    // set organization to null if not submitted
+    if (!organization) {
+      organization = null;
+    }
 
-  // check if profile exists
-  let profile = await Profile.findOne({ user: req.user.id });
-
-  // update profile
-  if (profile) {
+    // Using upsert option (creates new doc if no match is found)
+    let profile = await Profile.findOneAndUpdate(
+      { user: req.user.id },
+      {
+        $set: {
+          user: req.user.id,
+          organization,
+          name,
+          address,
+          phone,
+          birthday,
+          gender,
+          ssn
+        }
+      },
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true
+      }
+    ).catch(err => next(err));
+    return res.json({ profile });
   }
-
-  // create new profile for this user
-  profile = new Profile();
-  await profile.save();
-
-  return res.json({ profile });
-});
+);
 
 module.exports = router;
