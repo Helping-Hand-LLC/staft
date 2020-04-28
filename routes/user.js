@@ -1,5 +1,5 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
+const { newProfileRules, expValidate } = require('../config/validator');
 const Profile = require('../models/Profile');
 const router = express.Router();
 
@@ -21,29 +21,11 @@ router.get('/profile', (req, res) => {
  * @returns {JSON} newly created user profile information
  * @access private
  */
-router.post(
-  '/profile',
-  [
-    check('organization').escape(),
-    check('name').escape(),
-    check('address').isJSON(),
-    check('address.street').escape().notEmpty().matches(),
-    check('address.city').escape().notEmpty(),
-    check('address.state').escape().notEmpty(),
-    check('address.zip').notEmpty(),
-    check('address.country').escape(),
-    check('phone').notEmpty().isMobilePhone(),
-    check('birthday').toDate(),
-    check('gender').isIn(['male', 'female']),
-    check('ssn').escape().notEmpty().matches()
-  ],
-  (req, res) => {
-    // validate
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-  }
-);
+router.post('/profile', newProfileRules(), expValidate, (req, res) => {
+  // create new profile for this user
+  const profile = new Profile().save();
+
+  return res.json({ profile });
+});
 
 module.exports = router;
