@@ -69,9 +69,9 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: privateKey
     },
-    (jwtPayload, done) => {
+    async (jwtPayload, done) => {
       // retrieve user
-      const user = User.findById(jwtPayload.id)
+      const user = await User.findById(jwtPayload.id)
         .select('-password')
         .catch(err => done(err));
 

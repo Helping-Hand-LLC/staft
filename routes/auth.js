@@ -1,11 +1,12 @@
 const express = require('express');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 const {
   loginRules,
   registerRules,
   expValidate
 } = require('../config/validator');
-const generateUserJwt = require('../config/jwt');
+const { privateKey } = require('../config/keys');
 const router = express.Router();
 
 /**
@@ -25,8 +26,17 @@ router.post('/login', loginRules(), expValidate, (req, res, next) => {
     req.login(user, { session: false }, err => {
       if (err) next(err);
       // jwt
-      const token = generateUserJwt(user);
-      return res.json({ token });
+      jwt.sign(
+        {
+          id: user.id,
+          expiresIn: '2 days'
+        },
+        privateKey,
+        (err, token) => {
+          if (err) next(err);
+          return res.json({ token });
+        }
+      );
     });
   })(req, res, next);
 });
@@ -49,8 +59,17 @@ router.post('/register', registerRules(), expValidate, (req, res, next) => {
     req.login(user, { session: false }, err => {
       if (err) next(err);
       // jwt
-      const token = generateUserJwt(user);
-      return res.json({ token });
+      jwt.sign(
+        {
+          id: user.id,
+          expiresIn: '2 days'
+        },
+        privateKey,
+        (err, token) => {
+          if (err) next(err);
+          return res.json({ token });
+        }
+      );
     });
   })(req, res, next);
 });
@@ -70,6 +89,7 @@ router.get(
 
     // remove req.user
     req.logout();
+    res.json({ success: true });
   }
 );
 

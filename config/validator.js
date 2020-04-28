@@ -37,6 +37,15 @@ const newOrgRules = () => {
     check('uid')
       .escape()
       .isLength({ min: 4 })
+      .custom(value => {
+        if (str.indexOf(' ') >= 0) {
+          throw new Error(
+            'uid cannot contain whitespace (must be all one word)'
+          );
+        }
+        // Indicates the success of this synchronous custom validator
+        return true;
+      })
       .withMessage('uid must be at least 4 characters'),
     check('isPrivate').toBoolean(),
     check('adminEmail')
@@ -51,15 +60,18 @@ const newProfileRules = () => {
     check('organization').escape(),
     check('name').escape(),
     check('address').isJSON(),
-    check('address.street').escape().notEmpty().matches(),
+    check('address.street').escape().notEmpty(),
     check('address.city').escape().notEmpty(),
     check('address.state').escape().notEmpty(),
     check('address.zip').notEmpty(),
     check('address.country').escape(),
-    check('phone').notEmpty().isMobilePhone(),
+    check('phone')
+      .notEmpty()
+      .isMobilePhone()
+      .withMessage('Please enter a valid phone number'),
     check('birthday').toDate(),
     check('gender').isIn(['male', 'female']),
-    check('ssn').escape().notEmpty().matches()
+    check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
   ];
 };
 

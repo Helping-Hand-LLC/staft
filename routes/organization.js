@@ -47,7 +47,8 @@ router.post('/', newOrgRules(), expValidate, async (req, res, next) => {
   // TODO: set isAdmin of user profile
 
   // create new org
-  org = new Organization({ uid, isPrivate }).save();
+  org = new Organization({ uid, isPrivate });
+  await org.save();
 
   return res.json({ org });
 });
