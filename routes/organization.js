@@ -41,21 +41,35 @@ router.post('/', newOrgRules(), expValidate, async (req, res, next) => {
       ]
     });
 
+  // ensure admin has completed their profile
+  let adminProfile = await Profile.findOne({ user: admin.id });
+
+  if (!adminProfile)
+    return res.status(400).json({
+      errors: [
+        {
+          msg:
+            'Admin must complete their profile before creating a new organization'
+        }
+      ]
+    });
+
+  // ensure admin has not already been assigned to another organization
+  if (adminProfile.isAdmin)
+    return res.status(400).json({
+      errors: [
+        { msg: 'Admin has already been assigned to another organization' }
+      ]
+    });
+
   // create new org
   org = new Organization({ uid, isPrivate });
   await org.save();
 
   // set isAdmin and organization of admin user profile
-  let adminProfile = await Profile.findOneAndUpdate(
-    { user: admin.id },
-    {
-      $set: {
-        isAdmin: true,
-        organization: org.id
-      }
-    },
-    { new: true }
-  );
+  adminProfile.isAdmin = true;
+  adminProfile.organization = org.id;
+  await adminProfile.save();
   console.log(adminProfile);
 
   return res.json({ org });
