@@ -78,7 +78,7 @@ router.post('/register', registerRules(), expValidate, (req, res, next) => {
  * GET /auth/logout
  *
  * @desc logs out the currently loggen in user
- * @returns {null}
+ * @returns {JSON} success indicator
  * @access private
  */
 router.get(

@@ -40,18 +40,19 @@ const registerRules = () => {
 const newOrgRules = () => {
   return [
     check('uid')
+      .notEmpty()
       .escape()
       .isLength({ min: 4 })
+      .withMessage('uid is required and must have at least 4 characters')
       .custom(value => {
-        if (str.indexOf(' ') >= 0) {
+        if (value.indexOf(' ') >= 0) {
           throw new Error(
             'uid cannot contain whitespace (must be all one word)'
           );
         }
         // Indicates the success of this synchronous custom validator
         return true;
-      })
-      .withMessage('uid must be at least 4 characters'),
+      }),
     check('isPrivate').toBoolean(),
     check('adminEmail')
       .notEmpty()

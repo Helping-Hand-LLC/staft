@@ -1,5 +1,6 @@
 const express = require('express');
 const { newProfileRules, expValidate } = require('../config/validator');
+const User = require('../models/User');
 const Profile = require('../models/Profile');
 const router = express.Router();
 
@@ -68,5 +69,21 @@ router.post(
     return res.json({ profile });
   }
 );
+
+/**
+ * DELETE /user/profile
+ *
+ * @desc delete user and their associated profile
+ * @returns {JSON} success indicator
+ * @access private
+ */
+router.delete('/profile', async (req, res, next) => {
+  // remove user profile
+  await Profile.findOneAndDelete({ user: req.user.id }).catch(err => next(err));
+  // remove user
+  await User.findOneAndDelete({ _id: req.user.id }).catch(err => next(err));
+
+  return res.json({ success: true });
+});
 
 module.exports = router;

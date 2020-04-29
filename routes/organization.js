@@ -53,4 +53,15 @@ router.post('/', newOrgRules(), expValidate, async (req, res, next) => {
   return res.json({ org });
 });
 
+/**
+ * GET /organization/users
+ *
+ * @desc retrieve an organization's users
+ * @returns {JSON} this organization's user's public information
+ * @access private
+ */
+router.get('/profile', (req, res, next) => {
+  // TODO: implement me
+});
+
 module.exports = router;
