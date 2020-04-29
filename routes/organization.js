@@ -15,9 +15,6 @@ const router = express.Router();
 router.post('/', newOrgRules(), expValidate, async (req, res, next) => {
   const { uid, isPrivate, adminEmail } = req.body;
 
-  // format uid
-  uid = `com.${uid}`;
-
   // check if org exists
   let org = await Organization.findOne({ uid }).catch(err => next(err));
 
@@ -44,11 +41,22 @@ router.post('/', newOrgRules(), expValidate, async (req, res, next) => {
       ]
     });
 
-  // TODO: set isAdmin of user profile
-
   // create new org
   org = new Organization({ uid, isPrivate });
   await org.save();
+
+  // set isAdmin and organization of admin user profile
+  let adminProfile = await Profile.findOneAndUpdate(
+    { user: admin.id },
+    {
+      $set: {
+        isAdmin: true,
+        organization: org.id
+      }
+    },
+    { new: true }
+  );
+  console.log(adminProfile);
 
   return res.json({ org });
 });

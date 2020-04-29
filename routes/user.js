@@ -5,13 +5,13 @@ const Profile = require('../models/Profile');
 const router = express.Router();
 
 /**
- * GET /user/profile
+ * GET /user/profile/me
  *
  * @desc get user profile information from database
  * @returns {JSON} user profile information
  * @access private
  */
-router.get('/profile', async (req, res, next) => {
+router.get('/profile/me', async (req, res, next) => {
   const profile = await Profile.findOne({ user: req.user.id }).catch(err =>
     next(err)
   );
@@ -71,13 +71,13 @@ router.post(
 );
 
 /**
- * DELETE /user/profile
+ * DELETE /user/profile/me
  *
  * @desc delete user and their associated profile
  * @returns {JSON} success indicator
  * @access private
  */
-router.delete('/profile', async (req, res, next) => {
+router.delete('/profile/me', async (req, res, next) => {
   // remove user profile
   await Profile.findOneAndDelete({ user: req.user.id }).catch(err => next(err));
   // remove user
