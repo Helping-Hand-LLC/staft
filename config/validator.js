@@ -62,6 +62,32 @@ const newOrgRules = () => {
   ];
 };
 
+const updateOrgRules = () => {
+  return [
+    check('uid')
+      .escape()
+      .isLength({ min: 4 })
+      .withMessage('uid must have at least 4 characters')
+      .custom(value => {
+        if (value.indexOf(' ') >= 0) {
+          throw new Error(
+            'uid cannot contain whitespace (must be all one word)'
+          );
+        }
+        // Indicates the success of this synchronous custom validator
+        return true;
+      }),
+    check('isPrivate').toBoolean(),
+    check('adminEmails')
+      .notEmpty()
+      .withMessage('An organization must have at least one admin user'),
+    check('adminEmails.*')
+      .isEmail()
+      .normalizeEmail()
+      .withMessage('Please enter valid emails for the admin users')
+  ];
+};
+
 const newProfileRules = () => {
   return [
     check('organization').escape(),
@@ -101,6 +127,7 @@ module.exports = {
   loginRules,
   registerRules,
   newOrgRules,
+  updateOrgRules,
   newProfileRules,
   expValidate
 };
