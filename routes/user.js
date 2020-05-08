@@ -5,6 +5,17 @@ const Profile = require('../models/Profile');
 const router = express.Router();
 
 /**
+ * GET /user/me
+ *
+ * @desc get basic user information from database
+ * @returns {JSON} user type, email, password, and date
+ * @access private
+ */
+router.get('/me', async (req, res, next) => {
+  // TODO: implement me
+});
+
+/**
  * GET /user/profile/me
  *
  * @desc get user profile information from database

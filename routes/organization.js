@@ -187,6 +187,22 @@ router.put(
 );
 
 /**
+ * DELETE /organizations/:org_id
+ *
+ * @desc delete organization and remove from user profiles
+ * @returns {JSON} success indicator
+ * @access private
+ */
+router.delete(
+  '/:org_id',
+  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+//----- USERS -----
+/**
  * GET /organizations/:org_id/users
  *
  * @desc retrieve an organization's users
@@ -194,8 +210,114 @@ router.put(
  * @access private
  */
 router.get(
-  '/users',
+  '/:org_id/users',
   passport.authenticate('jwt', { session: false }), // TODO: admins only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * GET /organizations/:org_id/profiles
+ *
+ * @desc retrieve an organization's users' profiles
+ * @returns {JSON} this organization's users' profile information
+ * @access private
+ */
+router.get(
+  '/:org_id/profiles',
+  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * GET /organizations/:org_id/join/me
+ *
+ * @desc user join public organization
+ * @returns {JSON} success indicator
+ * @access private
+ */
+router.get(
+  '/:org_id/join/me',
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * PATCH /organizations/:org_id/removeAdmin/me
+ *
+ * @desc user removes self as admin of organization
+ * @returns {JSON} organization ID and type of worker
+ * @access private
+ */
+router.patch(
+  '/:org_id/removeAdmin/me',
+  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+//----- EVENTS -----
+/**
+ * GET /organizations/:org_id/events
+ *
+ * @desc retrieve an organization's events
+ * @returns {JSON} this organization's events
+ * @access private
+ */
+router.get(
+  '/:org_id/events',
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * POST /organizations/:org_id/events
+ *
+ * @desc create a new organization event
+ * @returns {JSON} newly created organization event
+ * @access private
+ */
+router.post(
+  '/:org_id/events',
+  passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * PUT /organizations/:org_id/events/:event_id
+ *
+ * @desc update organization event
+ * @returns {JSON} newly updated organization event
+ * @access private
+ */
+router.put(
+  '/:org_id/events/:event_id',
+  passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
+  (req, res, next) => {
+    // TODO: implement me
+  }
+);
+
+/**
+ * DELETE /organizations/:org_id/events/:event_id
+ *
+ * @desc delete organization event
+ * @returns {JSON} success indicator
+ * @access private
+ */
+router.delete(
+  '/:org_id/events/:event_id',
+  passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
   (req, res, next) => {
     // TODO: implement me
   }
