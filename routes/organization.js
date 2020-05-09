@@ -11,6 +11,30 @@ const Organization = require('../models/Organization');
 const router = express.Router();
 
 /**
+ * GET /organizations/:org_id
+ *
+ * @desc get organization basic information
+ * @returns {JSON} organization information
+ * @access private
+ */
+router.get(
+  '/:org_id',
+  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  async (req, res, next) => {
+    const org = await Organization.findById(req.params.org_id).catch(err =>
+      next(err)
+    );
+
+    if (!org)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'Organization Not Found' }] });
+
+    return res.json({ org });
+  }
+);
+
+/**
  * POST /organizations
  *
  * @desc create a new public or private organization
