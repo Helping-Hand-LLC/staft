@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 const { newProfileRules, expValidate } = require('../config/validator');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
@@ -12,7 +13,14 @@ const router = express.Router();
  * @access private
  */
 router.get('/me', async (req, res, next) => {
-  // TODO: implement me
+  const user = await User.findById(req.user.id)
+    .select('-password')
+    .catch(err => next(err));
+
+  if (!user)
+    return res.status(404).json({ errors: [{ msg: 'User not found' }] });
+
+  return res.json({ user });
 });
 
 /**
