@@ -7,7 +7,10 @@
     "start": "NODE_ENV=production node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint --ignore-path .gitignore .",
-    "format": "prettier --ignore-path .gitignore --write ."
+    "prettier": "prettier --ignore-path .gitignore .",
+    "format": "npm run prettier -- --write",
+    "check-format": "npm run prettier -- --check",
+    "validate": "npm run check-format && npm run lint"
   },
   "repository": {
     "type": "git",
