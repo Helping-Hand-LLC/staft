@@ -49,4 +49,5 @@ const profileSchema = new mongoose.Schema({
   // TODO: extra organization fields
 });
 
-module.exports = Profile = mongoose.model('Profile', profileSchema);
+const Profile = mongoose.model('Profile', profileSchema);
+module.exports = Profile;

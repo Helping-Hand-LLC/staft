@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcryptjs');
 const { newProfileRules, expValidate } = require('../config/validator');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
