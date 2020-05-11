@@ -250,7 +250,6 @@ router.get(
       next(err)
     );
 
-    // this shouldn't happen: every org must have at least 1 admin
     if (!orgUsers)
       return res
         .status(404)
@@ -348,9 +347,39 @@ router.patch(
         .status(400)
         .json({ errors: [{ msg: 'Could not find user profile' }] });
 
-    // if (userProfile.isAdmin) {
-    //   // TODO: ensure org still has another admin
-    // }
+    // ensure org still has another admin
+    let anotherAdminExists = false;
+
+    if (userProfile.isAdmin) {
+      const orgUsers = await Profile.find({
+        organization: org.id,
+        user: { $ne: req.user.id }
+      }).catch(err => next(err));
+
+      if (!orgUsers)
+        return res.status(404).json({
+          errors: [
+            {
+              msg:
+                'No other users found for this organization. Delete this organization to leave.'
+            }
+          ]
+        });
+
+      for (let i = 0; i < orgUsers.length; i++) {
+        if (orgUsers[i].isAdmin) anotherAdminExists = true;
+      }
+
+      if (!anotherAdminExists)
+        return res.status(400).json({
+          errors: [
+            {
+              msg:
+                'You are the sole admin of this organization. Assign another admin before leaving or delete this organization.'
+            }
+          ]
+        });
+    }
 
     userProfile.organization = null;
     await userProfile.save();
