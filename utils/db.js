@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { mongoUri } = require('./keys');
+const { mongoUri } = require('../config/keys');
 
 const connectdb = () => {
   mongoose

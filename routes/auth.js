@@ -5,7 +5,7 @@ const {
   loginRules,
   registerRules,
   expValidate
-} = require('../config/validator');
+} = require('../middleware/validator');
 const { privateKey } = require('../config/keys');
 const router = express.Router();
 

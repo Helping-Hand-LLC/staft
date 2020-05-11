@@ -1,5 +1,5 @@
 const express = require('express');
-const { newProfileRules, expValidate } = require('../config/validator');
+const { newProfileRules, expValidate } = require('../middleware/validator');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const router = express.Router();

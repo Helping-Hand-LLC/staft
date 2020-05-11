@@ -4,7 +4,9 @@ const {
   newOrgRules,
   updateOrgRules,
   expValidate
-} = require('../config/validator');
+} = require('../middleware/validator');
+const { checkOrg } = require('../middleware/models');
+const { getOrg } = require('../controllers/organization');
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const Organization = require('../models/Organization');
@@ -20,18 +22,8 @@ const router = express.Router();
 router.get(
   '/:org_id',
   passport.authenticate('jwt', { session: false }), // FIXME: admins only
-  async (req, res, next) => {
-    const org = await Organization.findById(req.params.org_id).catch(err =>
-      next(err)
-    );
-
-    if (!org)
-      return res
-        .status(404)
-        .json({ errors: [{ msg: 'Organization does not exist' }] });
-
-    return res.json({ org });
-  }
+  checkOrg,
+  getOrg
 );
 
 /**
@@ -146,7 +138,13 @@ router.put(
         .status(404)
         .json({ errors: [{ msg: 'Organization does not exist' }] });
 
-    const { uid, isPrivate, adminEmails } = req.body;
+    const {
+      uid,
+      isPrivate,
+      adminEmails
+      // managerEmails,
+      // clientEmails
+    } = req.body;
 
     // validate admins
     for (let i = 0; i < adminEmails.length; i++) {

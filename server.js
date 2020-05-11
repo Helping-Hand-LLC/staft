@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const connectdb = require('./config/db');
+const connectdb = require('./utils/db');
 const { port } = require('./config/keys');
 
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 connectdb();
 
 // passport config
-require('./config/passport');
+require('./middleware/passport');
 
 // body parser
 app.use(express.urlencoded({ extended: false }));

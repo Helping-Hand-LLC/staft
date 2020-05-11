@@ -5,7 +5,7 @@ const User = require('../models/User');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-const { privateKey } = require('./keys');
+const { privateKey } = require('../config/keys');
 
 // middleware to configure our passport local strategy
 passport.use(
