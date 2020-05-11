@@ -19,7 +19,7 @@ const router = express.Router();
  */
 router.get(
   '/:org_id',
-  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  passport.authenticate('jwt', { session: false }), // FIXME: admins only
   async (req, res, next) => {
     const org = await Organization.findById(req.params.org_id).catch(err =>
       next(err)
@@ -132,7 +132,7 @@ router.get('/public', async (req, res, next) => {
  */
 router.put(
   '/:org_id',
-  passport.authenticate('jwt', { session: false }), // TODO: admins only
+  passport.authenticate('jwt', { session: false }), // FIXME: admins only
   updateOrgRules(),
   expValidate,
   async (req, res, next) => {
@@ -219,7 +219,7 @@ router.put(
  */
 // router.delete(
 //   '/:org_id',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins only
+//   passport.authenticate('jwt', { session: false }), // FIXME: admins only
 //   (req, res, next) => {
 //     // TODO: implement me
 //   }
@@ -233,28 +233,32 @@ router.put(
  * @returns {JSON} this organization's user's public information
  * @access private
  */
-// router.get(
-//   '/:org_id/users',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins only
-//   (req, res, next) => {
-//     // TODO: implement me
-//   }
-// );
+router.get(
+  '/:org_id/users',
+  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  async (req, res, next) => {
+    const org = await Organization.findById(req.params.org_id).catch(err =>
+      next(err)
+    );
 
-/**
- * GET /organizations/:org_id/profiles
- *
- * @desc retrieve an organization's users' profiles
- * @returns {JSON} this organization's users' profile information
- * @access private
- */
-// router.get(
-//   '/:org_id/profiles',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins only
-//   (req, res, next) => {
-//     // TODO: implement me
-//   }
-// );
+    if (!org)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'Organization Not Found' }] });
+
+    const orgUsers = await Profile.find({ organization: org.id }).catch(err =>
+      next(err)
+    );
+
+    // this shouldn't happen: every org must have at least 1 admin
+    if (!orgUsers)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'No users found for this organization' }] });
+
+    return res.json({ orgUsers });
+  }
+);
 
 /**
  * GET /organizations/:org_id/join/me
@@ -280,7 +284,7 @@ router.put(
  */
 // router.patch(
 //   '/:org_id/removeAdmin/me',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins only
+//   passport.authenticate('jwt', { session: false }), // FIXME: admins only
 //   (req, res, next) => {
 //     // TODO: implement me
 //   }
@@ -311,7 +315,7 @@ router.put(
  */
 // router.post(
 //   '/:org_id/events',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
+//   passport.authenticate('jwt', { session: false }), // FIXME: admins / managers only
 //   (req, res, next) => {
 //     // TODO: implement me
 //   }
@@ -326,7 +330,7 @@ router.put(
  */
 // router.put(
 //   '/:org_id/events/:event_id',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
+//   passport.authenticate('jwt', { session: false }), // FIXME: admins / managers only
 //   (req, res, next) => {
 //     // TODO: implement me
 //   }
@@ -341,7 +345,7 @@ router.put(
  */
 // router.delete(
 //   '/:org_id/events/:event_id',
-//   passport.authenticate('jwt', { session: false }), // TODO: admins / managers only
+//   passport.authenticate('jwt', { session: false }), // FIXME: admins / managers only
 //   (req, res, next) => {
 //     // TODO: implement me
 //   }
