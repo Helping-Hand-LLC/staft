@@ -322,17 +322,41 @@ router.get(
 /**
  * PATCH /organizations/:org_id/leave/me
  *
- * @desc user removes self as admin of organization
- * @returns {JSON} organization ID and type of worker
+ * @desc user removes self from organization
+ * @returns {JSON} success indicator
  * @access private
  */
-// router.patch(
-//   '/:org_id/leave/me',
-//   passport.authenticate('jwt', { session: false }), // FIXME: admins only
-//   (req, res, next) => {
-//     // TODO: implement me
-//   }
-// );
+router.patch(
+  '/:org_id/leave/me',
+  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  async (req, res, next) => {
+    const org = await Organization.findById(req.params.org_id).catch(err =>
+      next(err)
+    );
+
+    if (!org)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'Organization does not exist' }] });
+
+    const userProfile = await Profile.findOne({
+      user: req.user.id
+    }).catch(err => next(err));
+
+    if (!userProfile)
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'Could not find user profile' }] });
+
+    // if (userProfile.isAdmin) {
+    //   // TODO: ensure org still has another admin
+    // }
+
+    userProfile.organization = null;
+    await userProfile.save();
+    return res.json({ success: true });
+  }
+);
 
 //----- EVENTS -----
 /**
