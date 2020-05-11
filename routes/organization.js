@@ -28,7 +28,7 @@ router.get(
     if (!org)
       return res
         .status(404)
-        .json({ errors: [{ msg: 'Organization Not Found' }] });
+        .json({ errors: [{ msg: 'Organization does not exist' }] });
 
     return res.json({ org });
   }
@@ -244,7 +244,7 @@ router.get(
     if (!org)
       return res
         .status(404)
-        .json({ errors: [{ msg: 'Organization Not Found' }] });
+        .json({ errors: [{ msg: 'Organization does not exist' }] });
 
     const orgUsers = await Profile.find({ organization: org.id }).catch(err =>
       next(err)
@@ -267,23 +267,67 @@ router.get(
  * @returns {JSON} success indicator
  * @access private
  */
-// router.get(
-//   '/:org_id/join/me',
-//   passport.authenticate('jwt', { session: false }),
-//   (req, res, next) => {
-//     // TODO: implement me
-//   }
-// );
+router.get(
+  '/:org_id/join/me',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    const org = await Organization.findById(req.params.org_id).catch(err =>
+      next(err)
+    );
+
+    if (!org)
+      return res
+        .status(404)
+        .json({ errors: [{ msg: 'Organization does not exist' }] });
+
+    // ensure organization is public
+    if (org.isPrivate)
+      return res.status(400).json({
+        errors: [
+          {
+            msg:
+              'Organization is private. Request an invite from an administrator to join.'
+          }
+        ]
+      });
+
+    const userProfile = await Profile.findOne({
+      user: req.user.id
+    }).catch(err => next(err));
+
+    if (!userProfile)
+      return res.status(400).json({
+        errors: [
+          { msg: 'User must complete profile before joining an organization' }
+        ]
+      });
+
+    // ensure user not already assigned
+    if (userProfile.organization)
+      return res.status(400).json({
+        errors: [
+          {
+            msg:
+              'User already assigned to another organization. Leave organization before joining another.'
+          }
+        ]
+      });
+
+    userProfile.organization = org.id;
+    await userProfile.save();
+    return res.json({ success: true });
+  }
+);
 
 /**
- * PATCH /organizations/:org_id/removeAdmin/me
+ * PATCH /organizations/:org_id/leave/me
  *
  * @desc user removes self as admin of organization
  * @returns {JSON} organization ID and type of worker
  * @access private
  */
 // router.patch(
-//   '/:org_id/removeAdmin/me',
+//   '/:org_id/leave/me',
 //   passport.authenticate('jwt', { session: false }), // FIXME: admins only
 //   (req, res, next) => {
 //     // TODO: implement me
