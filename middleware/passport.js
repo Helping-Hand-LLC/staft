@@ -6,6 +6,7 @@ const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const { privateKey } = require('../config/keys');
+const { routeError } = require('../utils/error');
 
 // middleware to configure our passport local strategy
 passport.use(
@@ -17,8 +18,7 @@ passport.use(
       const user = await User.findOne({ email }).catch(err => done(err));
 
       // email not registered
-      if (!user)
-        return done(null, false, { errors: [{ msg: 'Invalid credentials' }] });
+      if (!user) return done(null, false, routeError('Invalid credentials'));
 
       // compare hashed password
       const isMatch = bcrypt
@@ -26,8 +26,7 @@ passport.use(
         .catch(err => done(err));
 
       // incorrect password
-      if (!isMatch)
-        return done(null, false, { errors: [{ msg: 'Invalid credentials' }] });
+      if (!isMatch) return done(null, false, routeError('Invalid credentials'));
 
       // valid user
       return done(null, user);
@@ -45,9 +44,7 @@ passport.use(
 
       // email already registered
       if (user)
-        return done(null, false, {
-          errors: [{ msg: 'Email already registered' }]
-        });
+        return done(null, false, routeError('Email already registered'));
 
       // create new user
       user = new User({ email, password });
@@ -76,8 +73,7 @@ passport.use(
         .catch(err => done(err));
 
       // invalid token
-      if (!user)
-        return done(null, false, { errors: [{ msg: 'Invalid token' }] });
+      if (!user) return done(null, false, routeError('Invalid token'));
 
       // valid token
       return done(null, user);

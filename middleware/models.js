@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const Organization = require('../models/Organization');
+const { routeError } = require('../utils/error');
 
 module.exports = {
   checkUser: async (req, res, next) => {
@@ -8,8 +9,7 @@ module.exports = {
       .select('-password')
       .catch(err => next(err));
 
-    if (!user)
-      return res.status(404).json({ errors: [{ msg: 'User not found' }] });
+    if (!user) return res.status(404).json(routeError('User not found'));
 
     res.locals.user = user;
     next();
@@ -20,9 +20,9 @@ module.exports = {
     );
 
     if (!profile)
-      return res.status(404).json({
-        errors: [{ msg: 'Profile could not be found for this user' }]
-      });
+      return res
+        .status(404)
+        .json(routeError('Profile could not be found for this user'));
 
     res.locals.profile = profile;
     next();
@@ -33,9 +33,7 @@ module.exports = {
     );
 
     if (!org)
-      return res
-        .status(404)
-        .json({ errors: [{ msg: 'Organization does not exist' }] });
+      return res.status(404).json(routeError('Organization does not exist'));
 
     res.locals.org = org;
     next();
