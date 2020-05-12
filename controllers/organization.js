@@ -79,10 +79,21 @@ module.exports = {
     const {
       uid,
       isPrivate,
-      adminEmails
-      // managerEmails,
-      // clientEmails
+      adminEmails,
+      managerEmails,
+      clientEmails,
+      workerEmails
     } = req.body;
+
+    // ensure private org before setting workerEmails
+    if (!isPrivate)
+      res
+        .status(400)
+        .json(
+          routeError(
+            'Workers can join public organizations themselves. Assigning workers is reserved for private organizations only.'
+          )
+        );
 
     // validate admins
     for (let i = 0; i < adminEmails.length; i++) {
@@ -127,9 +138,149 @@ module.exports = {
           );
 
       // add isAdmin and organization to admin
+      result.type = 'admin';
+      await result.save();
       adminProfile.isAdmin = true;
       adminProfile.organization = res.locals.org.id;
       await adminProfile.save();
+    }
+
+    // validate managers
+    for (let i = 0; i < managerEmails.length; i++) {
+      const manager = managerEmails[i];
+      const result = await User.findOne({ email: manager }).catch(err =>
+        next(err)
+      );
+      // ensure manager is already a registered user
+      if (!result)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Please register all manager emails before assigning to an organization'
+            )
+          );
+
+      // ensure manager has completed their profile
+      const managerProfile = await Profile.findOne({
+        user: result.id
+      }).catch(err => next(err));
+      if (!managerProfile)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'All managers must complete their profile before being assigned to an organization'
+            )
+          );
+
+      // ensure manager is not already assigned to another organization
+      if (
+        managerProfile.isManager &&
+        managerProfile.organization != req.params.org_id
+      )
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Managers cannot be already assigned to another organization'
+            )
+          );
+
+      // add isManager and organization to manager
+      result.type = 'manager';
+      await result.save();
+      managerProfile.isManager = true;
+      managerProfile.organization = res.locals.org.id;
+      await managerProfile.save();
+    }
+
+    // validate clients
+    for (let i = 0; i < clientEmails.length; i++) {
+      const client = clientEmails[i];
+      const result = await User.findOne({ email: client }).catch(err =>
+        next(err)
+      );
+      // ensure client is already a registered user
+      if (!result)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Please register all client emails before assigning to an organization'
+            )
+          );
+
+      // ensure client has completed their profile
+      const clientProfile = await Profile.findOne({
+        user: result.id
+      }).catch(err => next(err));
+      if (!clientProfile)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'All clients must complete their profile before being assigned to an organization'
+            )
+          );
+
+      // ensure client is not already assigned to another organization
+      if (clientProfile.organization != req.params.org_id)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Clients cannot be already assigned to another organization'
+            )
+          );
+
+      // add organization to client
+      clientProfile.organization = res.locals.org.id;
+      await clientProfile.save();
+    }
+
+    // validate workerEmails
+    for (let i = 0; i < workerEmails.length; i++) {
+      const worker = workerEmails[i];
+      const result = await User.findOne({ email: worker }).catch(err =>
+        next(err)
+      );
+      // ensure worker is already a registered user
+      if (!result)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Please register all worker emails before assigning to an organization'
+            )
+          );
+
+      // ensure worker has completed their profile
+      const workerProfile = await Profile.findOne({
+        user: result.id
+      }).catch(err => next(err));
+      if (!workerProfile)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'All workers must complete their profile before being assigned to an organization'
+            )
+          );
+
+      // ensure worker is not already assigned to another organization
+      if (workerProfile.organization != req.params.org_id)
+        return res
+          .status(400)
+          .json(
+            routeError(
+              'Workers cannot be already assigned to another organization'
+            )
+          );
+
+      // add organization to worker
+      workerProfile.organization = res.locals.org.id;
+      await workerProfile.save();
     }
 
     // existing values should be re-sent so we don't need to check for null

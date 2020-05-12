@@ -92,7 +92,11 @@ const updateOrgRules = () => {
     check('clientEmails.*')
       .isEmail()
       .normalizeEmail()
-      .withMessage('Please enter valid emails for the client users')
+      .withMessage('Please enter valid emails for the client users'),
+    check('workerEmails.*')
+      .isEmail()
+      .normalizeEmail()
+      .withMessage('Please enter valid emails for the worker users')
   ];
 };
 
