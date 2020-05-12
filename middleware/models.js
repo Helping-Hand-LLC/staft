@@ -1,10 +1,32 @@
-// const User = require('../models/User');
-// const Profile = require('../models/Profile');
+const User = require('../models/User');
+const Profile = require('../models/Profile');
 const Organization = require('../models/Organization');
 
 module.exports = {
-  checkUser: () => {},
-  checkProfile: () => {},
+  checkUser: async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+      .select('-password')
+      .catch(err => next(err));
+
+    if (!user)
+      return res.status(404).json({ errors: [{ msg: 'User not found' }] });
+
+    res.locals.user = user;
+    next();
+  },
+  checkProfile: async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.user.id }).catch(err =>
+      next(err)
+    );
+
+    if (!profile)
+      return res.status(404).json({
+        errors: [{ msg: 'Profile could not be found for this user' }]
+      });
+
+    res.locals.profile = profile;
+    next();
+  },
   checkOrg: async (req, res, next) => {
     const org = await Organization.findById(req.params.org_id).catch(err =>
       next(err)

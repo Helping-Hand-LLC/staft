@@ -1,7 +1,12 @@
 const express = require('express');
 const { newProfileRules, expValidate } = require('../middleware/validator');
-const User = require('../models/User');
-const Profile = require('../models/Profile');
+const { checkUser, checkProfile } = require('../middleware/models');
+const {
+  getUser,
+  getUserProfile,
+  createOrUpdateProfile,
+  deleteUserAndProfile
+} = require('../controllers/user');
 const router = express.Router();
 
 /**
@@ -11,16 +16,7 @@ const router = express.Router();
  * @returns {JSON} user type, email, password, and date
  * @access private
  */
-router.get('/me', async (req, res, next) => {
-  const user = await User.findById(req.user.id)
-    .select('-password')
-    .catch(err => next(err));
-
-  if (!user)
-    return res.status(404).json({ errors: [{ msg: 'User not found' }] });
-
-  return res.json({ user });
-});
+router.get('/me', checkUser, getUser);
 
 /**
  * GET /user/profile/me
@@ -29,19 +25,7 @@ router.get('/me', async (req, res, next) => {
  * @returns {JSON} user profile information
  * @access private
  */
-router.get('/profile/me', async (req, res, next) => {
-  const profile = await Profile.findOne({ user: req.user.id }).catch(err =>
-    next(err)
-  );
-
-  if (!profile)
-    return res
-      .status(404)
-      .json({ errors: [{ msg: 'Profile could not be found for this user' }] });
-
-  const result = profile.populate('user', ['type']);
-  return res.json({ result });
-});
+router.get('/profile/me', checkProfile, getUserProfile);
 
 /**
  * POST /user/profile
@@ -50,43 +34,7 @@ router.get('/profile/me', async (req, res, next) => {
  * @returns {JSON} newly created / updated user profile information
  * @access private
  */
-router.post(
-  '/profile',
-  newProfileRules(),
-  expValidate,
-  async (req, res, next) => {
-    let { organization } = req.body;
-    const { name, address, phone, birthday, gender, ssn } = req.body;
-
-    // set organization to null if not submitted
-    if (!organization) {
-      organization = null;
-    }
-
-    // Using upsert option (creates new doc if no match is found)
-    let profile = await Profile.findOneAndUpdate(
-      { user: req.user.id },
-      {
-        $set: {
-          user: req.user.id,
-          organization,
-          name,
-          address,
-          phone,
-          birthday,
-          gender,
-          ssn
-        }
-      },
-      {
-        new: true,
-        upsert: true,
-        setDefaultsOnInsert: true
-      }
-    ).catch(err => next(err));
-    return res.json({ profile });
-  }
-);
+router.post('/profile', newProfileRules(), expValidate, createOrUpdateProfile);
 
 /**
  * DELETE /user/profile/me
@@ -95,13 +43,6 @@ router.post(
  * @returns {JSON} success indicator
  * @access private
  */
-router.delete('/profile/me', async (req, res, next) => {
-  // remove user profile
-  await Profile.findOneAndDelete({ user: req.user.id }).catch(err => next(err));
-  // remove user
-  await User.findOneAndDelete({ _id: req.user.id }).catch(err => next(err));
-
-  return res.json({ success: true });
-});
+router.delete('/profile/me', deleteUserAndProfile);
 
 module.exports = router;
