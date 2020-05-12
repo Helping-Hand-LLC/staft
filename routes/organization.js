@@ -80,6 +80,7 @@ router.put(
 router.delete(
   '/:org_id',
   passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  checkOrg,
   deleteOrg
 );
 

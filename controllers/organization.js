@@ -138,7 +138,6 @@ module.exports = {
           );
 
       // add isAdmin and organization to admin
-      result.type = 'admin';
       await result.save();
       adminProfile.isAdmin = true;
       adminProfile.organization = res.locals.org.id;
@@ -188,7 +187,6 @@ module.exports = {
           );
 
       // add isManager and organization to manager
-      result.type = 'manager';
       await result.save();
       managerProfile.isManager = true;
       managerProfile.organization = res.locals.org.id;
@@ -290,8 +288,28 @@ module.exports = {
 
     return res.json({ org: res.locals.org });
   },
-  deleteOrg: async () => {
-    /* TODO: implement me */
+  deleteOrg: async (req, res, next) => {
+    // get orgUsers and remove organization field
+    const orgUsers = await Profile.find({
+      organization: res.locals.org.id
+    }).catch(err => next(err));
+
+    if (orgUsers) {
+      for (let i = 0; i < orgUsers.length; i++) {
+        orgUsers[i].isAdmin = false;
+        orgUsers[i].isManager = false;
+        orgUsers[i].organization = null;
+        await orgUsers[i].save();
+      }
+    }
+
+    // TODO: delete all org events
+
+    // remove org
+    await Organization.findOneAndDelete({ _id: res.locals.org.id }).catch(err =>
+      next(err)
+    );
+    res.json({ success: true });
   },
   getOrgUsers: async (req, res, next) => {
     const orgUsers = await Profile.find({
