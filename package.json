@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Helping-Hand-LLC/staft#readme",
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^2.6.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
