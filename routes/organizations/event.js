@@ -24,7 +24,7 @@ const router = express.Router();
  * @access private
  */
 router.get(
-  '/:org_id/events',
+  '/',
   passport.authenticate('jwt', { session: false }),
   checkOrg,
   getOrgEvents
@@ -38,7 +38,7 @@ router.get(
  * @access private
  */
 router.get(
-  '/:org_id/events/:event_id',
+  '/:event_id',
   passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
@@ -53,7 +53,7 @@ router.get(
  * @access private
  */
 router.post(
-  '/:org_id/events',
+  '/',
   passport.authenticate('jwt', { session: false }),
   orgEventRules(),
   expValidate,
@@ -69,7 +69,7 @@ router.post(
  * @access private
  */
 router.put(
-  '/:org_id/events/:event_id',
+  '/:event_id',
   passport.authenticate('jwt', { session: false }),
   orgEventRules(),
   expValidate,
@@ -86,7 +86,7 @@ router.put(
  * @access private
  */
 router.patch(
-  '/:org_id/events/:event_id',
+  '/:event_id',
   passport.authenticate('jwt', { session: false }),
   orgEventParticipantRules(),
   expValidate,
@@ -104,11 +104,14 @@ router.patch(
  * @access private
  */
 router.delete(
-  '/:org_id/events/:event_id',
+  '/:event_id',
   passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
   deleteOrgEvent
 );
+
+//----- LOCATIONS -----
+router.use('/locations', require('./location'));
 
 module.exports = router;

@@ -160,6 +160,11 @@ module.exports = {
       // TODO: implement me
     ];
   },
+  orgEventLocationRules: () => {
+    return [
+      // TODO: implement me
+    ];
+  },
   expValidate: (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
