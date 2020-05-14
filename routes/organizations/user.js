@@ -5,7 +5,7 @@ const {
   getOrgUsers,
   joinPublicOrg,
   leaveOrg
-} = require('../../controllers/organization');
+} = require('../../controllers/organizations/user');
 const router = express.Router();
 
 /**

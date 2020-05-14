@@ -12,7 +12,7 @@ const {
   getPublicOrgs,
   updateOrg,
   deleteOrg
-} = require('../../controllers/organization');
+} = require('../../controllers/organizations/organization');
 const router = express.Router();
 
 /**

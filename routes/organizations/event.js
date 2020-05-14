@@ -13,7 +13,7 @@ const {
   updateOrgEvent,
   updateOrgEventParticipant,
   deleteOrgEvent
-} = require('../../controllers/organization');
+} = require('../../controllers/organizations/event');
 const router = express.Router();
 
 /**
