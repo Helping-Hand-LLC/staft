@@ -3,9 +3,16 @@ const passport = require('passport');
 const {
   newOrgRules,
   updateOrgRules,
+  orgEventRules,
+  orgEventParticipantRules,
   expValidate
 } = require('../middleware/validator');
-const { checkOrg, checkProfile } = require('../middleware/models');
+const {
+  checkUser,
+  checkProfile,
+  checkOrg,
+  checkEvent
+} = require('../middleware/models');
 const {
   getOrg,
   createOrg,
@@ -16,8 +23,10 @@ const {
   joinPublicOrg,
   leaveOrg,
   getOrgEvents,
+  getOrgEvent,
   createOrgEvent,
   updateOrgEvent,
+  updateOrgEventParticipant,
   deleteOrgEvent
 } = require('../controllers/organization');
 const router = express.Router();
@@ -31,7 +40,7 @@ const router = express.Router();
  */
 router.get(
   '/:org_id',
-  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   getOrg
 );
@@ -63,7 +72,7 @@ router.get('/', getPublicOrgs);
  */
 router.put(
   '/:org_id',
-  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  passport.authenticate('jwt', { session: false }),
   updateOrgRules(),
   expValidate,
   checkOrg,
@@ -79,7 +88,7 @@ router.put(
  */
 router.delete(
   '/:org_id',
-  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   deleteOrg
 );
@@ -94,7 +103,7 @@ router.delete(
  */
 router.get(
   '/:org_id/users',
-  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   getOrgUsers
 );
@@ -122,7 +131,7 @@ router.get(
  */
 router.patch(
   '/:org_id/leave/me',
-  passport.authenticate('jwt', { session: false }), // FIXME: admins only
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkProfile,
   leaveOrg
@@ -139,7 +148,23 @@ router.patch(
 router.get(
   '/:org_id/events',
   passport.authenticate('jwt', { session: false }),
+  checkOrg,
   getOrgEvents
+);
+
+/**
+ * GET /organizations/:org_id/events/:event_id
+ *
+ * @desc retrieve an organization event
+ * @returns {JSON} this organization's event with event_id
+ * @access private
+ */
+router.get(
+  '/:org_id/events/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  checkEvent,
+  getOrgEvent
 );
 
 /**
@@ -152,6 +177,9 @@ router.get(
 router.post(
   '/:org_id/events',
   passport.authenticate('jwt', { session: false }),
+  orgEventRules(),
+  expValidate,
+  checkOrg,
   createOrgEvent
 );
 
@@ -165,7 +193,29 @@ router.post(
 router.put(
   '/:org_id/events/:event_id',
   passport.authenticate('jwt', { session: false }),
+  orgEventRules(),
+  expValidate,
+  checkOrg,
+  checkEvent,
   updateOrgEvent
+);
+
+/**
+ * PATCH /organizations/:org_id/events/:event_id
+ *
+ * @desc event participant confirms status, checks in, or checks out
+ * @returns {JSON} modified participant information
+ * @access private
+ */
+router.patch(
+  '/:org_id/events/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  orgEventParticipantRules(),
+  expValidate,
+  checkOrg,
+  checkEvent,
+  checkUser,
+  updateOrgEventParticipant
 );
 
 /**
@@ -178,6 +228,8 @@ router.put(
 router.delete(
   '/:org_id/events/:event_id',
   passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  checkEvent,
   deleteOrgEvent
 );
 

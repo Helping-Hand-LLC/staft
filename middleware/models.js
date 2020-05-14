@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Profile = require('../models/Profile');
 const Organization = require('../models/Organization');
+const Event = require('../models/Event');
 const { routeError } = require('../utils/error');
 
 module.exports = {
@@ -36,6 +37,16 @@ module.exports = {
       return res.status(404).json(routeError('Organization does not exist'));
 
     res.locals.org = org;
+    next();
+  },
+  checkEvent: async (req, res, next) => {
+    const event = await Event.findById(req.params.event_id).catch(err =>
+      next(err)
+    );
+
+    if (!event) return res.status(404).json(routeError('Event does not exist'));
+
+    res.locals.event = event;
     next();
   }
 };

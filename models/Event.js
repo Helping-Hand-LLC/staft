@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Date format: 1995-12-17T03:24:00 => Sun Dec 17 1995 03:24:00 GMT
 const eventSchema = new mongoose.Schema(
   {
     organization: {
@@ -61,6 +62,7 @@ const eventSchema = new mongoose.Schema(
         },
         confirmedStatus: {
           type: String,
+          default: 'unconfirmed',
           enum: ['unconfirmed', 'accepted', 'rejected']
         },
         checkedIn: {
