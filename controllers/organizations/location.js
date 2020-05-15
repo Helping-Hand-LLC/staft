@@ -7,7 +7,9 @@ const client = new Client({});
 
 module.exports = {
   getOrgEventLocations: async (req, res, next) => {
-    const locations = await Location.find().catch(err => next(err));
+    const locations = await Location.find({
+      organization: res.locals.org.id
+    }).catch(err => next(err));
     res.json({ locations });
   },
   getGoogleLocationsFromQuery: async (req, res, next) => {
