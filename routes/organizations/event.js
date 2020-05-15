@@ -14,7 +14,7 @@ const {
   updateOrgEventParticipant,
   deleteOrgEvent
 } = require('../../controllers/organizations/event');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 /**
  * GET /organizations/:org_id/events

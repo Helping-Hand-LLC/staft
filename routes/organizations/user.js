@@ -6,7 +6,7 @@ const {
   joinPublicOrg,
   leaveOrg
 } = require('../../controllers/organizations/user');
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 /**
  * GET /organizations/:org_id/users

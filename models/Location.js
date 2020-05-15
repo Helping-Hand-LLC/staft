@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const locationSchema = new mongoose.Schema({
-  address_components: {
-    long_name: String,
-    short_name: String
+  organization: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Organization',
+    required: true
   },
-  formattedAddress: {
+  formatted_address: {
     type: String,
     required: true
   },
-  formatted_phone_number: String,
   geometry: {
     location: {
       lat: Number,
@@ -24,9 +24,7 @@ const locationSchema = new mongoose.Schema({
   place_id: {
     type: String,
     required: true
-  },
-  url: String,
-  website: String
+  }
 });
 
 const Location = mongoose.model('Location', locationSchema);
