@@ -14,11 +14,9 @@ const eventSchema = new mongoose.Schema(
     },
     title: String,
     location: {
-      name: {
-        type: String,
-        required: true
-      },
-      fullAddress: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Location',
+      required: true
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,

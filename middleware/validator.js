@@ -160,6 +160,29 @@ module.exports = {
       // TODO: implement me
     ];
   },
+  orgEventLocationRules: () => {
+    return [
+      check('query')
+        .escape()
+        .notEmpty()
+        .withMessage('location search term is required')
+    ];
+  },
+  newOrgEventLocationRules: () => {
+    return [
+      check('formatted_address')
+        .escape()
+        .notEmpty()
+        .withMessage('Formatted address is required'),
+      check('location.*').isDecimal(),
+      check('icon').escape(),
+      check('name')
+        .escape()
+        .notEmpty()
+        .withMessage('Event location name is required'),
+      check('place_id').escape().notEmpty().withMessage('Place ID is required')
+    ];
+  },
   expValidate: (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
