@@ -141,7 +141,6 @@ module.exports = {
       }
     }
 
-    console.log(pIndex);
     if (pIndex === undefined)
       return res
         .status(400)
