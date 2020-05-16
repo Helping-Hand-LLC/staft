@@ -152,7 +152,13 @@ module.exports = {
   },
   orgEventParticipantRules: () => {
     return [
-      // TODO: implement me
+      check('confirmedStatus')
+        .escape()
+        .isIn(['unconfirmed', 'accepted', 'rejected']),
+      check('checkedIn.status').toBoolean(),
+      check('checkedIn.datetime').optional().toDate(),
+      check('checkedOut.status').toBoolean(),
+      check('checkedOut.datetime').optional().toDate()
     ];
   },
   orgEventLocationRules: () => {

@@ -129,8 +129,33 @@ module.exports = {
     await res.locals.event.save();
     res.json({ event: res.locals.event });
   },
-  updateOrgEventParticipant: () => {
-    /* TODO: implement me */
+  updateOrgEventParticipant: async (req, res) => {
+    const { confirmedStatus, checkedIn, checkedOut } = req.body;
+
+    // find participant object of this user on this event
+    let pIndex;
+    for (let i = 0; i < res.locals.event.participants.length; i++) {
+      if (res.locals.event.participants[i].worker == req.user.id) {
+        pIndex = i;
+        break;
+      }
+    }
+
+    console.log(pIndex);
+    if (pIndex === undefined)
+      return res
+        .status(400)
+        .json(routeError('You are not a participant of this event'));
+
+    const updatedParticipant = {
+      worker: req.user.id,
+      confirmedStatus,
+      checkedIn,
+      checkedOut
+    };
+    res.locals.event.participants.set(pIndex, updatedParticipant);
+    await res.locals.event.save();
+    res.json({ participant: updatedParticipant });
   },
   deleteOrgEvent: async (req, res, next) => {
     await Event.findOneAndDelete({ _id: res.locals.event.id }).catch(err =>
