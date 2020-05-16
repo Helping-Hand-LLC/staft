@@ -11,8 +11,8 @@ module.exports = {
 
     res.json({ orgEvents });
   },
-  getOrgEvent: () => {
-    /* TODO: implement me */
+  getOrgEvent: async (req, res) => {
+    res.json({ event: res.locals.event });
   },
   createOrgEvent: async (req, res) => {
     const {
