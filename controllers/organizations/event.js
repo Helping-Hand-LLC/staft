@@ -132,7 +132,10 @@ module.exports = {
   updateOrgEventParticipant: () => {
     /* TODO: implement me */
   },
-  deleteOrgEvent: () => {
-    /* TODO: implement me */
+  deleteOrgEvent: async (req, res, next) => {
+    await Event.findOneAndDelete({ _id: res.locals.event.id }).catch(err =>
+      next(err)
+    );
+    res.json({ success: true });
   }
 };
