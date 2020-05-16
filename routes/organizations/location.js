@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventLocationRules,
   newOrgEventLocationRules,
@@ -23,6 +24,7 @@ const router = express.Router({ mergeParams: true });
 router.get(
   '/stored',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   getOrgEventLocations
 );
@@ -37,9 +39,10 @@ router.get(
 router.get(
   '/query',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkOrg,
   orgEventLocationRules(),
   expValidate,
-  checkOrg,
   getGoogleLocationsFromQuery
 );
 
@@ -53,9 +56,10 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkOrg,
   newOrgEventLocationRules(),
   expValidate,
-  checkOrg,
   createOrgEventLocation
 );
 

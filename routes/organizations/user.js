@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const checkObjectId = require('../../middleware/checkObjectId');
 const { checkProfile, checkOrg } = require('../../middleware/models');
 const {
   getOrgUsers,
@@ -18,6 +19,7 @@ const router = express.Router({ mergeParams: true });
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   getOrgUsers
 );
@@ -32,6 +34,7 @@ router.get(
 router.get(
   '/join/me',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   joinPublicOrg
 );
@@ -46,6 +49,7 @@ router.get(
 router.patch(
   '/leave/me',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   checkProfile,
   leaveOrg
