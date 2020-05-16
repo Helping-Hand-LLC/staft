@@ -3,9 +3,8 @@ const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
-  addEventParticipantRules,
-  removeEventParticipantRules,
-  orgEventParticipantRules,
+  addOrRemoveEventParticipantRules,
+  updateEventParticipantRules,
   expValidate
 } = require('../../middleware/validator');
 const { checkUser, checkOrg, checkEvent } = require('../../middleware/models');
@@ -90,23 +89,23 @@ router.put(
 );
 
 /**
- * TODO: POST /organizations/:org_id/events/:event_id
+ * POST /organizations/:org_id/events/:event_id
  *
  * @desc add new event participant
  * @returns {JSON} all event participants
  * @access private
  */
-// router.post(
-//   '/:event_id',
-//   passport.authenticate('jwt', { session: false }),
-//   checkObjectId('org_id'),
-//   checkObjectId('event_id'),
-//   checkOrg,
-//   checkEvent,
-//   addEventParticipantRules(),
-//   expValidate,
-//   addEventParticipant
-// );
+router.post(
+  '/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  addOrRemoveEventParticipantRules(),
+  expValidate,
+  addEventParticipant
+);
 
 /**
  * TODO: DELETE /organizations/:org_id/events/:event_id
@@ -122,7 +121,7 @@ router.put(
 //   checkObjectId('event_id'),
 //   checkOrg,
 //   checkEvent,
-//   removeEventParticipantRules(),
+//   addOrRemoveEventParticipantRules(),
 //   expValidate,
 //   removeEventParticipant
 // );
@@ -142,7 +141,7 @@ router.patch(
   checkOrg,
   checkEvent,
   checkUser,
-  orgEventParticipantRules(),
+  updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant
 );

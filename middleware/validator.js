@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const { check, validationResult } = require('express-validator');
 
 module.exports = {
@@ -145,13 +146,22 @@ module.exports = {
       check('links.*').escape().isURL()
     ];
   },
-  addEventParticipantRules: () => {
-    // TODO: implement me
+  addOrRemoveEventParticipantRules: () => {
+    return [
+      check('worker')
+        .escape()
+        .notEmpty()
+        .withMessage('Worker is required')
+        .custom(value => {
+          if (!mongoose.Types.ObjectId.isValid(value)) {
+            throw new Error('Invalid ObjectId');
+          }
+          // Indicates the success of this synchronous custom validator
+          return true;
+        })
+    ];
   },
-  removeEventParticipantRules: () => {
-    // TODO: implement me
-  },
-  orgEventParticipantRules: () => {
+  updateEventParticipantRules: () => {
     // FIXME:
     return [
       check('confirmedStatus')
