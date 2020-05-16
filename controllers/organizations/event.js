@@ -4,8 +4,12 @@ const { checkConfirmedParticipant } = require('../../utils/helpers');
 const { routeError } = require('../../utils/error');
 
 module.exports = {
-  getOrgEvents: () => {
-    /* TODO: implement me */
+  getOrgEvents: async (req, res, next) => {
+    const orgEvents = await Event.find({
+      organization: res.locals.org.id
+    }).catch(err => next(err));
+
+    res.json({ orgEvents });
   },
   getOrgEvent: () => {
     /* TODO: implement me */
