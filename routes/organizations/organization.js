@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const checkObjectId = require('../../middleware/checkObjectId');
 const {
   newOrgRules,
   updateOrgRules,
@@ -34,6 +35,7 @@ router.get('/', getPublicOrgs);
 router.get(
   '/:org_id',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   getOrg
 );
@@ -59,6 +61,7 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   updateOrgRules(),
   expValidate,
+  checkObjectId('org_id'),
   checkOrg,
   updateOrg
 );
@@ -73,6 +76,7 @@ router.put(
 router.delete(
   '/:org_id',
   passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
   checkOrg,
   deleteOrg
 );
