@@ -39,10 +39,10 @@ router.get(
 router.get(
   '/query',
   passport.authenticate('jwt', { session: false }),
-  orgEventLocationRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkOrg,
+  orgEventLocationRules(),
+  expValidate,
   getGoogleLocationsFromQuery
 );
 
@@ -56,10 +56,10 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  newOrgEventLocationRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkOrg,
+  newOrgEventLocationRules(),
+  expValidate,
   createOrgEventLocation
 );
 

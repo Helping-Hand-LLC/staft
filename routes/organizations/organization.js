@@ -59,10 +59,10 @@ router.post('/', newOrgRules(), expValidate, createOrg);
 router.put(
   '/:org_id',
   passport.authenticate('jwt', { session: false }),
-  updateOrgRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkOrg,
+  updateOrgRules(),
+  expValidate,
   updateOrg
 );
 

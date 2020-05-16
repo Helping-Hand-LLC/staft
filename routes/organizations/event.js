@@ -59,10 +59,10 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  orgEventRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkOrg,
+  orgEventRules(),
+  expValidate,
   createOrgEvent
 );
 
@@ -76,12 +76,12 @@ router.post(
 router.put(
   '/:event_id',
   passport.authenticate('jwt', { session: false }),
-  orgEventRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
   checkEvent,
+  orgEventRules(),
+  expValidate,
   updateOrgEvent
 );
 
@@ -95,13 +95,13 @@ router.put(
 router.patch(
   '/:event_id',
   passport.authenticate('jwt', { session: false }),
-  orgEventParticipantRules(),
-  expValidate,
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
   checkEvent,
   checkUser,
+  orgEventParticipantRules(),
+  expValidate,
   updateOrgEventParticipant
 );
 
