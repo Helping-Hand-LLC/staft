@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const moment = require('moment');
 const Event = require('../../models/Event');
 const { checkConfirmedParticipant } = require('../../utils/helpers');
@@ -15,7 +16,6 @@ module.exports = {
     res.json({ event: res.locals.event });
   },
   createOrgEvent: async (req, res) => {
-    // FIXME:
     const {
       isPublished,
       title,
@@ -24,9 +24,12 @@ module.exports = {
       endDateTime,
       isRepeatEvent,
       repeatOptions,
-      participants,
       links
     } = req.body;
+
+    // check location for valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(location))
+      return res.status(400).json(routeError('Invalid ObjectId'));
 
     // create new event
     const event = new Event({
@@ -39,14 +42,12 @@ module.exports = {
       endDateTime,
       isRepeatEvent,
       repeatOptions,
-      participants,
       links
     });
     await event.save();
     res.json({ event });
   },
   updateOrgEvent: async (req, res) => {
-    // FIXME:
     const {
       isPublished,
       title,
@@ -55,9 +56,12 @@ module.exports = {
       endDateTime,
       isRepeatEvent,
       repeatOptions,
-      participants,
       links
     } = req.body;
+
+    // check location for valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(location))
+      return res.status(400).json(routeError('Invalid ObjectId'));
 
     // check modification after startDateTime of event
     if (
@@ -93,31 +97,31 @@ module.exports = {
             'Warning (Unauthorized): You are not the creator of this event and therefore cannot modify it'
           )
         );
-    // warn about removing participants who have accepted confirmation
-    let violaton = false;
-    for (let i = 0; i < res.locals.event.participants.length; i++) {
-      // loop over original participants
-      // if any have accepted confirmation, check if they are still in the modified participants that were sent in req.body
-      // if not, set violation
+    // // warn about removing participants who have accepted confirmation
+    // let violaton = false;
+    // for (let i = 0; i < res.locals.event.participants.length; i++) {
+    //   // loop over original participants
+    //   // if any have accepted confirmation, check if they are still in the modified participants that were sent in req.body
+    //   // if not, set violation
 
-      if (
-        res.locals.event.participants[i].confirmedStatus === 'accepted' &&
-        !checkConfirmedParticipant(
-          res.locals.event.participants[i].worker,
-          participants
-        )
-      )
-        violaton = true;
-    }
+    //   if (
+    //     res.locals.event.participants[i].confirmedStatus === 'accepted' &&
+    //     !checkConfirmedParticipant(
+    //       res.locals.event.participants[i].worker,
+    //       participants
+    //     )
+    //   )
+    //     violaton = true;
+    // }
 
-    if (!req.header('Override-Confirmed-Participants') && violaton)
-      return res
-        .status(400)
-        .json(
-          routeError(
-            'Warning: Are you sure you wish to remove participants who are confirmed for this event?'
-          )
-        );
+    // if (!req.header('Override-Confirmed-Participants') && violaton)
+    //   return res
+    //     .status(400)
+    //     .json(
+    //       routeError(
+    //         'Warning: Are you sure you wish to remove participants who are confirmed for this event?'
+    //       )
+    //     );
 
     res.locals.event.isPublished = isPublished;
     res.locals.event.title = title;
@@ -126,7 +130,6 @@ module.exports = {
     res.locals.event.endDateTime = endDateTime;
     res.locals.event.isRepeatEvent = isRepeatEvent;
     res.locals.event.repeatOptions = repeatOptions;
-    res.locals.event.participants = participants;
     res.locals.event.links = links;
     await res.locals.event.save();
     res.json({ event: res.locals.event });

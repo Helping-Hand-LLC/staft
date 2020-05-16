@@ -123,7 +123,6 @@ module.exports = {
     ];
   },
   orgEventRules: () => {
-    // FIXME:
     return [
       check('isPublished').toBoolean(),
       check('title').escape(),
@@ -142,11 +141,6 @@ module.exports = {
         .optional()
         .isIn(['weeks', 'months', 'years']),
       check('repeatOptions.ends').toDate(), // null if not valid Date
-      check('participants').isArray(),
-      check('participants.confirmedStatus')
-        .escape()
-        .optional()
-        .isIn(['unconfirmed', 'accepted', 'rejected']),
       check('links').isArray().optional(),
       check('links.*').escape().isURL()
     ];

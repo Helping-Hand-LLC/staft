@@ -54,7 +54,7 @@ router.get(
 );
 
 /**
- * FIXME: POST /organizations/:org_id/events
+ * POST /organizations/:org_id/events
  *
  * @desc create a new organization event
  * @returns {JSON} newly created organization event
@@ -71,7 +71,7 @@ router.post(
 );
 
 /**
- * FIXME: PUT /organizations/:org_id/events/:event_id
+ * PUT /organizations/:org_id/events/:event_id
  *
  * @desc update organization event
  * @returns {JSON} newly updated organization event
@@ -96,36 +96,36 @@ router.put(
  * @returns {JSON} all event participants
  * @access private
  */
-router.post(
-  '/:event_id',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkObjectId('event_id'),
-  checkOrg,
-  checkEvent,
-  addEventParticipantRules(),
-  expValidate,
-  addEventParticipant
-);
+// router.post(
+//   '/:event_id',
+//   passport.authenticate('jwt', { session: false }),
+//   checkObjectId('org_id'),
+//   checkObjectId('event_id'),
+//   checkOrg,
+//   checkEvent,
+//   addEventParticipantRules(),
+//   expValidate,
+//   addEventParticipant
+// );
 
 /**
  * TODO: DELETE /organizations/:org_id/events/:event_id
  *
- * @desc update organization event
- * @returns {JSON} newly updated organization event
+ * @desc remove event participant
+ * @returns {JSON} success indicator
  * @access private
- */
-router.delete(
-  '/:event_id',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkObjectId('event_id'),
-  checkOrg,
-  checkEvent,
-  removeEventParticipantRules(),
-  expValidate,
-  removeEventParticipant
-);
+//  */
+// router.delete(
+//   '/:event_id',
+//   passport.authenticate('jwt', { session: false }),
+//   checkObjectId('org_id'),
+//   checkObjectId('event_id'),
+//   checkOrg,
+//   checkEvent,
+//   removeEventParticipantRules(),
+//   expValidate,
+//   removeEventParticipant
+// );
 
 /**
  * FIXME: PATCH /organizations/:org_id/events/:event_id
