@@ -123,6 +123,7 @@ module.exports = {
     ];
   },
   orgEventRules: () => {
+    // FIXME:
     return [
       check('isPublished').toBoolean(),
       check('title').escape(),
@@ -150,7 +151,14 @@ module.exports = {
       check('links.*').escape().isURL()
     ];
   },
+  addEventParticipantRules: () => {
+    // TODO: implement me
+  },
+  removeEventParticipantRules: () => {
+    // TODO: implement me
+  },
   orgEventParticipantRules: () => {
+    // FIXME:
     return [
       check('confirmedStatus')
         .escape()

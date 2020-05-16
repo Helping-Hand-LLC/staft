@@ -3,6 +3,8 @@ const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
+  addEventParticipantRules,
+  removeEventParticipantRules,
   orgEventParticipantRules,
   expValidate
 } = require('../../middleware/validator');
@@ -12,6 +14,8 @@ const {
   getOrgEvent,
   createOrgEvent,
   updateOrgEvent,
+  addEventParticipant,
+  removeEventParticipant,
   updateOrgEventParticipant,
   deleteOrgEvent
 } = require('../../controllers/organizations/event');
@@ -50,7 +54,7 @@ router.get(
 );
 
 /**
- * POST /organizations/:org_id/events
+ * FIXME: POST /organizations/:org_id/events
  *
  * @desc create a new organization event
  * @returns {JSON} newly created organization event
@@ -67,7 +71,7 @@ router.post(
 );
 
 /**
- * PUT /organizations/:org_id/events/:event_id
+ * FIXME: PUT /organizations/:org_id/events/:event_id
  *
  * @desc update organization event
  * @returns {JSON} newly updated organization event
@@ -86,7 +90,45 @@ router.put(
 );
 
 /**
- * PATCH /organizations/:org_id/events/:event_id
+ * TODO: POST /organizations/:org_id/events/:event_id
+ *
+ * @desc add new event participant
+ * @returns {JSON} all event participants
+ * @access private
+ */
+router.post(
+  '/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  addEventParticipantRules(),
+  expValidate,
+  addEventParticipant
+);
+
+/**
+ * TODO: DELETE /organizations/:org_id/events/:event_id
+ *
+ * @desc update organization event
+ * @returns {JSON} newly updated organization event
+ * @access private
+ */
+router.delete(
+  '/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  removeEventParticipantRules(),
+  expValidate,
+  removeEventParticipant
+);
+
+/**
+ * FIXME: PATCH /organizations/:org_id/events/:event_id
  *
  * @desc event participant confirms status, checks in, or checks out
  * @returns {JSON} modified participant information

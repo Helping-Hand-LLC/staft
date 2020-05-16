@@ -15,6 +15,7 @@ module.exports = {
     res.json({ event: res.locals.event });
   },
   createOrgEvent: async (req, res) => {
+    // FIXME:
     const {
       isPublished,
       title,
@@ -45,6 +46,7 @@ module.exports = {
     res.json({ event });
   },
   updateOrgEvent: async (req, res) => {
+    // FIXME:
     const {
       isPublished,
       title,
@@ -129,7 +131,14 @@ module.exports = {
     await res.locals.event.save();
     res.json({ event: res.locals.event });
   },
+  addEventParticipant: () => {
+    // TODO: implement me
+  },
+  removeEventParticipant: () => {
+    // TODO: implement me
+  },
   updateOrgEventParticipant: async (req, res) => {
+    // FIXME:
     const { confirmedStatus, checkedIn, checkedOut } = req.body;
 
     // find participant object of this user on this event
