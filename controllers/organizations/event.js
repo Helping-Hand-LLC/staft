@@ -53,7 +53,17 @@ module.exports = {
     } = req.body;
 
     // TODO: check modification after startDateTime of event
-    // TODO: check modification after endDateTime of event
+    // if (Date.now() >= startDateTime && Date.now() <= endDateTime)
+    //   return res
+    //     .status(400)
+    //     .json(
+    //       routeError('You cannot modify an event that has already started')
+    //     );
+    // // TODO: check modification after endDateTime of event
+    // if (Date.now() > endDateTime)
+    //   return res
+    //     .status(400)
+    //     .json(routeError('You cannot modify an event that has already ended'));
 
     // warn about modification of published event
     if (!req.header('Override-isPublished') && res.locals.event.isPublished)
