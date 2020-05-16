@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Event = require('../../models/Event');
 const { checkConfirmedParticipant } = require('../../utils/helpers');
 const { routeError } = require('../../utils/error');
@@ -52,18 +53,21 @@ module.exports = {
       links
     } = req.body;
 
-    // TODO: check modification after startDateTime of event
-    // if (Date.now() >= startDateTime && Date.now() <= endDateTime)
-    //   return res
-    //     .status(400)
-    //     .json(
-    //       routeError('You cannot modify an event that has already started')
-    //     );
-    // // TODO: check modification after endDateTime of event
-    // if (Date.now() > endDateTime)
-    //   return res
-    //     .status(400)
-    //     .json(routeError('You cannot modify an event that has already ended'));
+    // check modification after startDateTime of event
+    if (
+      moment().isSameOrAfter(startDateTime) &&
+      moment().isSameOrBefore(endDateTime)
+    )
+      return res
+        .status(400)
+        .json(
+          routeError('You cannot modify an event that has already started')
+        );
+    // check modification after endDateTime of event
+    if (moment().isAfter(endDateTime))
+      return res
+        .status(400)
+        .json(routeError('You cannot modify an event that has already ended'));
 
     // warn about modification of published event
     if (!req.header('Override-isPublished') && res.locals.event.isPublished)
