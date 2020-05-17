@@ -71,6 +71,9 @@ module.exports = {
       .select('uid')
       .catch(err => next(err));
 
+    if (!publicOrgs.length)
+      res.status(404).json(routeError('No public organizations found'));
+
     return res.json({ publicOrgs });
   },
   updateOrg: async (req, res, next) => {

@@ -7,6 +7,9 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
+    if (!orgUsers.length)
+      res.status(404).json(routeError('No users found for this organization'));
+
     return res.json({ orgUsers });
   },
   joinPublicOrg: async (req, res, next) => {
@@ -58,7 +61,7 @@ module.exports = {
         user: { $ne: req.user.id }
       }).catch(err => next(err));
 
-      if (orgUsers.length <= 0)
+      if (!orgUsers.length)
         return res
           .status(404)
           .json(
