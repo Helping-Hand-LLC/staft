@@ -45,8 +45,6 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-  // TODO: supporting documents: driver's license, w9, w4, i9
-  // TODO: extra organization fields
 });
 
 const Profile = mongoose.model('Profile', profileSchema);

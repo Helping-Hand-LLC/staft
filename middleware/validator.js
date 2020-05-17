@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+const moment = require('moment');
 const { check, validationResult } = require('express-validator');
 
 module.exports = {
@@ -31,7 +33,6 @@ module.exports = {
           if (value !== req.body.password) {
             throw new Error('Passwords do not match');
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         })
     ];
@@ -49,7 +50,6 @@ module.exports = {
               'uid cannot contain whitespace (must be all one word)'
             );
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         }),
       check('isPrivate').toBoolean(),
@@ -72,7 +72,6 @@ module.exports = {
               'uid cannot contain whitespace (must be all one word)'
             );
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         }),
       check('isPrivate').toBoolean(),
@@ -127,11 +126,26 @@ module.exports = {
       check('isPublished').toBoolean(),
       check('title').escape(),
       check('location').notEmpty().withMessage('Location is required'),
-      // TODO: ensure start and end are not equal or overlapping
-      check('startDateTime').toDate(), // null if not valid Date
-      check('endDateTime').toDate(), // null if not valid Date
+      // ensure start and end are not equal or overlapping
+      check('startDateTime')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrAfter(req.body.endDateTime)) {
+            throw new Error('Start date cannot be equal or after end date');
+          }
+
+          return true;
+        }), // null if not valid Date
+      check('endDateTime')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrBefore(req.body.startDateTime)) {
+            throw new Error('End date cannot be equal or before start date');
+          }
+
+          return true;
+        }), // null if not valid Date
       check('isRepeatEvent').toBoolean(),
-      // TODO: ensure repeatOptions.ends is not equal or overlapping to original event date
       check('repeatOptions.daysOfWeek.*')
         .escape()
         .isIn(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']),
@@ -140,17 +154,37 @@ module.exports = {
         .escape()
         .optional()
         .isIn(['weeks', 'months', 'years']),
-      check('repeatOptions.ends').toDate(), // null if not valid Date
-      check('participants').isArray(),
-      check('participants.confirmedStatus')
-        .escape()
-        .optional()
-        .isIn(['unconfirmed', 'accepted', 'rejected']),
+      // ensure repeatOptions.ends is not equal or overlapping to original event date
+      check('repeatOptions.ends')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrBefore(req.body.startDateTime)) {
+            throw new Error(
+              'Repeat end date cannot be equal or before start date'
+            );
+          }
+
+          return true;
+        }), // null if not valid Date
       check('links').isArray().optional(),
       check('links.*').escape().isURL()
     ];
   },
-  orgEventParticipantRules: () => {
+  addOrRemoveEventParticipantRules: () => {
+    return [
+      check('worker')
+        .escape()
+        .notEmpty()
+        .withMessage('Worker is required')
+        .custom(value => {
+          if (!mongoose.Types.ObjectId.isValid(value)) {
+            throw new Error('Invalid ObjectId');
+          }
+          return true;
+        })
+    ];
+  },
+  updateEventParticipantRules: () => {
     return [
       check('confirmedStatus')
         .escape()

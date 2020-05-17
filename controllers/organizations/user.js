@@ -7,10 +7,8 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
-    if (!orgUsers)
-      return res
-        .status(404)
-        .json(routeError('No users found for this organization'));
+    if (!orgUsers.length)
+      res.status(404).json(routeError('No users found for this organization'));
 
     return res.json({ orgUsers });
   },
@@ -63,7 +61,7 @@ module.exports = {
         user: { $ne: req.user.id }
       }).catch(err => next(err));
 
-      if (!orgUsers)
+      if (!orgUsers.length)
         return res
           .status(404)
           .json(

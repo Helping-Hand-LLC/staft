@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventLocationRules,
@@ -21,13 +20,7 @@ const router = express.Router({ mergeParams: true });
  * @returns {JSON} this organization's stored event locations
  * @access private
  */
-router.get(
-  '/stored',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkOrg,
-  getOrgEventLocations
-);
+router.get('/stored', checkObjectId('org_id'), checkOrg, getOrgEventLocations);
 
 /**
  * GET /organizations/:org_id/events/locations/query
@@ -38,7 +31,6 @@ router.get(
  */
 router.get(
   '/query',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkOrg,
   orgEventLocationRules(),
@@ -55,7 +47,6 @@ router.get(
  */
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkOrg,
   newOrgEventLocationRules(),

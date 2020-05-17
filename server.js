@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const connectdb = require('./utils/db');
+const connectdb = require('./middleware/db');
 const { port } = require('./config/keys');
 
 const app = express();

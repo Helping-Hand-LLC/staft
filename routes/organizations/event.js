@@ -1,17 +1,24 @@
 const express = require('express');
-const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
-  orgEventParticipantRules,
+  addOrRemoveEventParticipantRules,
+  updateEventParticipantRules,
   expValidate
 } = require('../../middleware/validator');
-const { checkUser, checkOrg, checkEvent } = require('../../middleware/models');
+const {
+  checkUser,
+  checkProfile,
+  checkOrg,
+  checkEvent
+} = require('../../middleware/models');
 const {
   getOrgEvents,
   getOrgEvent,
   createOrgEvent,
   updateOrgEvent,
+  addEventParticipant,
+  removeEventParticipant,
   updateOrgEventParticipant,
   deleteOrgEvent
 } = require('../../controllers/organizations/event');
@@ -24,13 +31,7 @@ const router = express.Router({ mergeParams: true });
  * @returns {JSON} this organization's events
  * @access private
  */
-router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkOrg,
-  getOrgEvents
-);
+router.get('/', checkObjectId('org_id'), checkOrg, getOrgEvents);
 
 /**
  * GET /organizations/:org_id/events/:event_id
@@ -41,7 +42,6 @@ router.get(
  */
 router.get(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -58,7 +58,6 @@ router.get(
  */
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkOrg,
   orgEventRules(),
@@ -75,7 +74,6 @@ router.post(
  */
 router.put(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -83,6 +81,42 @@ router.put(
   orgEventRules(),
   expValidate,
   updateOrgEvent
+);
+
+/**
+ * POST /organizations/:org_id/events/:event_id
+ *
+ * @desc add new event participant
+ * @returns {JSON} all event participants
+ * @access private
+ */
+router.post(
+  '/:event_id',
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  addOrRemoveEventParticipantRules(),
+  expValidate,
+  addEventParticipant
+);
+
+/**
+ * DELETE /organizations/:org_id/events/:event_id
+ *
+ * @desc remove event participant
+ * @returns {JSON} success indicator
+ * @access private
+//  */
+router.delete(
+  '/:event_id',
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  addOrRemoveEventParticipantRules(),
+  expValidate,
+  removeEventParticipant
 );
 
 /**
@@ -94,13 +128,13 @@ router.put(
  */
 router.patch(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
   checkEvent,
   checkUser,
-  orgEventParticipantRules(),
+  checkProfile,
+  updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant
 );
@@ -114,7 +148,6 @@ router.patch(
  */
 router.delete(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
