@@ -7,7 +7,12 @@ const {
   updateEventParticipantRules,
   expValidate
 } = require('../../middleware/validator');
-const { checkUser, checkOrg, checkEvent } = require('../../middleware/models');
+const {
+  checkUser,
+  checkProfile,
+  checkOrg,
+  checkEvent
+} = require('../../middleware/models');
 const {
   getOrgEvents,
   getOrgEvent,
@@ -127,7 +132,7 @@ router.delete(
 );
 
 /**
- * FIXME: PATCH /organizations/:org_id/events/:event_id
+ * PATCH /organizations/:org_id/events/:event_id
  *
  * @desc event participant confirms status, checks in, or checks out
  * @returns {JSON} modified participant information
@@ -141,6 +146,7 @@ router.patch(
   checkOrg,
   checkEvent,
   checkUser,
+  checkProfile,
   updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant

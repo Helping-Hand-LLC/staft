@@ -212,32 +212,29 @@ module.exports = {
     res.json({ success: true });
   },
   updateOrgEventParticipant: async (req, res) => {
-    // FIXME:
+    // check worker belongs to this organization
+    if (res.locals.profile.organization != res.locals.org.id)
+      return res
+        .status(400)
+        .json(routeError('You do not belong to this organization'));
+
     const { confirmedStatus, checkedIn, checkedOut } = req.body;
 
     // find participant object of this user on this event
-    let pIndex;
-    for (let i = 0; i < res.locals.event.participants.length; i++) {
-      if (res.locals.event.participants[i].worker == req.user.id) {
-        pIndex = i;
-        break;
-      }
-    }
+    const participant = res.locals.event.participants.find(
+      el => el.worker == req.user.id
+    );
 
-    if (pIndex === undefined)
+    if (!participant)
       return res
         .status(400)
         .json(routeError('You are not a participant of this event'));
 
-    const updatedParticipant = {
-      worker: req.user.id,
-      confirmedStatus,
-      checkedIn,
-      checkedOut
-    };
-    res.locals.event.participants.set(pIndex, updatedParticipant);
+    participant.confirmedStatus = confirmedStatus;
+    participant.checkedIn = checkedIn;
+    participant.checkedOut = checkedOut;
     await res.locals.event.save();
-    res.json({ participant: updatedParticipant });
+    res.json({ participant });
   },
   deleteOrgEvent: async (req, res, next) => {
     await Event.findOneAndDelete({ _id: res.locals.event.id }).catch(err =>

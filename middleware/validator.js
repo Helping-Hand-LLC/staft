@@ -162,7 +162,6 @@ module.exports = {
     ];
   },
   updateEventParticipantRules: () => {
-    // FIXME:
     return [
       check('confirmedStatus')
         .escape()
