@@ -86,10 +86,6 @@ module.exports = {
         .isEmail()
         .normalizeEmail()
         .withMessage('Please enter valid emails for the manager users'),
-      check('clientEmails.*')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please enter valid emails for the client users'),
       check('workerEmails.*')
         .isEmail()
         .normalizeEmail()
