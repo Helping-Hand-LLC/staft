@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
@@ -32,13 +31,7 @@ const router = express.Router({ mergeParams: true });
  * @returns {JSON} this organization's events
  * @access private
  */
-router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkOrg,
-  getOrgEvents
-);
+router.get('/', checkObjectId('org_id'), checkOrg, getOrgEvents);
 
 /**
  * GET /organizations/:org_id/events/:event_id
@@ -49,7 +42,6 @@ router.get(
  */
 router.get(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -66,7 +58,6 @@ router.get(
  */
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkOrg,
   orgEventRules(),
@@ -83,7 +74,6 @@ router.post(
  */
 router.put(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -102,7 +92,6 @@ router.put(
  */
 router.post(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -121,7 +110,6 @@ router.post(
 //  */
 router.delete(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -140,7 +128,6 @@ router.delete(
  */
 router.patch(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,
@@ -161,7 +148,6 @@ router.patch(
  */
 router.delete(
   '/:event_id',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   checkOrg,

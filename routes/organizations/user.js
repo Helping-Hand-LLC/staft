@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const checkObjectId = require('../../middleware/checkObjectId');
 const { checkProfile, checkOrg } = require('../../middleware/models');
 const {
@@ -16,13 +15,7 @@ const router = express.Router({ mergeParams: true });
  * @returns {JSON} this organization's user's public information
  * @access private
  */
-router.get(
-  '/',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkOrg,
-  getOrgUsers
-);
+router.get('/', checkObjectId('org_id'), checkOrg, getOrgUsers);
 
 /**
  * GET /organizations/:org_id/users/join/me
@@ -31,13 +24,7 @@ router.get(
  * @returns {JSON} success indicator
  * @access private
  */
-router.get(
-  '/join/me',
-  passport.authenticate('jwt', { session: false }),
-  checkObjectId('org_id'),
-  checkOrg,
-  joinPublicOrg
-);
+router.get('/join/me', checkObjectId('org_id'), checkOrg, joinPublicOrg);
 
 /**
  * PATCH /organizations/:org_id/users/leave/me
@@ -48,7 +35,6 @@ router.get(
  */
 router.patch(
   '/leave/me',
-  passport.authenticate('jwt', { session: false }),
   checkObjectId('org_id'),
   checkOrg,
   checkProfile,

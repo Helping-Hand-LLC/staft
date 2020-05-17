@@ -53,8 +53,6 @@ module.exports = {
     })(req, res, next);
   },
   logout: (req, res) => {
-    // TODO: delete the stored jwt token client-side
-
     // remove req.user
     req.logout();
     res.json({ success: true });

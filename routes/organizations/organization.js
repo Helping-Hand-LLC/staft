@@ -82,9 +82,17 @@ router.delete(
 );
 
 //----- USERS -----
-router.use('/:org_id/users', require('./user'));
+router.use(
+  '/:org_id/users',
+  passport.authenticate('jwt', { session: false }),
+  require('./user')
+);
 
 //----- EVENTS -----
-router.use('/:org_id/events', require('./event'));
+router.use(
+  '/:org_id/events',
+  passport.authenticate('jwt', { session: false }),
+  require('./event')
+);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Organization = require('../../models/Organization');
+const Event = require('../../models/Event');
 const { routeError } = require('../../utils/error');
 
 module.exports = {
@@ -70,9 +71,6 @@ module.exports = {
       .select('uid')
       .catch(err => next(err));
 
-    if (!publicOrgs)
-      return res.status(404).json(routeError('No public organizations'));
-
     return res.json({ publicOrgs });
   },
   updateOrg: async (req, res, next) => {
@@ -86,7 +84,7 @@ module.exports = {
     } = req.body;
 
     // ensure private org before setting workerEmails
-    if (!isPrivate)
+    if (!isPrivate && workerEmails.length > 0)
       res
         .status(400)
         .json(
@@ -138,7 +136,6 @@ module.exports = {
           );
 
       // add isAdmin and organization to admin
-      await result.save();
       adminProfile.isAdmin = true;
       adminProfile.organization = res.locals.org.id;
       await adminProfile.save();
@@ -187,7 +184,6 @@ module.exports = {
           );
 
       // add isManager and organization to manager
-      await result.save();
       managerProfile.isManager = true;
       managerProfile.organization = res.locals.org.id;
       await managerProfile.save();
@@ -233,52 +229,56 @@ module.exports = {
           );
 
       // add organization to client
+      result.type = 'client';
+      await result.save();
       clientProfile.organization = res.locals.org.id;
       await clientProfile.save();
     }
 
-    // validate workerEmails
-    for (let i = 0; i < workerEmails.length; i++) {
-      const worker = workerEmails[i];
-      const result = await User.findOne({ email: worker }).catch(err =>
-        next(err)
-      );
-      // ensure worker is already a registered user
-      if (!result)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Please register all worker emails before assigning to an organization'
-            )
-          );
+    if (workerEmails.length > 0) {
+      // validate workerEmails
+      for (let i = 0; i < workerEmails.length; i++) {
+        const worker = workerEmails[i];
+        const result = await User.findOne({ email: worker }).catch(err =>
+          next(err)
+        );
+        // ensure worker is already a registered user
+        if (!result)
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'Please register all worker emails before assigning to an organization'
+              )
+            );
 
-      // ensure worker has completed their profile
-      const workerProfile = await Profile.findOne({
-        user: result.id
-      }).catch(err => next(err));
-      if (!workerProfile)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'All workers must complete their profile before being assigned to an organization'
-            )
-          );
+        // ensure worker has completed their profile
+        const workerProfile = await Profile.findOne({
+          user: result.id
+        }).catch(err => next(err));
+        if (!workerProfile)
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'All workers must complete their profile before being assigned to an organization'
+              )
+            );
 
-      // ensure worker is not already assigned to another organization
-      if (workerProfile.organization != req.params.org_id)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Workers cannot be already assigned to another organization'
-            )
-          );
+        // ensure worker is not already assigned to another organization
+        if (workerProfile.organization != req.params.org_id)
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'Workers cannot be already assigned to another organization'
+              )
+            );
 
-      // add organization to worker
-      workerProfile.organization = res.locals.org.id;
-      await workerProfile.save();
+        // add organization to worker
+        workerProfile.organization = res.locals.org.id;
+        await workerProfile.save();
+      }
     }
 
     // existing values should be re-sent so we don't need to check for null
@@ -294,7 +294,7 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
-    if (orgUsers) {
+    if (orgUsers.length > 0) {
       for (let i = 0; i < orgUsers.length; i++) {
         orgUsers[i].isAdmin = false;
         orgUsers[i].isManager = false;
@@ -303,7 +303,10 @@ module.exports = {
       }
     }
 
-    // TODO: delete all org events
+    // delete all org events
+    Event.deleteMany({ organization: res.locals.org.id }).catch(err =>
+      next(err)
+    );
 
     // remove org
     await Organization.findOneAndDelete({ _id: res.locals.org.id }).catch(err =>

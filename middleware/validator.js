@@ -33,7 +33,6 @@ module.exports = {
           if (value !== req.body.password) {
             throw new Error('Passwords do not match');
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         })
     ];
@@ -51,7 +50,6 @@ module.exports = {
               'uid cannot contain whitespace (must be all one word)'
             );
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         }),
       check('isPrivate').toBoolean(),
@@ -74,7 +72,6 @@ module.exports = {
               'uid cannot contain whitespace (must be all one word)'
             );
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         }),
       check('isPrivate').toBoolean(),
@@ -137,7 +134,6 @@ module.exports = {
             throw new Error('Start date cannot be equal or after end date');
           }
 
-          // Indicates the success of this synchronous custom validator
           return true;
         }), // null if not valid Date
       check('endDateTime')
@@ -147,7 +143,6 @@ module.exports = {
             throw new Error('End date cannot be equal or before start date');
           }
 
-          // Indicates the success of this synchronous custom validator
           return true;
         }), // null if not valid Date
       check('isRepeatEvent').toBoolean(),
@@ -169,7 +164,6 @@ module.exports = {
             );
           }
 
-          // Indicates the success of this synchronous custom validator
           return true;
         }), // null if not valid Date
       check('links').isArray().optional(),
@@ -186,7 +180,6 @@ module.exports = {
           if (!mongoose.Types.ObjectId.isValid(value)) {
             throw new Error('Invalid ObjectId');
           }
-          // Indicates the success of this synchronous custom validator
           return true;
         })
     ];
