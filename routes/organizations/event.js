@@ -108,23 +108,23 @@ router.post(
 );
 
 /**
- * TODO: DELETE /organizations/:org_id/events/:event_id
+ * DELETE /organizations/:org_id/events/:event_id
  *
  * @desc remove event participant
  * @returns {JSON} success indicator
  * @access private
 //  */
-// router.delete(
-//   '/:event_id',
-//   passport.authenticate('jwt', { session: false }),
-//   checkObjectId('org_id'),
-//   checkObjectId('event_id'),
-//   checkOrg,
-//   checkEvent,
-//   addOrRemoveEventParticipantRules(),
-//   expValidate,
-//   removeEventParticipant
-// );
+router.delete(
+  '/:event_id',
+  passport.authenticate('jwt', { session: false }),
+  checkObjectId('org_id'),
+  checkObjectId('event_id'),
+  checkOrg,
+  checkEvent,
+  addOrRemoveEventParticipantRules(),
+  expValidate,
+  removeEventParticipant
+);
 
 /**
  * FIXME: PATCH /organizations/:org_id/events/:event_id
