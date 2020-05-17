@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 const { check, validationResult } = require('express-validator');
 
 module.exports = {
@@ -128,11 +129,28 @@ module.exports = {
       check('isPublished').toBoolean(),
       check('title').escape(),
       check('location').notEmpty().withMessage('Location is required'),
-      // TODO: ensure start and end are not equal or overlapping
-      check('startDateTime').toDate(), // null if not valid Date
-      check('endDateTime').toDate(), // null if not valid Date
+      // ensure start and end are not equal or overlapping
+      check('startDateTime')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrAfter(req.body.endDateTime)) {
+            throw new Error('Start date cannot be equal or after end date');
+          }
+
+          // Indicates the success of this synchronous custom validator
+          return true;
+        }), // null if not valid Date
+      check('endDateTime')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrBefore(req.body.startDateTime)) {
+            throw new Error('End date cannot be equal or before start date');
+          }
+
+          // Indicates the success of this synchronous custom validator
+          return true;
+        }), // null if not valid Date
       check('isRepeatEvent').toBoolean(),
-      // TODO: ensure repeatOptions.ends is not equal or overlapping to original event date
       check('repeatOptions.daysOfWeek.*')
         .escape()
         .isIn(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']),
@@ -141,7 +159,19 @@ module.exports = {
         .escape()
         .optional()
         .isIn(['weeks', 'months', 'years']),
-      check('repeatOptions.ends').toDate(), // null if not valid Date
+      // ensure repeatOptions.ends is not equal or overlapping to original event date
+      check('repeatOptions.ends')
+        .toDate()
+        .custom((value, { req }) => {
+          if (value && moment(value).isSameOrBefore(req.body.startDateTime)) {
+            throw new Error(
+              'Repeat end date cannot be equal or before start date'
+            );
+          }
+
+          // Indicates the success of this synchronous custom validator
+          return true;
+        }), // null if not valid Date
       check('links').isArray().optional(),
       check('links.*').escape().isURL()
     ];
