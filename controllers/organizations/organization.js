@@ -82,7 +82,6 @@ module.exports = {
       isPrivate,
       adminEmails,
       managerEmails,
-      clientEmails,
       workerEmails
     } = req.body;
 
@@ -190,52 +189,6 @@ module.exports = {
       managerProfile.isManager = true;
       managerProfile.organization = res.locals.org.id;
       await managerProfile.save();
-    }
-
-    // validate clients
-    for (let i = 0; i < clientEmails.length; i++) {
-      const client = clientEmails[i];
-      const result = await User.findOne({ email: client }).catch(err =>
-        next(err)
-      );
-      // ensure client is already a registered user
-      if (!result)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Please register all client emails before assigning to an organization'
-            )
-          );
-
-      // ensure client has completed their profile
-      const clientProfile = await Profile.findOne({
-        user: result.id
-      }).catch(err => next(err));
-      if (!clientProfile)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'All clients must complete their profile before being assigned to an organization'
-            )
-          );
-
-      // ensure client is not already assigned to another organization
-      if (clientProfile.organization != req.params.org_id)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Clients cannot be already assigned to another organization'
-            )
-          );
-
-      // add organization to client
-      result.type = 'client';
-      await result.save();
-      clientProfile.organization = res.locals.org.id;
-      await clientProfile.save();
     }
 
     if (workerEmails.length > 0) {
