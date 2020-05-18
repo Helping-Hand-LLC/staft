@@ -7,7 +7,6 @@ const {
   expValidate
 } = require('../../middleware/validator');
 const {
-  checkUser,
   checkProfile,
   checkOrg,
   checkEvent
@@ -132,7 +131,6 @@ router.patch(
   checkObjectId('event_id'),
   checkOrg,
   checkEvent,
-  checkUser,
   checkProfile,
   updateEventParticipantRules(),
   expValidate,

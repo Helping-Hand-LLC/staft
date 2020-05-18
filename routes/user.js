@@ -1,6 +1,6 @@
 const express = require('express');
 const { newProfileRules, expValidate } = require('../middleware/validator');
-const { checkUser, checkProfile } = require('../middleware/models');
+const { checkProfile } = require('../middleware/models');
 const {
   getUser,
   getUserProfile,
@@ -16,7 +16,7 @@ const router = express.Router();
  * @returns {JSON} user type, email, password, and date
  * @access private
  */
-router.get('/me', checkUser, getUser);
+router.get('/me', getUser);
 
 /**
  * GET /user/profile/me
