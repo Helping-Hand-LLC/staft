@@ -21,7 +21,7 @@ passport.use(
       if (!user) return done(null, false, routeError('Invalid credentials'));
 
       // compare hashed password
-      const isMatch = bcrypt
+      const isMatch = await bcrypt
         .compare(password, user.password)
         .catch(err => done(err));
 

@@ -4,7 +4,7 @@ const Profile = require('../models/Profile');
 module.exports = {
   getUser: (req, res) => res.json({ user: res.locals.user }),
   getUserProfile: async (req, res) => {
-    const result = res.locals.profile.populate('user', ['type']);
+    const result = res.locals.profile.populate('user', ['type', 'email']);
     return res.json({ result });
   },
   createOrUpdateProfile: async (req, res, next) => {
@@ -12,9 +12,7 @@ module.exports = {
     const { name, address, phone, birthday, gender, ssn } = req.body;
 
     // set organization to null if not submitted
-    if (!organization) {
-      organization = null;
-    }
+    if (!organization) organization = null;
 
     // Using upsert option (creates new doc if no match is found)
     let profile = await Profile.findOneAndUpdate(

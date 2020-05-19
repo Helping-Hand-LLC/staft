@@ -86,19 +86,6 @@ module.exports = {
         .status(400)
         .json(routeError('Warning: You are modifying a published event'));
 
-    // check createdBy before modification
-    if (
-      !req.header('Override-createdBy') &&
-      res.locals.event.createdBy !== req.user.id
-    )
-      return res
-        .status(401)
-        .json(
-          routeError(
-            'Warning (Unauthorized): You are not the creator of this event and therefore cannot modify it'
-          )
-        );
-
     res.locals.event.isPublished = isPublished;
     res.locals.event.title = title;
     res.locals.event.location = location;
@@ -212,12 +199,6 @@ module.exports = {
     res.json({ success: true });
   },
   updateOrgEventParticipant: async (req, res) => {
-    // check worker belongs to this organization
-    if (res.locals.profile.organization != res.locals.org.id)
-      return res
-        .status(400)
-        .json(routeError('You do not belong to this organization'));
-
     const { confirmedStatus, checkedIn, checkedOut } = req.body;
 
     // find participant object of this user on this event

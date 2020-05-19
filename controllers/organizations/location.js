@@ -10,6 +10,10 @@ module.exports = {
     const locations = await Location.find({
       organization: res.locals.org.id
     }).catch(err => next(err));
+
+    if (!locations.length)
+      return res.status(404).json(routeError('No locations found'));
+
     res.json({ locations });
   },
   getGoogleLocationsFromQuery: async (req, res, next) => {

@@ -1,9 +1,20 @@
+const User = require('../models/User');
 const Profile = require('../models/Profile');
 const Organization = require('../models/Organization');
 const Event = require('../models/Event');
 const { routeError } = require('../utils/error');
 
 module.exports = {
+  checkUser: async (req, res, next) => {
+    const user = await User.findById(req.user.id)
+      .select('-password')
+      .catch(err => next(err));
+
+    if (!user) return res.status(404).json(routeError('User does not exist'));
+
+    res.locals.user = user;
+    next();
+  },
   checkProfile: async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.user.id }).catch(err =>
       next(err)

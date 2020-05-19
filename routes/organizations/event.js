@@ -1,6 +1,10 @@
 const express = require('express');
 const passport = require('passport');
-const { isManager } = require('../../middleware/access');
+const {
+  isManager,
+  managerIsEventCreator,
+  isInOrg
+} = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
@@ -108,7 +112,7 @@ router.put(
   checkOrg,
   checkEvent,
   isManager,
-  // TODO: middleware checking manager created this event (or override with header)
+  managerIsEventCreator,
   orgEventRules(),
   expValidate,
   updateOrgEvent
@@ -129,7 +133,7 @@ router.post(
   checkOrg,
   checkEvent,
   isManager,
-  // TODO: middleware checking manager created this event (or override with header)
+  managerIsEventCreator,
   addOrRemoveEventParticipantRules(),
   expValidate,
   addEventParticipant
@@ -150,7 +154,7 @@ router.delete(
   checkOrg,
   checkEvent,
   isManager,
-  // TODO: middleware checking manager created this event (or override with header)
+  managerIsEventCreator,
   addOrRemoveEventParticipantRules(),
   expValidate,
   removeEventParticipant
@@ -171,7 +175,7 @@ router.patch(
   checkProfile,
   checkOrg,
   checkEvent,
-  // TODO: middleware checking user is part of this org
+  isInOrg,
   updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant
@@ -192,7 +196,7 @@ router.delete(
   checkOrg,
   checkEvent,
   isManager,
-  // TODO: warn about manager deleting event that they didn't create (override flag)
+  managerIsEventCreator,
   deleteOrgEvent
 );
 

@@ -5,6 +5,16 @@ const Event = require('../../models/Event');
 const { routeError } = require('../../utils/error');
 
 module.exports = {
+  getPublicOrgs: async (req, res, next) => {
+    const publicOrgs = await Organization.find({ isPrivate: false })
+      .select('uid')
+      .catch(err => next(err));
+
+    if (!publicOrgs.length)
+      res.status(404).json(routeError('No public organizations found'));
+
+    return res.json({ publicOrgs });
+  },
   getOrg: (req, res) => res.json({ org: res.locals.org }),
   createOrg: async (req, res, next) => {
     const { uid, isPrivate, adminEmail } = req.body;
@@ -59,22 +69,13 @@ module.exports = {
     org = new Organization({ uid, isPrivate });
     await org.save();
 
-    // set isAdmin and organization of admin user profile
+    // set isAdmin, isManager, and organization of admin user profile
     adminProfile.isAdmin = true;
+    adminProfile.isManager = true;
     adminProfile.organization = org.id;
     await adminProfile.save();
 
     return res.json({ org });
-  },
-  getPublicOrgs: async (req, res, next) => {
-    const publicOrgs = await Organization.find({ isPrivate: false })
-      .select('uid')
-      .catch(err => next(err));
-
-    if (!publicOrgs.length)
-      res.status(404).json(routeError('No public organizations found'));
-
-    return res.json({ publicOrgs });
   },
   updateOrg: async (req, res, next) => {
     const {
@@ -87,7 +88,7 @@ module.exports = {
 
     // ensure private org before setting workerEmails
     if (!isPrivate && workerEmails.length > 0)
-      res
+      return res
         .status(400)
         .json(
           routeError(
@@ -98,11 +99,11 @@ module.exports = {
     // validate admins
     for (let i = 0; i < adminEmails.length; i++) {
       const admin = adminEmails[i];
-      const result = await User.findOne({ email: admin }).catch(err =>
+      const existingAdmin = await User.findOne({ email: admin }).catch(err =>
         next(err)
       );
       // ensure admin is already a registered user
-      if (!result)
+      if (!existingAdmin)
         return res
           .status(400)
           .json(
@@ -113,7 +114,7 @@ module.exports = {
 
       // ensure admin has completed their profile
       const adminProfile = await Profile.findOne({
-        user: result.id
+        user: existingAdmin.id
       }).catch(err => next(err));
       if (!adminProfile)
         return res
@@ -137,8 +138,9 @@ module.exports = {
             )
           );
 
-      // add isAdmin and organization to admin
+      // add isAdmin, isManager, and organization to admin
       adminProfile.isAdmin = true;
+      adminProfile.isManager = true;
       adminProfile.organization = res.locals.org.id;
       await adminProfile.save();
     }
@@ -146,11 +148,11 @@ module.exports = {
     // validate managers
     for (let i = 0; i < managerEmails.length; i++) {
       const manager = managerEmails[i];
-      const result = await User.findOne({ email: manager }).catch(err =>
-        next(err)
-      );
+      const existingManager = await User.findOne({
+        email: manager
+      }).catch(err => next(err));
       // ensure manager is already a registered user
-      if (!result)
+      if (!existingManager)
         return res
           .status(400)
           .json(
@@ -161,7 +163,7 @@ module.exports = {
 
       // ensure manager has completed their profile
       const managerProfile = await Profile.findOne({
-        user: result.id
+        user: existingManager.id
       }).catch(err => next(err));
       if (!managerProfile)
         return res
@@ -186,6 +188,7 @@ module.exports = {
           );
 
       // add isManager and organization to manager
+      managerProfile.isAdmin = false;
       managerProfile.isManager = true;
       managerProfile.organization = res.locals.org.id;
       await managerProfile.save();
@@ -195,11 +198,11 @@ module.exports = {
       // validate workerEmails
       for (let i = 0; i < workerEmails.length; i++) {
         const worker = workerEmails[i];
-        const result = await User.findOne({ email: worker }).catch(err =>
-          next(err)
-        );
+        const existingWorker = await User.findOne({
+          email: worker
+        }).catch(err => next(err));
         // ensure worker is already a registered user
-        if (!result)
+        if (!existingWorker)
           return res
             .status(400)
             .json(
@@ -210,7 +213,7 @@ module.exports = {
 
         // ensure worker has completed their profile
         const workerProfile = await Profile.findOne({
-          user: result.id
+          user: existingWorker.id
         }).catch(err => next(err));
         if (!workerProfile)
           return res
@@ -232,6 +235,8 @@ module.exports = {
             );
 
         // add organization to worker
+        workerProfile.isAdmin = false;
+        workerProfile.isManager = false;
         workerProfile.organization = res.locals.org.id;
         await workerProfile.save();
       }

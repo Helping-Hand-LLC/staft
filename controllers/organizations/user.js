@@ -46,6 +46,8 @@ module.exports = {
           )
         );
 
+    userProfile.isAdmin = false;
+    userProfile.isManager = false;
     userProfile.organization = res.locals.org.id;
     await userProfile.save();
     return res.json({ success: true });

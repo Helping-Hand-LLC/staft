@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { isAdmin } = require('../../middleware/access');
+const { isAdmin, isInOrg } = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   newOrgRules,
@@ -42,7 +42,7 @@ router.get(
   checkObjectId('org_id'),
   passport.authenticate('jwt', { session: false }),
   checkOrg,
-  // TODO: check user is part of this org
+  isInOrg,
   getOrg
 );
 
