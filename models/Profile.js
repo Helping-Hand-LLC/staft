@@ -1,5 +1,15 @@
 const mongoose = require('mongoose');
 
+const addressSchema = new mongoose.Schema(
+  {
+    street: { type: String, required: true },
+    city: { type: String, required: true },
+    state: { type: String, required: true },
+    zip: { type: String, required: true }
+  },
+  { id: false, _id: false }
+);
+
 const profileSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,13 +32,7 @@ const profileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  address: {
-    // FIXME: single nested document
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    zip: { type: String, required: true }
-  },
+  address: addressSchema,
   phone: {
     type: String,
     required: true
