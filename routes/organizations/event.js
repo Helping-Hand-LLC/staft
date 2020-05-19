@@ -1,4 +1,6 @@
 const express = require('express');
+const passport = require('passport');
+const { isManager } = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventRules,
@@ -28,37 +30,64 @@ const router = express.Router({ mergeParams: true });
  *
  * @desc retrieve an organization's events
  * @returns {JSON} this organization's events
- * @access private
+ * @access private isManager
  */
-router.get('/', checkObjectId('org_id'), checkOrg, getOrgEvents);
+router.get(
+  '/',
+  checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  isManager,
+  getOrgEvents
+);
 
 /**
  * GET /organizations/:org_id/events/:event_id
  *
  * @desc retrieve an organization event
  * @returns {JSON} this organization's event with event_id
- * @access private
+ * @access private isManager
  */
 router.get(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
+  isManager,
   checkEvent,
   getOrgEvent
 );
+
+/**
+ * TODO: GET /organizations/:org_id/events/me
+ *
+ * @desc retrieve organization events where user is participant
+ * @returns {JSON} this organization's events where user is participant
+ * @access private
+ */
+
+/**
+ * TODO: GET /organizations/:org_id/event/:event_id/me
+ *
+ * @desc retrieve an organization event where user is participant
+ * @returns {JSON} organization event where user is participant
+ * @access private
+ */
 
 /**
  * POST /organizations/:org_id/events
  *
  * @desc create a new organization event
  * @returns {JSON} newly created organization event
- * @access private
+ * @access private isManager
  */
 router.post(
   '/',
   checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
+  isManager,
   orgEventRules(),
   expValidate,
   createOrgEvent
@@ -69,14 +98,17 @@ router.post(
  *
  * @desc update organization event
  * @returns {JSON} newly updated organization event
- * @access private
+ * @access private isManager
  */
 router.put(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
+  isManager,
+  // TODO: middleware checking manager created this event (or override with header)
   orgEventRules(),
   expValidate,
   updateOrgEvent
@@ -87,14 +119,17 @@ router.put(
  *
  * @desc add new event participant
  * @returns {JSON} all event participants
- * @access private
+ * @access private isManager
  */
 router.post(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
+  isManager,
+  // TODO: middleware checking manager created this event (or override with header)
   addOrRemoveEventParticipantRules(),
   expValidate,
   addEventParticipant
@@ -105,33 +140,38 @@ router.post(
  *
  * @desc remove event participant
  * @returns {JSON} success indicator
- * @access private
-//  */
+ * @access private isManager
+ */
 router.delete(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
+  isManager,
+  // TODO: middleware checking manager created this event (or override with header)
   addOrRemoveEventParticipantRules(),
   expValidate,
   removeEventParticipant
 );
 
 /**
- * PATCH /organizations/:org_id/events/:event_id
+ * PATCH /organizations/:org_id/events/:event_id/me
  *
  * @desc event participant confirms status, checks in, or checks out
  * @returns {JSON} modified participant information
  * @access private
  */
 router.patch(
-  '/:event_id',
+  '/:event_id/me',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkProfile,
   checkOrg,
   checkEvent,
-  checkProfile,
+  // TODO: middleware checking user is part of this org
   updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant
@@ -142,14 +182,17 @@ router.patch(
  *
  * @desc delete organization event
  * @returns {JSON} success indicator
- * @access private
+ * @access private isManager
  */
 router.delete(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
   checkEvent,
+  isManager,
+  // TODO: warn about manager deleting event that they didn't create (override flag)
   deleteOrgEvent
 );
 

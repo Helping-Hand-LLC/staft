@@ -31,10 +31,12 @@ userSchema.methods.generateAuthToken = () => {
       .then(profile => {
         // set access level in jwt payload
         let isAdmin = false,
-          isManager = false;
+          isManager = false,
+          organization = null;
         if (profile) {
           isAdmin = profile.isAdmin;
           isManager = profile.isManager;
+          organization = profile.organization;
         }
 
         jwt.sign(
@@ -42,6 +44,7 @@ userSchema.methods.generateAuthToken = () => {
             id: this.id,
             isAdmin,
             isManager,
+            organization,
             expiresIn: '2 days'
           },
           privateKey,
