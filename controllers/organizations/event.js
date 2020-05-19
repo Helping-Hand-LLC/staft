@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const mongoose = require('mongoose');
 const moment = require('moment');
 const User = require('../../models/User');
@@ -13,9 +14,31 @@ module.exports = {
 
     res.json({ orgEvents });
   },
-  getOrgEvent: async (req, res) => {
-    res.json({ event: res.locals.event });
+  getOrgEvent: async (req, res) => res.json({ event: res.locals.event }),
+  getAllMyOrgEvents: async (req, res, next) => {
+    const orgEvents = await Event.find({
+      organization: res.locals.org.id
+    }).catch(err => next(err));
+
+    if (_.isEmpty(orgEvents))
+      return res
+        .status(404)
+        .json(routeError('No events found for this organization'));
+
+    // filter to this user as participant
+    let myOrgEvents = [];
+
+    for (let i = 0; i < orgEvents.length; i++) {
+      const event = orgEvents[i];
+      const participant = event.participants.find(
+        el => el.worker == req.user.id
+      );
+      if (participant) myOrgEvents.push(event);
+    }
+
+    res.json({ myOrgEvents });
   },
+  getMyOrgEvent: (req, res) => res.json({ event: res.locals.event }),
   createOrgEvent: async (req, res) => {
     const {
       isPublished,
@@ -122,7 +145,6 @@ module.exports = {
 
     // check worker belongs to this organization
     if (workerProfile.organization != res.locals.org.id) {
-      console.log(workerProfile.organization, res.locals.org.id);
       return res
         .status(400)
         .json(routeError('Worker does not belong to this organization'));
@@ -201,21 +223,11 @@ module.exports = {
   updateOrgEventParticipant: async (req, res) => {
     const { confirmedStatus, checkedIn, checkedOut } = req.body;
 
-    // find participant object of this user on this event
-    const participant = res.locals.event.participants.find(
-      el => el.worker == req.user.id
-    );
-
-    if (!participant)
-      return res
-        .status(400)
-        .json(routeError('You are not a participant of this event'));
-
-    participant.confirmedStatus = confirmedStatus;
-    participant.checkedIn = checkedIn;
-    participant.checkedOut = checkedOut;
+    res.locals.participant.confirmedStatus = confirmedStatus;
+    res.locals.participant.checkedIn = checkedIn;
+    res.locals.participant.checkedOut = checkedOut;
     await res.locals.event.save();
-    res.json({ participant });
+    res.json({ participant: res.locals.participant });
   },
   deleteOrgEvent: async (req, res, next) => {
     await Event.findOneAndDelete({ _id: res.locals.event.id }).catch(err =>

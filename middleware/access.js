@@ -29,5 +29,14 @@ module.exports = {
     if (req.user.organization != res.locals.org.id)
       return res.status(403).json(routeError('Access denied'));
     next();
+  },
+  isInEvent: (req, res, next) => {
+    const participant = res.locals.event.participants.find(
+      el => el.worker == req.user.id
+    );
+    if (!participant) return res.status(400).json(routeError('Access denied'));
+
+    res.locals.participant = participant;
+    next();
   }
 };

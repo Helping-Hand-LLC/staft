@@ -3,7 +3,8 @@ const passport = require('passport');
 const {
   isManager,
   managerIsEventCreator,
-  isInOrg
+  isInOrg,
+  isInEvent
 } = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
@@ -20,6 +21,8 @@ const {
 const {
   getOrgEvents,
   getOrgEvent,
+  getAllMyOrgEvents,
+  getMyOrgEvent,
   createOrgEvent,
   updateOrgEvent,
   addEventParticipant,
@@ -46,6 +49,22 @@ router.get(
 );
 
 /**
+ * GET /organizations/:org_id/events/me
+ *
+ * @desc retrieve organization events where user is participant
+ * @returns {JSON} this organization's events where user is participant
+ * @access private
+ */
+router.get(
+  '/me',
+  checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  isInOrg,
+  getAllMyOrgEvents
+);
+
+/**
  * GET /organizations/:org_id/events/:event_id
  *
  * @desc retrieve an organization event
@@ -64,20 +83,22 @@ router.get(
 );
 
 /**
- * TODO: GET /organizations/:org_id/events/me
- *
- * @desc retrieve organization events where user is participant
- * @returns {JSON} this organization's events where user is participant
- * @access private
- */
-
-/**
- * TODO: GET /organizations/:org_id/event/:event_id/me
+ * GET /organizations/:org_id/event/:event_id/me
  *
  * @desc retrieve an organization event where user is participant
  * @returns {JSON} organization event where user is participant
  * @access private
  */
+router.get(
+  '/:event_id/me',
+  checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  isInOrg,
+  checkEvent,
+  isInEvent,
+  getMyOrgEvent
+);
 
 /**
  * POST /organizations/:org_id/events
@@ -119,13 +140,13 @@ router.put(
 );
 
 /**
- * POST /organizations/:org_id/events/:event_id
+ * PATCH /organizations/:org_id/events/:event_id
  *
  * @desc add new event participant
  * @returns {JSON} all event participants
  * @access private isManager
  */
-router.post(
+router.patch(
   '/:event_id',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
@@ -174,8 +195,9 @@ router.patch(
   passport.authenticate('jwt', { session: false }),
   checkProfile,
   checkOrg,
-  checkEvent,
   isInOrg,
+  checkEvent,
+  isInEvent,
   updateEventParticipantRules(),
   expValidate,
   updateOrgEventParticipant
