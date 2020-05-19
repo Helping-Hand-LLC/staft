@@ -5,6 +5,7 @@ const checkObjectId = require('../../middleware/checkObjectId');
 const {
   newOrgRules,
   updateOrgRules,
+  addWorkerToOrgRules,
   expValidate
 } = require('../../middleware/validator');
 const { checkOrg } = require('../../middleware/models');
@@ -13,6 +14,7 @@ const {
   createOrg,
   getPublicOrgs,
   updateOrg,
+  addWorker,
   deleteOrg
 } = require('../../controllers/organizations/organization');
 const router = express.Router();
@@ -71,6 +73,24 @@ router.put(
   updateOrgRules(),
   expValidate,
   updateOrg
+);
+
+/**
+ * PATCH /organizations/:org_id/addWorker
+ *
+ * @desc add worker to this organization
+ * @returns {JSON} updated (organization) profile for this worker
+ * @access private isAdmin
+ */
+router.patch(
+  '/:org_id/addWorker',
+  checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  isAdmin,
+  addWorkerToOrgRules(),
+  expValidate,
+  addWorker
 );
 
 /**

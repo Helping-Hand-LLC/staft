@@ -52,12 +52,7 @@ module.exports = {
           }
           return true;
         }),
-      check('isPrivate').toBoolean(),
-      check('adminEmail')
-        .notEmpty()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please enter a valid email')
+      check('isPrivate').toBoolean()
     ];
   },
   updateOrgRules: () => {
@@ -74,22 +69,20 @@ module.exports = {
           }
           return true;
         }),
-      check('isPrivate').toBoolean(),
-      check('adminEmails')
+      check('isPrivate').toBoolean()
+    ];
+  },
+  addWorkerToOrgRules: () => {
+    return [
+      check('workerEmail')
+        .isEmail()
+        .normalizeEmail()
+        .withMessage('Please enter a valid email for this worker'),
+      check('access')
+        .escape()
         .notEmpty()
-        .withMessage('An organization must have at least one admin user'),
-      check('adminEmails.*')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please enter valid emails for the admin users'),
-      check('managerEmails.*')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please enter valid emails for the manager users'),
-      check('workerEmails.*')
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please enter valid emails for the worker users')
+        .isIn(['admin', 'manager', 'worker'])
+        .withMessage('Please enter a valid access level for this worker')
     ];
   },
   newProfileRules: () => {
