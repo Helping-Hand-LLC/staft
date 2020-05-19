@@ -10,7 +10,7 @@ module.exports = {
       .select('-password')
       .catch(err => next(err));
 
-    if (!user) return res.status(404).json(routeError('User not found'));
+    if (!user) return res.status(404).json(routeError('User does not exist'));
 
     res.locals.user = user;
     next();

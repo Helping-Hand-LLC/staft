@@ -1,4 +1,5 @@
 const express = require('express');
+const { isInOrg } = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const { checkProfile, checkOrg } = require('../../middleware/models');
 const {
@@ -15,7 +16,7 @@ const router = express.Router({ mergeParams: true });
  * @returns {JSON} this organization's user's public information
  * @access private
  */
-router.get('/', checkObjectId('org_id'), checkOrg, getOrgUsers);
+router.get('/', checkObjectId('org_id'), checkOrg, isInOrg, getOrgUsers);
 
 /**
  * GET /organizations/:org_id/users/join/me
@@ -36,8 +37,9 @@ router.get('/join/me', checkObjectId('org_id'), checkOrg, joinPublicOrg);
 router.patch(
   '/leave/me',
   checkObjectId('org_id'),
-  checkOrg,
   checkProfile,
+  checkOrg,
+  isInOrg,
   leaveOrg
 );
 

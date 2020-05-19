@@ -1,6 +1,4 @@
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const { privateKey } = require('../config/keys');
 
 module.exports = {
   login: (req, res, next) => {
@@ -10,20 +8,11 @@ module.exports = {
       // bad request
       if (!user) return res.status(400).json(info);
 
-      req.login(user, { session: false }, err => {
+      req.login(user, { session: false }, async err => {
         if (err) next(err);
-        // jwt
-        jwt.sign(
-          {
-            id: user.id,
-            expiresIn: '2 days'
-          },
-          privateKey,
-          (err, token) => {
-            if (err) next(err);
-            return res.json({ token });
-          }
-        );
+        // generate jwt
+        const token = await user.generateAuthToken().catch(err => next(err));
+        res.json({ token });
       });
     })(req, res, next);
   },
@@ -35,20 +24,11 @@ module.exports = {
       if (!user) return res.status(400).json(info);
 
       // login newly registered user
-      req.login(user, { session: false }, err => {
+      req.login(user, { session: false }, async err => {
         if (err) next(err);
-        // jwt
-        jwt.sign(
-          {
-            id: user.id,
-            expiresIn: '2 days'
-          },
-          privateKey,
-          (err, token) => {
-            if (err) next(err);
-            return res.json({ token });
-          }
-        );
+        // generate jwt
+        const token = await user.generateAuthToken().catch(err => next(err));
+        res.json({ token });
       });
     })(req, res, next);
   },

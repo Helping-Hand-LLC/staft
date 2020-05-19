@@ -21,7 +21,7 @@ passport.use(
       if (!user) return done(null, false, routeError('Invalid credentials'));
 
       // compare hashed password
-      const isMatch = bcrypt
+      const isMatch = await bcrypt
         .compare(password, user.password)
         .catch(err => done(err));
 
@@ -66,17 +66,14 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: privateKey
     },
+    // if jwtPayload is passed, the sent JWT has been verified
     async (jwtPayload, done) => {
-      // retrieve user
-      const user = await User.findById(jwtPayload.id)
-        .select('-password')
-        .catch(err => done(err));
-
-      // invalid token
-      if (!user) return done(null, false, routeError('Invalid token'));
-
-      // valid token
-      return done(null, user);
+      // pass userJwtPayload details to next middleware
+      try {
+        return done(null, jwtPayload.user);
+      } catch (err) {
+        done(err, null, routeError('Invalid token'));
+      }
     }
   )
 );

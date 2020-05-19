@@ -1,4 +1,6 @@
 const express = require('express');
+const passport = require('passport');
+const { isManager } = require('../../middleware/access');
 const checkObjectId = require('../../middleware/checkObjectId');
 const {
   orgEventLocationRules,
@@ -18,21 +20,30 @@ const router = express.Router({ mergeParams: true });
  *
  * @desc retrieve an organization's stored event locations
  * @returns {JSON} this organization's stored event locations
- * @access private
+ * @access private isManager
  */
-router.get('/stored', checkObjectId('org_id'), checkOrg, getOrgEventLocations);
+router.get(
+  '/stored',
+  checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
+  checkOrg,
+  isManager,
+  getOrgEventLocations
+);
 
 /**
  * GET /organizations/:org_id/events/locations/query
  *
  * @desc get Google Maps Places API results for a location query
  * @returns {JSON} location results
- * @access private
+ * @access private isManager
  */
 router.get(
   '/query',
   checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
+  isManager,
   orgEventLocationRules(),
   expValidate,
   getGoogleLocationsFromQuery
@@ -43,12 +54,14 @@ router.get(
  *
  * @desc create organization event location
  * @returns {JSON} newly created location
- * @access private
+ * @access private isManager
  */
 router.post(
   '/',
   checkObjectId('org_id'),
+  passport.authenticate('jwt', { session: false }),
   checkOrg,
+  isManager,
   newOrgEventLocationRules(),
   expValidate,
   createOrgEventLocation
