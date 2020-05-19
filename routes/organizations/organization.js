@@ -33,7 +33,7 @@ router.get(
 /**
  * GET /organizations/:org_id/me
  *
- * @desc get user organization basic information
+ * @desc get this user's organization basic information
  * @returns {JSON} organization information (uid, isPrivate)
  * @access private
  */

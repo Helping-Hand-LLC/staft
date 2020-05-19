@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Organization = require('../../models/Organization');
@@ -10,7 +11,7 @@ module.exports = {
       .select('uid')
       .catch(err => next(err));
 
-    if (!publicOrgs.length)
+    if (_.isEmpty(publicOrgs))
       res.status(404).json(routeError('No public organizations found'));
 
     return res.json({ publicOrgs });
@@ -87,7 +88,7 @@ module.exports = {
     } = req.body;
 
     // ensure private org before setting workerEmails
-    if (!isPrivate && workerEmails.length > 0)
+    if (!isPrivate && !_.isEmpty(workerEmails))
       return res
         .status(400)
         .json(
@@ -145,56 +146,58 @@ module.exports = {
       await adminProfile.save();
     }
 
-    // validate managers
-    for (let i = 0; i < managerEmails.length; i++) {
-      const manager = managerEmails[i];
-      const existingManager = await User.findOne({
-        email: manager
-      }).catch(err => next(err));
-      // ensure manager is already a registered user
-      if (!existingManager)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Please register all manager emails before assigning to an organization'
-            )
-          );
+    if (!_.isEmpty(managerEmails)) {
+      // validate managers
+      for (let i = 0; i < managerEmails.length; i++) {
+        const manager = managerEmails[i];
+        const existingManager = await User.findOne({
+          email: manager
+        }).catch(err => next(err));
+        // ensure manager is already a registered user
+        if (!existingManager)
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'Please register all manager emails before assigning to an organization'
+              )
+            );
 
-      // ensure manager has completed their profile
-      const managerProfile = await Profile.findOne({
-        user: existingManager.id
-      }).catch(err => next(err));
-      if (!managerProfile)
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'All managers must complete their profile before being assigned to an organization'
-            )
-          );
+        // ensure manager has completed their profile
+        const managerProfile = await Profile.findOne({
+          user: existingManager.id
+        }).catch(err => next(err));
+        if (!managerProfile)
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'All managers must complete their profile before being assigned to an organization'
+              )
+            );
 
-      // ensure manager is not already assigned to another organization
-      if (
-        managerProfile.isManager &&
-        managerProfile.organization != req.params.org_id
-      )
-        return res
-          .status(400)
-          .json(
-            routeError(
-              'Managers cannot be already assigned to another organization'
-            )
-          );
+        // ensure manager is not already assigned to another organization
+        if (
+          managerProfile.isManager &&
+          managerProfile.organization != req.params.org_id
+        )
+          return res
+            .status(400)
+            .json(
+              routeError(
+                'Managers cannot be already assigned to another organization'
+              )
+            );
 
-      // add isManager and organization to manager
-      managerProfile.isAdmin = false;
-      managerProfile.isManager = true;
-      managerProfile.organization = res.locals.org.id;
-      await managerProfile.save();
+        // add isManager and organization to manager
+        managerProfile.isAdmin = false;
+        managerProfile.isManager = true;
+        managerProfile.organization = res.locals.org.id;
+        await managerProfile.save();
+      }
     }
 
-    if (workerEmails.length > 0) {
+    if (!_.isEmpty(workerEmails)) {
       // validate workerEmails
       for (let i = 0; i < workerEmails.length; i++) {
         const worker = workerEmails[i];
@@ -255,7 +258,7 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
-    if (orgUsers.length > 0) {
+    if (!_.isEmpty(orgUsers)) {
       for (let i = 0; i < orgUsers.length; i++) {
         orgUsers[i].isAdmin = false;
         orgUsers[i].isManager = false;

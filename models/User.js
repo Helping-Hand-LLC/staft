@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-userSchema.methods.generateAuthToken = () => {
+userSchema.methods.generateAuthToken = function () {
   return new Promise((resolve, reject) => {
     Profile.findOne({ user: this.id })
       .then(profile => {
@@ -39,20 +39,18 @@ userSchema.methods.generateAuthToken = () => {
           organization = profile.organization;
         }
 
-        jwt.sign(
-          {
-            id: this.id,
-            isAdmin,
-            isManager,
-            organization,
-            expiresIn: '2 days'
-          },
-          privateKey,
-          (err, token) => {
-            if (err) reject(err);
-            resolve(token);
-          }
-        );
+        const userJwtPayload = {
+          id: this.id,
+          isAdmin,
+          isManager,
+          organization,
+          expiresIn: '2 days'
+        };
+
+        jwt.sign({ user: userJwtPayload }, privateKey, (err, token) => {
+          if (err) reject(err);
+          resolve(token);
+        });
       })
       .catch(err => reject(err));
   });

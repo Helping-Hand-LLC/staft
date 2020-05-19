@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Profile = require('../../models/Profile');
 const { routeError } = require('../../utils/error');
 
@@ -7,7 +8,7 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
-    if (!orgUsers.length)
+    if (_.isEmpty(orgUsers))
       res.status(404).json(routeError('No users found for this organization'));
 
     return res.json({ orgUsers });
@@ -63,7 +64,7 @@ module.exports = {
         user: { $ne: req.user.id }
       }).catch(err => next(err));
 
-      if (!orgUsers.length)
+      if (_.isEmpty(orgUsers))
         return res
           .status(404)
           .json(

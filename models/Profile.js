@@ -23,6 +23,7 @@ const profileSchema = new mongoose.Schema({
     required: true
   },
   address: {
+    // FIXME: single nested document
     street: { type: String, required: true },
     city: { type: String, required: true },
     state: { type: String, required: true },

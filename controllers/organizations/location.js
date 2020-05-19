@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Location = require('../../models/Location');
 const { Client, Status } = require('@googlemaps/google-maps-services-js');
 const { routeError } = require('../../utils/error');
@@ -11,7 +12,7 @@ module.exports = {
       organization: res.locals.org.id
     }).catch(err => next(err));
 
-    if (!locations.length)
+    if (_.isEmpty(locations))
       return res.status(404).json(routeError('No locations found'));
 
     res.json({ locations });
