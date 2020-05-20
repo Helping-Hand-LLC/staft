@@ -16,7 +16,8 @@ const {
 const {
   checkProfile,
   checkOrg,
-  checkEvent
+  checkEvent,
+  checkEventParticipant
 } = require('../../middleware/models');
 const {
   getOrgEvents,
@@ -157,6 +158,7 @@ router.patch(
   managerIsEventCreator,
   addOrRemoveEventParticipantRules(),
   expValidate,
+  checkEventParticipant,
   addEventParticipant
 );
 
@@ -178,6 +180,7 @@ router.delete(
   managerIsEventCreator,
   addOrRemoveEventParticipantRules(),
   expValidate,
+  checkEventParticipant,
   removeEventParticipant
 );
 

@@ -1,8 +1,6 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 const moment = require('moment');
-const User = require('../../models/User');
-const Profile = require('../../models/Profile');
 const Event = require('../../models/Event');
 const { routeError } = require('../../utils/error');
 
@@ -120,42 +118,10 @@ module.exports = {
     await res.locals.event.save();
     res.json({ event: res.locals.event });
   },
-  addEventParticipant: async (req, res, next) => {
+  addEventParticipant: async (req, res) => {
     const { worker } = req.body;
 
-    // check worker exists
-    const existingWorker = await User.findById(worker).catch(err => next(err));
-
-    if (!existingWorker)
-      return res.status(404).json(routeError('Worker does not exist'));
-
-    // check worker has completed profile
-    const workerProfile = await Profile.findOne({ user: worker }).catch(err =>
-      next(err)
-    );
-
-    if (!workerProfile)
-      return res
-        .status(400)
-        .json(
-          routeError(
-            'Worker must complete profile before being assigned to an event'
-          )
-        );
-
-    // check worker belongs to this organization
-    if (workerProfile.organization != res.locals.org.id) {
-      return res
-        .status(400)
-        .json(routeError('Worker does not belong to this organization'));
-    }
-
-    // check if worker already belongs to this event
-    const participant = res.locals.event.participants.find(
-      el => el.worker == worker
-    );
-
-    if (participant)
+    if (res.locals.participant)
       return res
         .status(400)
         .json(routeError('Worker already assigned to this event'));
@@ -164,48 +130,15 @@ module.exports = {
     await res.locals.event.save();
     res.json({ participants: res.locals.event.participants });
   },
-  removeEventParticipant: async (req, res, next) => {
-    const { worker } = req.body;
-
-    // check worker exists
-    const existingWorker = await User.findById(worker).catch(err => next(err));
-
-    if (!existingWorker)
-      return res.status(404).json(routeError('Worker does not exist'));
-
-    // check worker has completed profile
-    const workerProfile = await Profile.findOne({ user: worker }).catch(err =>
-      next(err)
-    );
-
-    if (!workerProfile)
-      return res
-        .status(400)
-        .json(
-          routeError(
-            'Worker must complete profile before being assigned to an event'
-          )
-        );
-
-    // check worker belongs to this organization
-    if (workerProfile.organization != res.locals.org.id)
-      return res
-        .status(400)
-        .json(routeError('Worker does not belong to this organization'));
-
-    // check that the sent worker is participant of this event
-    const participant = res.locals.event.participants.find(
-      el => el.worker == worker
-    );
-
-    if (!participant)
+  removeEventParticipant: async (req, res) => {
+    if (!res.locals.participant)
       return res
         .status(400)
         .json(routeError('Worker is not assigned to this event'));
 
     // warn about removing participant who have accepted confirmation
     let violaton = false;
-    if (participant.confirmedStatus === 'accepted') violaton = true;
+    if (res.locals.participant.confirmedStatus === 'accepted') violaton = true;
 
     if (!req.header('Override-Confirmed-Participants') && violaton)
       return res
@@ -216,7 +149,7 @@ module.exports = {
           )
         );
 
-    res.locals.event.participants.id(participant._id).remove();
+    res.locals.event.participants.id(res.locals.participant._id).remove();
     await res.locals.event.save();
     res.json({ success: true });
   },

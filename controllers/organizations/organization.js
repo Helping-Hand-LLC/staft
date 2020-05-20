@@ -53,15 +53,17 @@ module.exports = {
     const { workerEmail, access } = req.body;
 
     // check that worker exists
-    const worker = User.findOne({ email: workerEmail }).catch(err => next(err));
+    const worker = await User.findOne({ email: workerEmail }).catch(err =>
+      next(err)
+    );
 
     if (!worker)
       return res.status(404).json(routeError('Worker does not exist'));
 
     // check worker profile
-    const workerProfile = Profile.findOne({ user: worker.id }).catch(err =>
-      next(err)
-    );
+    const workerProfile = await Profile.findOne({
+      user: worker.id
+    }).catch(err => next(err));
 
     if (!workerProfile)
       return res
@@ -134,7 +136,7 @@ module.exports = {
     }
 
     // delete all org events
-    Event.deleteMany({ organization: res.locals.org.id }).catch(err =>
+    await Event.deleteMany({ organization: res.locals.org.id }).catch(err =>
       next(err)
     );
 
