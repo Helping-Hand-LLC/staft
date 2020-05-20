@@ -48,5 +48,45 @@ module.exports = {
 
     res.locals.event = event;
     next();
+  },
+  checkEventParticipant: async (req, res, next) => {
+    const { worker } = req.body;
+
+    // check worker exists
+    const existingWorker = await User.findById(worker).catch(err => next(err));
+
+    if (!existingWorker)
+      return res.status(404).json(routeError('Worker does not exist'));
+
+    // check worker has completed profile
+    const workerProfile = await Profile.findOne({ user: worker }).catch(err =>
+      next(err)
+    );
+
+    if (!workerProfile)
+      return res
+        .status(400)
+        .json(
+          routeError(
+            'Worker must complete profile before being assigned/removed from an event'
+          )
+        );
+
+    // check worker belongs to this organization
+    if (workerProfile.organization != res.locals.org.id) {
+      return res
+        .status(400)
+        .json(routeError('Worker does not belong to this organization'));
+    }
+
+    // check if worker belongs to this event
+    const participant = res.locals.event.participants.find(
+      el => el.worker == worker
+    );
+
+    // set variables for controllers
+    res.locals.worker = existingWorker;
+    res.locals.participant = participant;
+    next();
   }
 };

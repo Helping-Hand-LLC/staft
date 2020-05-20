@@ -24,6 +24,7 @@ module.exports = {
           )
         );
 
+    // check user profile exists
     const userProfile = await Profile.findOne({
       user: req.user.id
     }).catch(err => next(err));
