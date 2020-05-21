@@ -1,7 +1,9 @@
-const { describe, expect, it } = require('@jest/globals');
+const { describe, it } = require('@jest/globals');
+const app = require('../app');
+const request = require('supertest');
 
-describe('Testing Staft API', () => {
-  it('Tests that our testing framework works properly', () => {
-    expect(4).toBe(4);
+describe('Test the root path', () => {
+  it('It should response the GET method', () => {
+    return request(app).get('/').expect(200);
   });
 });
