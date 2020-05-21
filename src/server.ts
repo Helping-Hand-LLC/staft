@@ -1,4 +1,7 @@
 import app from './app';
+import { port } from './config/keys';
 
 // start server
-app.listen(5000, () => console.log('express server listening on port 3000...'));
+app.listen(port, () =>
+  console.log(`express server listening on port ${port}...`)
+);
