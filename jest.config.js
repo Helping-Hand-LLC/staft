@@ -12,7 +12,7 @@ module.exports = {
   // cacheDirectory: "/private/var/folders/8w/52cz40xd2vl3p6s9tcj257bh0000gn/T/jest_dx",
 
   // Automatically clear mock calls and instances between every test
-  clearMocks: true,
+  // clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
@@ -49,10 +49,10 @@ module.exports = {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  globalSetup: './jest.global-setup.js',
+  // TODO: globalSetup: './jest.global-setup.js',
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  globalTeardown: './jest.global-teardown.js',
+  // TODO: globalTeardown: './jest.global-teardown.js',
 
   // A set of global variables that need to be available in all test environments
   // globals: {},

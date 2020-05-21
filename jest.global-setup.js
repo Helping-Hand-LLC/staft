@@ -1,3 +1,3 @@
-module.exports = async () => {
-  // TODO: connect test db
-};
+// module.exports = async () => {
+//   // TODO: connect test db
+// };
