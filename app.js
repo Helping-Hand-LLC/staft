@@ -1,7 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const connectdb = require('./middleware/db');
-
+const connectdb = require('./config/db');
 const app = express();
 
 // mongodb connection
