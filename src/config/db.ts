@@ -9,7 +9,12 @@ export default async (): Promise<void> => {
       useCreateIndex: true,
       useFindAndModify: false
     });
-    // TODO: check after connection error
+
+    // handle errors after initial connection
+    mongoose.connection.on('error', err =>
+      console.error(`Mongodb Connection Error: ${err.message}`)
+    );
+
     console.log('mongodb connected...');
   } catch (err) {
     console.error(err.message);
