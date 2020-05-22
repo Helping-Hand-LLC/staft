@@ -9,6 +9,7 @@ export default async (): Promise<void> => {
       useCreateIndex: true,
       useFindAndModify: false
     });
+    // TODO: check after connection error
     console.log('mongodb connected...');
   } catch (err) {
     console.error(err.message);

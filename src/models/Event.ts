@@ -10,7 +10,7 @@ type RepeatOptions = {
   ends: Date;
 };
 
-type Participant = {
+export type Participant = {
   worker: mongoose.Schema.Types.ObjectId;
   confirmedStatus: string;
   checkedIn: {
