@@ -63,3 +63,5 @@ router.use('/:org_id/workers', jwtAuth, workerRouter);
 
 //----- EVENTS -----
 router.use('/:org_id/events', eventRouter);
+
+export default router;

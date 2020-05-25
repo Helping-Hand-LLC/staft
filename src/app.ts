@@ -1,7 +1,11 @@
 import express, { Application } from 'express';
 import passport from 'passport';
 import connectdb from './config/db';
+
+import { jwtAuth } from './middleware/access';
 import AuthRouter from './routes/auth';
+import UserRouter from './routes/user';
+import OrgRouter from './routes/organization';
 
 const app: Application = express();
 
@@ -20,5 +24,7 @@ app.use(passport.initialize());
 
 // routes
 app.use('/auth', AuthRouter);
+app.use('/user', jwtAuth, UserRouter);
+app.use('/org', OrgRouter);
 
 export default app;
