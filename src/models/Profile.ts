@@ -1,26 +1,8 @@
-import mongoose from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
+import { IUser } from './User';
+import { IOrg } from './Organization';
 
-type Address = {
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-};
-
-export type ProfileDocument = mongoose.Document & {
-  user: mongoose.Schema.Types.ObjectId;
-  organization: mongoose.Schema.Types.ObjectId;
-  isManager: boolean;
-  isAdmin: boolean;
-  name: string;
-  address: Address;
-  phone: string;
-  birthday: Date;
-  gender: string;
-  ssn: string;
-};
-
-const addressSchema = new mongoose.Schema(
+const addressSchema = new Schema(
   {
     street: { type: String, required: true },
     city: { type: String, required: true },
@@ -30,15 +12,15 @@ const addressSchema = new mongoose.Schema(
   { id: false, _id: false }
 );
 
-const profileSchema = new mongoose.Schema(
+const profileSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
     organization: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Organization'
     },
     isManager: {
@@ -63,8 +45,8 @@ const profileSchema = new mongoose.Schema(
       required: true
     },
     gender: {
-      type: String,
-      enum: ['male', 'female'],
+      type: Number,
+      enum: [0, 1],
       required: true
     },
     ssn: {
@@ -75,5 +57,29 @@ const profileSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Profile = mongoose.model<ProfileDocument>('Profile', profileSchema);
-export default Profile;
+enum Gender {
+  Male = 1,
+  Female = 0
+}
+
+interface IAddress {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+interface IProfile extends Document {
+  user: IUser['_id'];
+  organization: IOrg['_id'];
+  isManager: boolean;
+  isAdmin: boolean;
+  name: string;
+  address: IAddress;
+  phone: string;
+  birthday: Date;
+  gender: Gender;
+  ssn: string;
+}
+
+export default model<IProfile>('Profile', profileSchema);

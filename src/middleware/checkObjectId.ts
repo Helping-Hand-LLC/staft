@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import routeError from '../utils/error';
-import MiddlewareFunction from '../config/middleware';
+import MiddlewareFn from '../config/middleware';
 
-type checkObjectIdFn = (idToCheck: string) => MiddlewareFunction;
+type checkObjectIdFn = (idToCheck: string) => MiddlewareFn;
 
 const checkObjectId: checkObjectIdFn = idToCheck => (req, res, next) => {
   // idToCheck: String representing the request parameter to check

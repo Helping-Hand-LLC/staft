@@ -10,10 +10,6 @@ export interface IJwtUser extends Request {
   expiresIn: string;
 }
 
-type MiddlewareFunction = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => void;
+type MiddlewareFn = (req: Request, res: Response, next: NextFunction) => void;
 
-export default MiddlewareFunction;
+export default MiddlewareFn;

@@ -1,11 +1,6 @@
-import mongoose from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 
-export type OrganizationDocument = mongoose.Document & {
-  uid: string;
-  isPrivate: boolean;
-};
-
-const orgSchema = new mongoose.Schema(
+const orgSchema = new Schema(
   {
     uid: {
       type: String,
@@ -20,8 +15,9 @@ const orgSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Organization = mongoose.model<OrganizationDocument>(
-  'Organization',
-  orgSchema
-);
-export default Organization;
+export interface IOrg extends Document {
+  uid: string;
+  isPrivate: boolean;
+}
+
+export default model<IOrg>('Organization', orgSchema);

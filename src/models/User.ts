@@ -1,33 +1,15 @@
-import mongoose from 'mongoose';
+import { Document, Schema, model } from 'mongoose';
 import Profile from './Profile';
 import jwt, { SignCallback } from 'jsonwebtoken';
 import { privateKey } from '../config/keys';
 
-export interface AuthToken {
-  id: mongoose.Schema.Types.ObjectId;
-  isAdmin: boolean;
-  isManager: boolean;
-  organization: mongoose.Schema.Types.ObjectId | null;
-  expiresIn: string;
-}
-
-type generateAuthTokenFunction = () => Promise<string>;
-
-export type UserDocument = mongoose.Document & {
-  type: string;
-  email: string;
-  password: string;
-
-  generateAuthToken: generateAuthTokenFunction;
-};
-
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     type: {
-      type: String,
+      type: Number,
       required: true,
-      default: 'worker',
-      enum: ['client', 'worker']
+      default: 0,
+      enum: [0, 1]
     },
     email: {
       type: String,
@@ -42,7 +24,27 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const generateAuthToken: generateAuthTokenFunction = function () {
+// TODO: export this type for working with client accounts
+enum UserType {
+  Worker = 0,
+  Client = 1
+}
+
+interface IUserSchema extends Document {
+  type: UserType;
+  email: string;
+  password: string;
+}
+
+interface IAuthToken {
+  id: Schema.Types.ObjectId;
+  isAdmin: boolean;
+  isManager: boolean;
+  organization: Schema.Types.ObjectId | null;
+  expiresIn: string;
+}
+
+const generateAuthToken: () => Promise<string> = function () {
   return new Promise((resolve, reject) => {
     Profile.findOne({ user: this.id })
       .then(profile => {
@@ -56,7 +58,7 @@ const generateAuthToken: generateAuthTokenFunction = function () {
           organization = profile.organization;
         }
 
-        const userJwtPayload: AuthToken = {
+        const userJwtPayload: IAuthToken = {
           id: this.id,
           isAdmin,
           isManager,
@@ -77,5 +79,8 @@ const generateAuthToken: generateAuthTokenFunction = function () {
 
 userSchema.methods.generateAuthToken = generateAuthToken;
 
-const User = mongoose.model<UserDocument>('User', userSchema);
-export default User;
+export interface IUser extends IUserSchema {
+  generateAuthToken(): Promise<string>;
+}
+
+export default model<IUser>('User', userSchema);
