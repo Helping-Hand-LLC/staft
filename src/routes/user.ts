@@ -4,7 +4,7 @@ import {
   expValidate
 } from '../middleware/validator';
 import { checkUser, checkProfile } from '../middleware/checkModel';
-import UserController from '../controllers/user';
+import * as UserController from '../controllers/user';
 
 const router = Router();
 

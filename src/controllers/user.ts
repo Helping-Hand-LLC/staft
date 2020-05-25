@@ -2,15 +2,15 @@ import User from '../models/User';
 import Profile from '../models/Profile';
 import MiddlewareFn, { IJwtUser } from '../config/middleware';
 
-const getUser: MiddlewareFn = (_req, res) =>
+export const getUser: MiddlewareFn = (_req, res) =>
   res.json({ user: res.locals.user });
 
-const getUserProfile: MiddlewareFn = (_req, res) => {
+export const getUserProfile: MiddlewareFn = (_req, res) => {
   const populated = res.locals.profile.populate('user', ['type', 'email']);
   return res.json({ populated });
 };
 
-const createOrUpdateProfile: MiddlewareFn = async (req, res, next) => {
+export const createOrUpdateProfile: MiddlewareFn = async (req, res, next) => {
   let { organization } = req.body;
   const { name, address, phone, birthday, gender, ssn } = req.body;
 
@@ -47,7 +47,7 @@ const createOrUpdateProfile: MiddlewareFn = async (req, res, next) => {
   }
 };
 
-const deleteUserAndProfile: MiddlewareFn = async (req, res, next) => {
+export const deleteUserAndProfile: MiddlewareFn = async (req, res, next) => {
   const reqUser = req.user as IJwtUser;
 
   try {
@@ -60,11 +60,4 @@ const deleteUserAndProfile: MiddlewareFn = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-};
-
-export default {
-  getUser,
-  getUserProfile,
-  createOrUpdateProfile,
-  deleteUserAndProfile
 };

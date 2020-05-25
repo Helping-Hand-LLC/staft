@@ -7,22 +7,14 @@ type ValidatorFn = () => ValidationChain[];
 
 export const loginRules: ValidatorFn = () => {
   return [
-    check('email')
-      .notEmpty()
-      .isEmail()
-      .normalizeEmail()
-      .withMessage('Please enter a valid email'),
+    check('email').notEmpty().isEmail().normalizeEmail(),
     check('password').notEmpty().escape().withMessage('Password is required')
   ];
 };
 
 export const registerRules: ValidatorFn = () => {
   return [
-    check('email')
-      .notEmpty()
-      .isEmail()
-      .normalizeEmail()
-      .withMessage('Please enter a valid email'),
+    check('email').notEmpty().isEmail().normalizeEmail(),
     check('password')
       .notEmpty()
       .escape()

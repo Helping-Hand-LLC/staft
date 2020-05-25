@@ -1,7 +1,7 @@
 import passport from 'passport';
 import MiddlewareFn from '../config/middleware';
 
-const login: MiddlewareFn = (req, res, next) => {
+export const login: MiddlewareFn = (req, res, next) => {
   passport.authenticate('login', { session: false }, (err, user, info) => {
     // db error
     if (err) return next(err);
@@ -21,7 +21,7 @@ const login: MiddlewareFn = (req, res, next) => {
   })(req, res, next);
 };
 
-const register: MiddlewareFn = (req, res, next) => {
+export const register: MiddlewareFn = (req, res, next) => {
   passport.authenticate('register', { session: false }, (err, user, info) => {
     // db error
     if (err) return next(err);
@@ -42,10 +42,8 @@ const register: MiddlewareFn = (req, res, next) => {
   })(req, res, next);
 };
 
-const logout: MiddlewareFn = (req, res) => {
+export const logout: MiddlewareFn = (req, res) => {
   // remove req.user
   req.logout();
   res.json({ success: true });
 };
-
-export default { login, register, logout };

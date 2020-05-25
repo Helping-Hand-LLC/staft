@@ -1,7 +1,10 @@
+import passport from 'passport';
 import { IOrg } from '../models/Organization';
 import { IEvent } from '../models/Event';
 import MiddlewareFn, { IJwtUser } from '../config/middleware';
 import routeError from '../utils/error';
+
+export const jwtAuth = passport.authenticate('jwt', { session: false });
 
 export const isAdmin: MiddlewareFn = (req, res, next) => {
   const user = req.user as IJwtUser;

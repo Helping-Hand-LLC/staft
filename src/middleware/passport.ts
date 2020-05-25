@@ -1,13 +1,10 @@
 import passport from 'passport';
-import passportLocal from 'passport-local';
-import passportJwt, { ExtractJwt } from 'passport-jwt';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import bcrypt from 'bcryptjs';
 import { privateKey } from '../config/keys';
 import routeError from '../utils/error';
 import User from '../models/User';
-
-const LocalStrategy = passportLocal.Strategy;
-const JwtStrategy = passportJwt.Strategy;
 
 passport.use(
   'login',
