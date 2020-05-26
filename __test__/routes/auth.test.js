@@ -1,5 +1,5 @@
 const { describe, it } = require('@jest/globals');
-const app = require('../app');
+const app = require('../../app');
 const request = require('supertest');
 
 describe('Test the root path', () => {
