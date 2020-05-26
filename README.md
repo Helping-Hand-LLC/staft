@@ -9,21 +9,58 @@ Automating your organization's staffing operations
 _ACCESS: PUBLIC_
 
 - `POST /auth/login`
+
   - Logs in a previously registered user
   - _Dependencies:_
+    - validates user input
   - _Example Request:_
+
+    ```http
+    POST /auth/login HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+
+    {
+      "email": "hello@gmail.com",
+      "password": "123456"
+    }
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `POST /auth/register`
+
   - Registers a new user and automatically logs in this new user
   - _Dependencies:_
+    - Validates user input
   - _Example Request:_
+
+    ```http
+    POST /auth/register HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+
+    {
+      "email": "hello@gmail.com",
+      "password": "123456",
+      "passwordConfirm": "123456"
+    }
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /auth/logout`
   - Logs out the currently logged in user
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+    ```http
+    GET /auth/logout HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 
@@ -34,25 +71,69 @@ _ACCESS: PRIVATE - all users_
 - `GET /user/me`
   - Retrieves the basic information for the currently logged in user
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
+    - Checks that this user exists
   - _Example Request:_
+    ```http
+    GET /user/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 - `GET /user/profile/me`
   - Retrieves the user profile for the currently logged in user
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token-
   - _Example Request:_
+    ```http
+    GET /user/profile/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 - `POST /user/profile`
+
   - Creates or updates a new profile for the currently logged in user
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+    POST /user/profile HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
+
+    {
+      "name": "hello",
+      "address": {
+        "street": "123 Main St",
+        "city": "Manhattan",
+        "state": "NY",
+        "zip": "54321"
+      },
+      "birthday": "01-01-2000",
+      "phone": "1234567890",
+      "gender": "male",
+      "ssn": "123456789"
+    }
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `DELETE /user/profile`
   - Deletes a user and their corresponding profile
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+    ```http
+    DELETE /user/profile/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 
@@ -63,69 +144,149 @@ _Note: Access levels vary within organizations. Each route will have its own acc
 _Also: All admins and managers are verified that their organization matches the `org_id` of the request. So managers and admins of organizations not matching `org_id` do not have access._
 
 - `GET /organizations`
-  - _ACCESS: PRIVATE - all users_
+  - **_ACCESS: PRIVATE - all users_**
   - Retrieves all public organizations
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+    ```http
+    GET /organizations HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 - `GET /organizations/:org_id/me`
-  - _ACCESS: PRIVATE - all users in this organization_
+  - **_ACCESS: PRIVATE - all users in this organization_**
   - Retrieves the basic information of a logged in user's organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+    ```http
+    GET /organizations/<org_id>/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
+    ```
   - _Example Response:_
   - _Possible Errors:_
 - `POST /organizations`
-  - _ACCESS: PUBLIC_
+
+  - **_ACCESS: PUBLIC_**
   - Creates a new public or private organization
-  - _Dependencies:_
+  - _Dependencies:_ N/A
   - _Example Request:_
+
+    ```http
+    POST /organizations HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+
+    {
+      "uid": "neworg",
+      "isPrivate": false
+    }
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PUT /organizations/:org_id`
-  - _ACCESS: PRIVATE - admins only_
+
+  - **_ACCESS: PRIVATE - admins only_**
   - Updates a previously registered organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+    PUT /organizations/<org_id> HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
+
+    {
+      "uid": "public1",
+      "isPrivate": false
+    }
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PATCH /organizations/:org_id/addWorker`
-  - _ACCESS: PRIVATE - admins only_
+
+  - **_ACCESS: PRIVATE - admins only_**
   - Adds a previously registered worker to an organization (Note: regular workers can only be added to private organizations. Admins and managers are always invite only.)
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `DELETE /organizations/:org_id`
-  - _ACCESS: PRIVATE - admins only_
+
+  - **_ACCESS: PRIVATE - admins only_**
   - Deletes a previously registered organization and its events
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
 
 #### Organization Workers
 
 - `GET /organizations/:org_id/workers`
+
   - **_ACCESS: PRIVATE - all users in this organization_**
   - Retrives all workers of this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /organizations/:org_id/workers/join/me`
-  - _ACCESS: PRIVATE - all users_
+
+  - **_ACCESS: PRIVATE - all users_**
   - Allows a previously registered worker to join a public organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PATCH /organizations/:org_id/workers/leave/me`
-  - _ACCESS: PRIVATE - all users in this organization_
+
+  - **_ACCESS: PRIVATE - all users in this organization_**
   - Allows a previously registered worker to leave an organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
 
@@ -134,89 +295,183 @@ _Also: All admins and managers are verified that their organization matches the 
 _NOTE: Admins are automatically given manager access. So routes with access level of 'managers only' applies to admins as well._
 
 - `GET /organizations/:org_id/events`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Retrieves all events associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /organizations/:org_id/events/me`
-  - _ACCESS: PRIVATE - all users in this organization_
+
+  - **_ACCESS: PRIVATE - all users in this organization_**
   - Retrieves all events associated with this organization in which the logged in user is a participant
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /organizations/:org_id/events/:event_id`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Retrieves a single event associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /organizations/:org_id/events/:event_id/me`
-  - _ACCESS: PRIVATE - all users of this organization who is participant of this event_
+
+  - **_ACCESS: PRIVATE - all users of this organization who is participant of this event_**
   - Retrieves a single event associated with this organization in which the logged in user is a participant
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `POST /organizations/:org_id/events`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Creates a new event associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PUT /organizations/:org_id/events:event_id`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Updates an event associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PATCH /organizations/:org_id/events/:event_id`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Adds or removes a worker as a participant of this organization event
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `PATCH /organizations/:org_id/events/:event_id/me`
-  - _ACCESS: PRIVATE - all users of this organization who is participant of this event_
+
+  - **_ACCESS: PRIVATE - all users of this organization who is participant of this event_**
   - Allows an event participant to confirm status, check in, or check out
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `DELETE /organizations/:org_id/events/:event_id`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Deletes an organization event
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
 
 ##### Organization Event Locations
 
 - `GET /organizations/:org_id/events/locations/stored`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Retrieves all stored event locations associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `GET /organizations/:org_id/events/locations/query`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Makes a Google Places API query for a provided location
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
+
 - `POST /organizations/:org_id/events/locations`
-  - _ACCESS: PRIVATE - managers only_
+
+  - **_ACCESS: PRIVATE - managers only_**
   - Creates a new event location associated with this organization
   - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
   - _Example Request:_
+
+    ```http
+
+    ```
+
   - _Example Response:_
   - _Possible Errors:_
