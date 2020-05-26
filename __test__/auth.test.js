@@ -1,5 +1,6 @@
-const { describe, it } = require('@jest/globals');
-const app = require('../../app');
+/* eslint-disable no-undef */
+
+const app = require('../app');
 const request = require('supertest');
 
 describe('Test the root path', () => {

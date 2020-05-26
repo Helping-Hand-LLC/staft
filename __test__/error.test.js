@@ -1,5 +1,5 @@
-const { routeError } = require('../../utils/error');
-const { test, expect } = require('@jest/globals');
+/* eslint-disable no-undef */
+const { routeError } = require('../utils/error');
 
 test('error utility returns a correctly formatted error object with message', () => {
   expect(routeError('some error message')).toEqual({
