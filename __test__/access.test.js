@@ -1,5 +1,10 @@
 /* eslint-disable no-undef */
-const { buildReq, buildRes } = require('./utils/generate');
+const {
+  buildUser,
+  buildReq,
+  buildRes,
+  buildNext
+} = require('./utils/generate');
 const {
   isAdmin
   // isManager,
@@ -12,9 +17,11 @@ const { routeError } = require('../utils/error');
 // isAdmin
 describe('Test isAdmin access middleware', () => {
   it('Workers who are not admins are denined access', () => {
-    const req = buildReq(false, '');
-    const res = buildRes('');
-    const next = jest.fn();
+    const req = buildReq({
+      user: buildUser()
+    });
+    const res = buildRes();
+    const next = buildNext();
 
     isAdmin(req, res, next);
     expect(next).not.toHaveBeenCalled();
@@ -25,9 +32,15 @@ describe('Test isAdmin access middleware', () => {
   });
 
   it('Workers who are not in this organization are denied access', () => {
-    const req = buildReq(true, '1234');
-    const res = buildRes('4321');
-    const next = jest.fn();
+    const req = buildReq({
+      user: buildUser({ isAdmin: true, org: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        org: { id: '4321' }
+      }
+    });
+    const next = buildNext();
 
     isAdmin(req, res, next);
     expect(next).not.toHaveBeenCalled();
@@ -38,9 +51,15 @@ describe('Test isAdmin access middleware', () => {
   });
 
   it('Worker who are neither in this organization or an admin are denied access', () => {
-    const req = buildReq(false, '1234');
-    const res = buildRes('4321');
-    const next = jest.fn();
+    const req = buildReq({
+      user: buildUser({ isAdmin: false, org: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        org: { id: '4321' }
+      }
+    });
+    const next = buildNext();
 
     isAdmin(req, res, next);
     expect(next).not.toHaveBeenCalled();
@@ -51,9 +70,15 @@ describe('Test isAdmin access middleware', () => {
   });
 
   it('Workers who are admins and are in this organization are allowed access', () => {
-    const req = buildReq(true, '1234');
-    const res = buildRes('1234');
-    const next = jest.fn();
+    const req = buildReq({
+      user: buildUser({ isAdmin: true, org: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        org: { id: '1234' }
+      }
+    });
+    const next = buildNext();
 
     isAdmin(req, res, next);
     expect(next).toHaveBeenCalled();
