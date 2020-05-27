@@ -9,8 +9,8 @@ const {
   isAdmin,
   isManager,
   managerIsEventCreator,
-  isInOrg
-  // isInEvent
+  isInOrg,
+  isInEvent
 } = require('../middleware/access');
 const { routeError } = require('../utils/error');
 
@@ -292,9 +292,56 @@ describe('Test isInOrg access middleware', () => {
   });
 });
 
-// // isInEvent
-// describe('Test isInEvent access middleware', () => {
-//   it('Workers who are not participants of this event are denied access');
+// isInEvent
+describe('Test isInEvent access middleware', () => {
+  it('Workers who are not participants of this event are denied access', () => {
+    const req = buildReq({
+      user: buildUser({ id: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        event: {
+          participants: [
+            { worker: '4321' },
+            { worker: '7890' },
+            { worker: '5678' }
+          ]
+        }
+      }
+    });
+    const next = buildNext();
 
-//   it('Workers who are participants of this event are allowed access');
-// });
+    isInEvent(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+    expect(res.locals.participant).toBeUndefined();
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledTimes(1);
+    expect(res.json).toHaveBeenCalledWith(routeError('Access denied'));
+  });
+
+  it('Workers who are participants of this event are allowed access', () => {
+    const req = buildReq({
+      user: buildUser({ id: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        event: {
+          participants: [
+            { worker: '4321' },
+            { worker: '1234' },
+            { worker: '5678' }
+          ]
+        }
+      }
+    });
+    const next = buildNext();
+
+    isInEvent(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(res.locals.participant).toBeDefined();
+    expect(res.locals.participant).toEqual({ worker: '1234' });
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
+  });
+});
