@@ -10,7 +10,7 @@ function buildUser(
   };
 }
 
-function buildReq({ user, ...overrides }) {
+function buildReq({ user, ...overrides } = { user: buildUser() }) {
   const req = { user, body: {}, params: {}, ...overrides };
   return req;
 }
