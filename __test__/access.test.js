@@ -8,8 +8,8 @@ const {
 const {
   isAdmin,
   isManager,
-  managerIsEventCreator
-  // isInOrg,
+  managerIsEventCreator,
+  isInOrg
   // isInEvent
 } = require('../middleware/access');
 const { routeError } = require('../utils/error');
@@ -79,7 +79,6 @@ describe('Test isAdmin access middleware', () => {
     const next = buildNext();
 
     isAdmin(req, res, next);
-    expect(next).toHaveBeenCalled();
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -103,7 +102,7 @@ describe('Test isManager access middleware', () => {
 
   it('Workers who are not in this organization are denied access', () => {
     const req = buildReq({
-      user: { isManager: true, org: '1234' }
+      user: buildUser({ isManager: true, org: '1234' })
     });
     const res = buildRes({
       locals: {
@@ -122,7 +121,7 @@ describe('Test isManager access middleware', () => {
 
   it('Workers who are neither in this organization or a manager are denied access', () => {
     const req = buildReq({
-      user: { isManager: false, org: '1234' }
+      user: buildUser({ isManager: false, org: '1234' })
     });
     const res = buildRes({
       locals: {
@@ -141,7 +140,7 @@ describe('Test isManager access middleware', () => {
 
   it('Workers who are managers and in this organization are allowed access', () => {
     const req = buildReq({
-      user: { isManager: true, org: '1234' }
+      user: buildUser({ isManager: true, org: '1234' })
     });
     const res = buildRes({
       locals: {
@@ -151,11 +150,9 @@ describe('Test isManager access middleware', () => {
     const next = buildNext();
 
     isManager(req, res, next);
-    expect(next).not.toHaveBeenCalled();
-    expect(res.status).toHaveBeenCalledTimes(1);
-    expect(res.status).toHaveBeenCalledWith(403);
-    expect(res.json).toHaveBeenCalledTimes(1);
-    expect(res.json).toHaveBeenCalledWith(routeError('Access denied'));
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
   });
 });
 
@@ -163,7 +160,7 @@ describe('Test isManager access middleware', () => {
 describe('Test managerIsEventCreator access middleware', () => {
   it('Managers who are not the creator of an event and have not set the override header are denied access', () => {
     const req = buildReq({
-      user: { id: '1234' },
+      user: buildUser({ id: '1234' }),
       header: function () {
         return this.headers['Override-createdBy'];
       },
@@ -190,7 +187,7 @@ describe('Test managerIsEventCreator access middleware', () => {
 
   it('Managers who are not the creator of an event and have set the override header are allowed access', () => {
     const req = buildReq({
-      user: { id: '1234' },
+      user: buildUser({ id: '1234' }),
       header: function () {
         return this.headers['Override-createdBy'];
       },
@@ -206,7 +203,6 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
-    expect(next).toHaveBeenCalled();
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -214,7 +210,7 @@ describe('Test managerIsEventCreator access middleware', () => {
 
   it('Managers who are the creator of an event and have set the override header are allowed access', () => {
     const req = buildReq({
-      user: { id: '1234' },
+      user: buildUser({ id: '1234' }),
       header: function () {
         return this.headers['Override-createdBy'];
       },
@@ -230,7 +226,6 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
-    expect(next).toHaveBeenCalled();
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -238,7 +233,7 @@ describe('Test managerIsEventCreator access middleware', () => {
 
   it('Managers who are the creator of an event are allowed access', () => {
     const req = buildReq({
-      user: { id: '1234' },
+      user: buildUser({ id: '1234' }),
       header: function () {
         return this.headers['Override-createdBy'];
       },
@@ -252,19 +247,50 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
-    expect(next).toHaveBeenCalled();
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
   });
 });
 
-// // isInOrg
-// describe('Test isInOrg access middleware', () => {
-//   it('Workers who are not in this organization are denied access');
+// isInOrg
+describe('Test isInOrg access middleware', () => {
+  it('Workers who are not in this organization are denied access', () => {
+    const req = buildReq({
+      user: buildUser({ org: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        org: { id: '4321' }
+      }
+    });
+    const next = buildNext();
 
-//   it('Workers who are in this organization are allowed access');
-// });
+    isInOrg(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledTimes(1);
+    expect(res.json).toHaveBeenCalledWith(routeError('Access denied'));
+  });
+
+  it('Workers who are in this organization are allowed access', () => {
+    const req = buildReq({
+      user: buildUser({ org: '1234' })
+    });
+    const res = buildRes({
+      locals: {
+        org: { id: '1234' }
+      }
+    });
+    const next = buildNext();
+
+    isInOrg(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
+  });
+});
 
 // // isInEvent
 // describe('Test isInEvent access middleware', () => {
