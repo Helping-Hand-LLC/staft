@@ -16,13 +16,8 @@ const app = express();
 // initialize passport
 // app.use(passport.initialize());
 
-// FIXME: test route
-app.get('/', (req, res) => {
-  res.status(200).send('Hello World!');
-});
-
 // routes
-// app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 // app.use(
 //   '/user',
 //   passport.authenticate('jwt', { session: false }),
