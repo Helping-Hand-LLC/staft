@@ -33,8 +33,8 @@ describe('Test auth login route', () => {
       })
       .expect(400, {
         errors: [
-          { msg: 'Invalid value', param: 'email', location: 'body' },
           {
+            value: 'some-invalid-email@',
             msg: 'Please enter a valid email',
             param: 'email',
             location: 'body'

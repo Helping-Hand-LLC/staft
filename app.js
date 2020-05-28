@@ -10,8 +10,8 @@ const app = express();
 // require('./middleware/passport');
 
 // body parser
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // initialize passport
 // app.use(passport.initialize());
