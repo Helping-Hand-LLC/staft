@@ -107,18 +107,14 @@ export const updateOrgEvent: MiddlewareFn = async (req, res, next) => {
     return res.status(400).json(routeError('Invalid ObjectId'));
 
   // check modification after startDateTime of event
-  if (
-    moment().isSameOrAfter(startDateTime) &&
-    moment().isSameOrBefore(endDateTime)
-  )
+  if (moment().isSameOrAfter(startDateTime))
     return res
       .status(400)
-      .json(routeError('You cannot modify an event that has already started'));
-  // check modification after endDateTime of event
-  if (moment().isAfter(endDateTime))
-    return res
-      .status(400)
-      .json(routeError('You cannot modify an event that has already ended'));
+      .json(
+        routeError(
+          'You cannot modify an event that is in progress or has already ended'
+        )
+      );
 
   // warn about modification of published event
   if (!req.header('Override-isPublished') && res.locals.event.isPublished)
