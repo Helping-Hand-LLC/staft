@@ -104,7 +104,16 @@ _ACCESS: PRIVATE - all users_
     ```
   - _Example Response:_
     ```json
-
+    {
+      "user": {
+        "type": 0,
+        "_id": "<user_id>",
+        "email": "hello@gmail.com",
+        "createdAt": "2020-06-02T15:27:37.451Z",
+        "updatedAt": "2020-06-02T15:27:37.451Z",
+        "__v": 0
+      }
+    }
     ```
   - _Possible Errors:_
     - user does not exist
@@ -123,7 +132,29 @@ _ACCESS: PRIVATE - all users_
     ```
   - _Example Response:_
     ```json
-
+    {
+      "populated": {
+        "isManager": false,
+        "isAdmin": false,
+        "_id": "<profile_id>",
+        "user": "<user_id>",
+        "__v": 0,
+        "address": {
+          "street": "123 Main St",
+          "city": "Manhattan",
+          "state": "NY",
+          "zip": "12345"
+        },
+        "birthday": "2000-01-01T05:00:00.000Z",
+        "createdAt": "2020-06-02T15:34:14.609Z",
+        "gender": 0,
+        "name": "hello",
+        "organization": null,
+        "phone": "1234567890",
+        "ssn": "123456789",
+        "updatedAt": "2020-06-02T15:34:14.609Z"
+      }
+    }
     ```
   - _Possible Errors:_
     - profile does not exist
@@ -157,19 +188,43 @@ _ACCESS: PRIVATE - all users_
         "street": "123 Main St",
         "city": "Manhattan",
         "state": "NY",
-        "zip": "54321"
+        "zip": "12345"
       },
       "birthday": "01-01-2000",
       "phone": "1234567890",
-      "gender": "male",
+      "gender": 0,
       "ssn": "123456789"
     }
     ```
 
   - _Example Response:_
-    ```json
 
+    ```json
+    {
+      "profile": {
+        "isManager": false,
+        "isAdmin": false,
+        "_id": "<profile_id>",
+        "user": "<user_id>",
+        "__v": 0,
+        "address": {
+          "street": "123 Main St",
+          "city": "Manhattan",
+          "state": "NY",
+          "zip": "12345"
+        },
+        "birthday": "2000-01-01T05:00:00.000Z",
+        "createdAt": "2020-06-02T15:34:14.609Z",
+        "gender": 0,
+        "name": "hello",
+        "organization": null,
+        "phone": "1234567890",
+        "ssn": "123456789",
+        "updatedAt": "2020-06-02T15:34:14.609Z"
+      }
+    }
     ```
+
   - _Possible Errors:_
     - database connection errors
 
@@ -209,9 +264,11 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - database connection errors
     - no public organizations found
@@ -229,9 +286,11 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -259,9 +318,11 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - database connection errors
 
@@ -288,9 +349,11 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -320,9 +383,11 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -374,9 +439,11 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -456,9 +523,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -480,9 +549,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -504,9 +575,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -530,9 +603,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -584,9 +659,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -623,9 +700,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -657,9 +736,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -793,9 +874,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -821,9 +904,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - query is required
     - org_id is not valid mongoose ObjectId
@@ -863,9 +948,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
     ```json
 
     ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
