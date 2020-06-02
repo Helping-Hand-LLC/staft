@@ -13,6 +13,8 @@ _ACCESS: PUBLIC_
   - Logs in a previously registered user
   - _Dependencies:_
     - validates user input
+      - email is required and must be valid
+      - password is required
   - _Example Request:_
 
     ```http
@@ -28,8 +30,6 @@ _ACCESS: PUBLIC_
 
   - _Example Response:_
   - _Possible Errors:_
-    - email is required and must be valid
-    - password is required
     - database connection errors
     - user not found
     - invalid password
@@ -38,7 +38,10 @@ _ACCESS: PUBLIC_
 
   - Registers a new user and automatically logs in this new user
   - _Dependencies:_
-    - Validates user input
+    - validates user input
+      - email is required and must be valid
+      - password is required and must be at least 6 characters
+      - passwordConfirm is required and must match password
   - _Example Request:_
 
     ```http
@@ -55,9 +58,6 @@ _ACCESS: PUBLIC_
 
   - _Example Response:_
   - _Possible Errors:_
-    - email is required and must be valid
-    - password is required and must be at least 6 characters
-    - passwordConfirm is required and must match password
     - database connection errors
     - user already registered
 
@@ -118,6 +118,15 @@ _ACCESS: PRIVATE - all users_
   - Creates or updates a new profile for the currently logged in user
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - name is required
+    - address
+      - street is required
+      - city is required
+      - state is required
+      - zip (code) is required
+    - phone is required
+    - birthday is required
+    - gender is required and must be either 'male' or 'female'
   - _Example Request:_
 
     ```http
@@ -143,15 +152,6 @@ _ACCESS: PRIVATE - all users_
 
   - _Example Response:_
   - _Possible Errors:_
-    - name is required
-    - address
-      - street is required
-      - city is required
-      - state is required
-      - zip (code) is required
-    - phone is required
-    - birthday is required
-    - gender is required and must be either 'male' or 'female'
     - database connection errors
 
 - `DELETE /user/profile`
@@ -217,7 +217,9 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - **_ACCESS: PUBLIC_**
   - Creates a new public or private organization
-  - _Dependencies:_ N/A
+  - _Dependencies:_
+    - uid is required and must be unique and at least 4 characters
+    - isPrivate must be a boolean (true or false)
   - _Example Request:_
 
     ```http
@@ -233,8 +235,6 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
-    - uid is required and must be unique and at least 4 characters
-    - isPrivate must be a boolean (true or false)
     - database connection errors
 
 - `PUT /organizations/:org_id`
@@ -243,6 +243,8 @@ _Also: All admins and managers are verified that their organization matches the 
   - Updates a previously registered organization
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - uid is required and must be unique and at least 4 characters
+    - isPrivate must be a boolean (true or false)
   - _Example Request:_
 
     ```http
@@ -259,8 +261,6 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
-    - uid is required and must be unique and at least 4 characters
-    - isPrivate must be a boolean (true or false)
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have admin level access
@@ -272,6 +272,8 @@ _Also: All admins and managers are verified that their organization matches the 
   - Adds a previously registered worker to an organization (Note: regular workers can only be added to private organizations. Admins and managers are always invite only.)
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - workerEmail is required and must be valid
+    - access is required and must be either 'admin', 'manager', or 'worker'
   - _Example Request:_
 
     ```http
@@ -288,8 +290,6 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
-    - workerEmail is required and must be valid
-    - access is required and must be either 'admin', 'manager', or 'worker'
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have admin level access
@@ -500,6 +500,17 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - Creates a new event associated with this organization
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - isPublished must be a boolean (true or false), if provided
+    - location is required
+    - startDateTime is required and must be a valid date and equal to or after endDateTime
+    - endDateTime is required and must be a valid date and equal to or before startDateTime
+    - isRepeatEvent must be boolean (true or false), if provided
+    - repeatOptions
+      - daysOfWeek must be array of 3-letter string abbreviations representing days of the week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      - frequency
+        - multiplier must be either 'weeks', 'months', or 'years'
+      - ends must be a valid date and equal to or after startDateTime
+    - links must be an array of strings that are website URLs
   - _Example Request:_
 
     ```http
@@ -525,17 +536,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
-    - isPublished must be a boolean (true or false), if provided
-    - location is required
-    - startDateTime is required and must be a valid date and equal to or after endDateTime
-    - endDateTime is required and must be a valid date and equal to or before startDateTime
-    - isRepeatEvent must be boolean (true or false), if provided
-    - repeatOptions
-      - daysOfWeek must be array of 3-letter string abbreviations representing days of the week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      - frequency
-        - multiplier must be either 'weeks', 'months', or 'years'
-      - ends must be a valid date and equal to or after startDateTime
-    - links must be an array of strings that are website URLs
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
@@ -652,6 +652,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - Allows an event participant to confirm status, check in, or check out
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - confirmedStatus must be either 'unconfirmed', 'accepted', or 'rejected'
+    - checkedIn
+      - status must be boolean (true or false), if provided
+      - dateTime must be a valid date
+    - checkedOut
+      - status must be boolean (true or false), if provided
+      - dateTime must be a valid date
   - _Example Request:_
 
     ```http
@@ -677,13 +684,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     { "success": true }
     ```
   - _Possible Errors:_
-    - confirmedStatus must be either 'unconfirmed', 'accepted', or 'rejected'
-    - checkedIn
-      - status must be boolean (true or false), if provided
-      - dateTime must be a valid date
-    - checkedOut
-      - status must be boolean (true or false), if provided
-      - dateTime must be a valid date
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
     - worker profile does not exist
@@ -773,6 +773,12 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - Creates a new event location associated with this organization
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
+    - formatted_address is required
+    - location
+      - lat must be a decimal value
+      - lng must be a decimal value
+    - name is required
+    - place_id is required
   - _Example Request:_
 
     ```http
@@ -794,12 +800,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
-    - formatted_address is required
-    - location
-      - lat must be a decimal value
-      - lng must be a decimal value
-    - name is required
-    - place_id is required
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
