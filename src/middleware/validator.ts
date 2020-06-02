@@ -102,10 +102,7 @@ export const createOrUpdateProfileRules: ValidatorFn = () => {
       .isMobilePhone('any')
       .withMessage('Please enter a valid phone number'),
     check('birthday').notEmpty().toDate().withMessage('Birthday is required'),
-    check('gender')
-      .notEmpty()
-      .isIn(['male', 'female'])
-      .withMessage('Gender is required'),
+    check('gender').notEmpty().isIn([0, 1]).withMessage('Gender is required'),
     check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
   ];
 };
