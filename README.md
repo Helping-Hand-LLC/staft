@@ -647,7 +647,138 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
 
     ```json
-
+    {
+      "orgEvents": [
+        {
+          "repeatOptions": {
+            "daysOfWeek": [],
+            "ends": null
+          },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-06-15T10:30:00.000Z",
+          "endDateTime": "2020-06-15T14:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": true,
+                "datetime": "2020-10-31T04:00:00.000Z"
+              },
+              "checkedOut": {
+                "status": false
+              },
+              "confirmedStatus": "rejected",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            },
+            {
+              "checkedIn": {
+                "status": false
+              },
+              "checkedOut": {
+                "status": false
+              },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-16T22:40:50.815Z",
+          "updatedAt": "2020-05-19T21:46:43.893Z",
+          "__v": 9
+        },
+        {
+          "repeatOptions": {
+            "daysOfWeek": [],
+            "ends": null
+          },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": false
+              },
+              "checkedOut": {
+                "status": false
+              },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-19T21:44:20.600Z",
+          "updatedAt": "2020-05-19T21:46:56.552Z",
+          "__v": 1
+        },
+        {
+          "repeatOptions": {
+            "daysOfWeek": [],
+            "ends": null
+          },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": false
+              },
+              "checkedOut": {
+                "status": false
+              },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-19T21:44:32.099Z",
+          "updatedAt": "2020-05-19T21:47:05.697Z",
+          "__v": 1
+        },
+        {
+          "repeatOptions": {
+            "daysOfWeek": [],
+            "ends": null
+          },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [],
+          "createdAt": "2020-05-19T21:44:38.473Z",
+          "updatedAt": "2020-05-19T21:44:38.473Z",
+          "__v": 0
+        }
+      ]
+    }
     ```
 
   - _Possible Errors:_
@@ -699,7 +830,52 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
 
     ```json
-
+    {
+      "event": {
+        "repeatOptions": {
+          "daysOfWeek": [],
+          "ends": null
+        },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "links": [],
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-06-15T10:30:00.000Z",
+        "endDateTime": "2020-06-15T14:45:00.000Z",
+        "participants": [
+          {
+            "checkedIn": {
+              "status": true,
+              "datetime": "2020-10-31T04:00:00.000Z"
+            },
+            "checkedOut": {
+              "status": false
+            },
+            "confirmedStatus": "rejected",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          },
+          {
+            "checkedIn": {
+              "status": false
+            },
+            "checkedOut": {
+              "status": false
+            },
+            "confirmedStatus": "unconfirmed",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          }
+        ],
+        "createdAt": "2020-05-16T22:40:50.815Z",
+        "updatedAt": "2020-05-19T21:46:43.893Z",
+        "__v": 9
+      }
+    }
     ```
 
   - _Possible Errors:_
@@ -783,7 +959,28 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
 
     ```json
-
+    {
+      "event": {
+        "repeatOptions": {
+          "daysOfWeek": [],
+          "ends": null
+        },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "links": [],
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-07-15T09:30:00.000Z",
+        "endDateTime": "2020-07-15T11:45:00.000Z",
+        "participants": [],
+        "createdAt": "2020-06-02T16:23:26.162Z",
+        "updatedAt": "2020-06-02T16:23:26.162Z",
+        "__v": 0
+      }
+    }
     ```
 
   - _Possible Errors:_
