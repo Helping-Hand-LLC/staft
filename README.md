@@ -29,6 +29,11 @@ _ACCESS: PUBLIC_
     ```
 
   - _Example Response:_
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    }
+    ```
   - _Possible Errors:_
     - database connection errors
     - user not found
@@ -57,6 +62,11 @@ _ACCESS: PUBLIC_
     ```
 
   - _Example Response:_
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    }
+    ```
   - _Possible Errors:_
     - database connection errors
     - user already registered
@@ -93,6 +103,9 @@ _ACCESS: PRIVATE - all users_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - user does not exist
     - database connection errors
@@ -109,6 +122,9 @@ _ACCESS: PRIVATE - all users_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - profile does not exist
     - database connection errors
@@ -151,6 +167,9 @@ _ACCESS: PRIVATE - all users_
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - database connection errors
 
@@ -190,6 +209,9 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - database connection errors
     - no public organizations found
@@ -207,6 +229,9 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -234,6 +259,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - database connection errors
 
@@ -260,6 +288,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -289,6 +320,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -340,6 +374,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -419,6 +456,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -440,6 +480,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -461,6 +504,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -484,6 +530,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -535,6 +584,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -571,6 +623,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -602,6 +657,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -735,6 +793,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -760,6 +821,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - query is required
     - org_id is not valid mongoose ObjectId
@@ -799,6 +863,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
