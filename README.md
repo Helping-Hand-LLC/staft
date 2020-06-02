@@ -30,6 +30,9 @@ _ACCESS: PUBLIC_
   - _Possible Errors:_
     - email is required and must be valid
     - password is required
+    - database connection errors
+    - user not found
+    - invalid password
 
 - `POST /auth/register`
 
@@ -55,6 +58,8 @@ _ACCESS: PUBLIC_
     - email is required and must be valid
     - password is required and must be at least 6 characters
     - passwordConfirm is required and must match password
+    - database connection errors
+    - user already registered
 
 - `GET /auth/logout`
   - Logs out the currently logged in user
@@ -67,7 +72,9 @@ _ACCESS: PUBLIC_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
-  - _Possible Errors:_
+    ```json
+    { "success": true }
+    ```
 
 #### Basic Users & Profiles
 
@@ -88,6 +95,7 @@ _ACCESS: PRIVATE - all users_
   - _Example Response:_
   - _Possible Errors:_
     - user does not exist
+    - database connection errors
 
 - `GET /user/profile/me`
 
@@ -103,6 +111,7 @@ _ACCESS: PRIVATE - all users_
   - _Example Response:_
   - _Possible Errors:_
     - profile does not exist
+    - database connection errors
 
 - `POST /user/profile`
 
@@ -143,6 +152,7 @@ _ACCESS: PRIVATE - all users_
     - phone is required
     - birthday is required
     - gender is required and must be either 'male' or 'female'
+    - database connection errors
 
 - `DELETE /user/profile`
   - Deletes a user and their corresponding profile
@@ -155,7 +165,11 @@ _ACCESS: PRIVATE - all users_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
+    - database connection errors
 
 ### Organizations
 
@@ -164,6 +178,7 @@ _Note: Access levels vary within organizations. Each route will have its own acc
 _Also: All admins and managers are verified that their organization matches the `org_id` of the request. So managers and admins of organizations not matching `org_id` do not have access._
 
 - `GET /organizations`
+
   - **_ACCESS: PRIVATE - all users_**
   - Retrieves all public organizations
   - _Dependencies:_
@@ -176,6 +191,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
   - _Example Response:_
   - _Possible Errors:_
+    - database connection errors
+    - no public organizations found
+
 - `GET /organizations/:org_id/me`
 
   - **_ACCESS: PRIVATE - all users in this organization_**
@@ -193,6 +211,7 @@ _Also: All admins and managers are verified that their organization matches the 
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker is not in this organization
+    - database connection errors
 
 - `POST /organizations`
 
@@ -216,6 +235,7 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Possible Errors:_
     - uid is required and must be unique and at least 4 characters
     - isPrivate must be a boolean (true or false)
+    - database connection errors
 
 - `PUT /organizations/:org_id`
 
@@ -244,6 +264,7 @@ _Also: All admins and managers are verified that their organization matches the 
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have admin level access
+    - database connection errors
 
 - `PATCH /organizations/:org_id/addWorker`
 
@@ -272,6 +293,11 @@ _Also: All admins and managers are verified that their organization matches the 
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have admin level access
+    - database connection errors
+    - workerEmail does not exist as a registered user
+    - workerEmail user has not completed their profile
+    - workerEmail user is already assigned to another organization
+    - attempting to add worker to public organization
 
 - `DELETE /organizations/:org_id`
 
@@ -288,10 +314,14 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have admin level access
+    - database connection errors
 
 #### Organization Workers
 
@@ -314,6 +344,8 @@ _Also: All admins and managers are verified that their organization matches the 
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker is not in this organization
+    - database connection errors
+    - no users found for this organization
 
 - `GET /organizations/:org_id/workers/join/me`
 
@@ -330,9 +362,16 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
+    - database connection errors
+    - organization is private
+    - worker has not completed their profile
+    - worker already assigned to another organization
 
 - `PATCH /organizations/:org_id/workers/leave/me`
 
@@ -349,11 +388,17 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - worker profile does not exist
     - organization does not exist
     - worker is not in this organization
+    - database connection errors
+    - worker is an admin and organization does not have another existing admin
+    - no users found for this organization
 
 #### Organization Events
 
@@ -378,6 +423,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
+    - database connection errors
 
 - `GET /organizations/:org_id/events/me`
 
@@ -398,6 +444,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker is not in this organization
+    - database connection errors
 
 - `GET /organizations/:org_id/events/:event_id`
 
@@ -420,6 +467,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - organization does not exist
     - worker does not have manager level access
     - event does not exist
+    - database connection errors
 
 - `GET /organizations/:org_id/events/:event_id/me`
 
@@ -443,6 +491,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - worker is not in this organization
     - event does not exist
     - worker is not a participant of this event
+    - database connection errors
+    - no events found for this organization
 
 - `POST /organizations/:org_id/events`
 
@@ -489,6 +539,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
+    - database connection errors
+    - location is not valid mongoose ObjectId
 
 - `PUT /organizations/:org_id/events:event_id`
 
@@ -526,6 +578,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - event does not exist
     - worker does not have manager level access
     - manager is not creator of this event and has not set override header
+    - database connection errors
+    - location is not valid mongoose ObjectId
+    - attempting to modify an event that has already started
+    - attempting to modify an event that has already ended
+    - attempting to modify a published event
 
 - `PATCH /organizations/:org_id/events/:event_id`
 
@@ -553,6 +610,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - worker does not have manager level access
     - manager is not creator of this event and has not set override header
     - worker is not participant of this event
+    - database connection errors
+    - worker already assigned to this event
 
 - `DELETE /organizations/:org_id/events/:event_id`
 
@@ -572,6 +631,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -580,6 +642,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - worker does not have manager level access
     - manager is not creator of this event and has not set override header
     - worker is not participant of this event
+    - database connection errors
+    - worker not assigned to this event
+    - attempting to remove worker that has accepted confirmation for this event
 
 - `PATCH /organizations/:org_id/events/:event_id/me`
 
@@ -608,6 +673,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - confirmedStatus must be either 'unconfirmed', 'accepted', or 'rejected'
     - checkedIn
@@ -639,6 +707,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+    ```json
+    { "success": true }
+    ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -668,6 +739,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
+    - database connection errors
+    - no locations found
 
 - `GET /organizations/:org_id/events/locations/query`
 
@@ -692,6 +765,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
+    - Google API connection errors
 
 - `POST /organizations/:org_id/events/locations`
 
@@ -729,3 +803,5 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - org_id is not valid mongoose ObjectId
     - organization does not exist
     - worker does not have manager level access
+    - database connection errors
+    - location already exists
