@@ -266,7 +266,22 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
 
     ```json
-
+    {
+      "publicOrgs": [
+        {
+          "_id": "<org_id>",
+          "uid": "public1"
+        },
+        {
+          "_id": "<org_id>",
+          "uid": "public2"
+        },
+        {
+          "_id": "<org_id>",
+          "uid": "private1"
+        }
+      ]
+    }
     ```
 
   - _Possible Errors:_
@@ -288,7 +303,14 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
 
     ```json
-
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "public1",
+        "isPrivate": false,
+        "__v": 0
+      }
+    }
     ```
 
   - _Possible Errors:_
@@ -320,7 +342,16 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
 
     ```json
-
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "neworg",
+        "isPrivate": false,
+        "createdAt": "2020-06-02T15:52:56.612Z",
+        "updatedAt": "2020-06-02T15:52:56.612Z",
+        "__v": 0
+      }
+    }
     ```
 
   - _Possible Errors:_
@@ -343,15 +374,24 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
 
     {
-      "uid": "public1",
-      "isPrivate": false
+      "uid": "private2",
+      "isPrivate": true
     }
     ```
 
   - _Example Response:_
 
     ```json
-
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "private2",
+        "isPrivate": true,
+        "createdAt": "2020-06-02T15:52:56.612Z",
+        "updatedAt": "2020-06-02T15:55:41.029Z",
+        "__v": 0
+      }
+    }
     ```
 
   - _Possible Errors:_
