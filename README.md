@@ -22,10 +22,7 @@ _ACCESS: PUBLIC_
     Host: http://localhost:5000
     Content-Type: application/json
 
-    {
-      "email": "hello@gmail.com",
-      "password": "123456"
-    }
+    { "email": "hello@gmail.com", "password": "123456" }
     ```
 
   - _Example Response:_
@@ -268,18 +265,9 @@ _Also: All admins and managers are verified that their organization matches the 
     ```json
     {
       "publicOrgs": [
-        {
-          "_id": "<org_id>",
-          "uid": "public1"
-        },
-        {
-          "_id": "<org_id>",
-          "uid": "public2"
-        },
-        {
-          "_id": "<org_id>",
-          "uid": "private1"
-        }
+        { "_id": "<org_id>", "uid": "public1" },
+        { "_id": "<org_id>", "uid": "public2" },
+        { "_id": "<org_id>", "uid": "private1" }
       ]
     }
     ```
@@ -333,10 +321,7 @@ _Also: All admins and managers are verified that their organization matches the 
     Host: http://localhost:5000
     Content-Type: application/json
 
-    {
-      "uid": "neworg",
-      "isPrivate": false
-    }
+    { "uid": "neworg", "isPrivate": false }
     ```
 
   - _Example Response:_
@@ -373,10 +358,7 @@ _Also: All admins and managers are verified that their organization matches the 
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    {
-      "uid": "private2",
-      "isPrivate": true
-    }
+    { "uid": "private2", "isPrivate": true }
     ```
 
   - _Example Response:_
@@ -416,10 +398,7 @@ _Also: All admins and managers are verified that their organization matches the 
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    {
-      "workerEmail": "random@email.com",
-      "access": "worker"
-    }
+    { "workerEmail": "random@email.com", "access": "worker" }
     ```
 
   - _Example Response:_
@@ -650,16 +629,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     {
       "orgEvents": [
         {
-          "repeatOptions": {
-            "daysOfWeek": [],
-            "ends": null
-          },
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
           "isPublished": false,
           "isRepeatEvent": false,
           "links": [],
           "_id": "<event_id>",
           "organization": "<org_id>",
-          "title": "",
+          "title": "Event 1",
           "location": "<location_id>",
           "createdBy": "<user_id>",
           "startDateTime": "2020-06-15T10:30:00.000Z",
@@ -670,20 +646,14 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
                 "status": true,
                 "datetime": "2020-10-31T04:00:00.000Z"
               },
-              "checkedOut": {
-                "status": false
-              },
+              "checkedOut": { "status": false },
               "confirmedStatus": "rejected",
               "_id": "<participant_id>",
               "worker": "<user_id>"
             },
             {
-              "checkedIn": {
-                "status": false
-              },
-              "checkedOut": {
-                "status": false
-              },
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
               "confirmedStatus": "unconfirmed",
               "_id": "<participant_id>",
               "worker": "<user_id>"
@@ -694,28 +664,21 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "__v": 9
         },
         {
-          "repeatOptions": {
-            "daysOfWeek": [],
-            "ends": null
-          },
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
           "isPublished": false,
           "isRepeatEvent": false,
           "links": [],
           "_id": "<event_id>",
           "organization": "<org_id>",
-          "title": "",
+          "title": "Event 2",
           "location": "<location_id>",
           "createdBy": "<user_id>",
           "startDateTime": "2020-07-15T09:30:00.000Z",
           "endDateTime": "2020-07-15T11:45:00.000Z",
           "participants": [
             {
-              "checkedIn": {
-                "status": false
-              },
-              "checkedOut": {
-                "status": false
-              },
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
               "confirmedStatus": "unconfirmed",
               "_id": "<participant_id>",
               "worker": "<user_id>"
@@ -726,28 +689,21 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "__v": 1
         },
         {
-          "repeatOptions": {
-            "daysOfWeek": [],
-            "ends": null
-          },
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
           "isPublished": false,
           "isRepeatEvent": false,
           "links": [],
           "_id": "<event_id>",
           "organization": "<org_id>",
-          "title": "",
+          "title": "Event 3",
           "location": "<location_id>",
           "createdBy": "<user_id>",
           "startDateTime": "2020-07-15T09:30:00.000Z",
           "endDateTime": "2020-07-15T11:45:00.000Z",
           "participants": [
             {
-              "checkedIn": {
-                "status": false
-              },
-              "checkedOut": {
-                "status": false
-              },
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
               "confirmedStatus": "unconfirmed",
               "_id": "<participant_id>",
               "worker": "<user_id>"
@@ -758,16 +714,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "__v": 1
         },
         {
-          "repeatOptions": {
-            "daysOfWeek": [],
-            "ends": null
-          },
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
           "isPublished": false,
           "isRepeatEvent": false,
           "links": [],
           "_id": "<event_id>",
           "organization": "<org_id>",
-          "title": "",
+          "title": "Event 4",
           "location": "<location_id>",
           "createdBy": "<user_id>",
           "startDateTime": "2020-07-15T09:30:00.000Z",
@@ -832,16 +785,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```json
     {
       "event": {
-        "repeatOptions": {
-          "daysOfWeek": [],
-          "ends": null
-        },
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
         "isPublished": false,
         "isRepeatEvent": false,
         "links": [],
         "_id": "<event_id>",
         "organization": "<org_id>",
-        "title": "",
+        "title": "Event Title",
         "location": "<location_id>",
         "createdBy": "<user_id>",
         "startDateTime": "2020-06-15T10:30:00.000Z",
@@ -852,20 +802,14 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
               "status": true,
               "datetime": "2020-10-31T04:00:00.000Z"
             },
-            "checkedOut": {
-              "status": false
-            },
+            "checkedOut": { "status": false },
             "confirmedStatus": "rejected",
             "_id": "<participant_id>",
             "worker": "<user_id>"
           },
           {
-            "checkedIn": {
-              "status": false
-            },
-            "checkedOut": {
-              "status": false
-            },
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
             "confirmedStatus": "unconfirmed",
             "_id": "<participant_id>",
             "worker": "<user_id>"
@@ -905,10 +849,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```json
     {
       "event": {
-        "repeatOptions": {
-          "daysOfWeek": [],
-          "ends": null
-        },
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
         "isPublished": false,
         "isRepeatEvent": false,
         "links": [],
@@ -988,10 +929,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
       "endDateTime": "2020-07-15T07:45:00",
       "isRepeatEvent": false,
       "repeatOptions": {},
-      "links": [
-        "www.google.com",
-        "www.facebook.com"
-      ]
+      "links": [ "www.google.com", "www.facebook.com" ]
     }
     ```
 
@@ -1000,20 +938,17 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```json
     {
       "event": {
-        "repeatOptions": {
-          "daysOfWeek": [],
-          "ends": null
-        },
-        "isPublished": false,
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
+        "isPublished": true,
         "isRepeatEvent": false,
-        "links": [],
+        "links": ["www.google.com", "www.facebook.com"],
         "_id": "<event_id>",
         "organization": "<org_id>",
-        "title": "",
+        "title": "Some event title",
         "location": "<location_id>",
         "createdBy": "<user_id>",
-        "startDateTime": "2020-07-15T09:30:00.000Z",
-        "endDateTime": "2020-07-15T11:45:00.000Z",
+        "startDateTime": "2020-07-15T05:30:00.000Z",
+        "endDateTime": "2020-07-15T07:45:00.000Z",
         "participants": [],
         "createdAt": "2020-06-02T16:23:26.162Z",
         "updatedAt": "2020-06-02T16:23:26.162Z",
@@ -1166,13 +1101,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
     {
       "confirmedStatus": "accepted",
-      "checkedIn": {
-        "status": true,
-        "dateTime": "2020-05-15T06:30:00"
-      },
-      "checkedOut": {
-        "status": false
-      }
+      "checkedIn": { "status": true, "dateTime": "2020-05-15T06:30:00" },
+      "checkedOut": { "status": false }
     }
     ```
 
@@ -1485,10 +1415,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
     {
         "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
-        "location": {
-            "lat": 38.039084,
-            "lng": -84.51431800000002
-        },
+        "location": { "lat": 38.039084, "lng": -84.51431800000002 },
         "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
         "name": "Starbucks",
         "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
