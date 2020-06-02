@@ -90,7 +90,7 @@ router.put(
 );
 
 router.patch(
-  '/:event_id',
+  '/:event_id/add',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   jwtAuth,
@@ -105,7 +105,7 @@ router.patch(
 );
 
 router.delete(
-  '/:event_id',
+  '/:event_id/remove',
   checkObjectId('org_id'),
   checkObjectId('event_id'),
   jwtAuth,
