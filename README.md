@@ -425,7 +425,14 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
 
     ```json
-
+    {
+      "worker": {
+        "email": "random@email.com",
+        "isAdmin": false,
+        "isManager": false,
+        "organization": "<org_id>"
+      }
+    }
     ```
 
   - _Possible Errors:_
@@ -481,7 +488,82 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
 
     ```json
-
+    {
+      "orgUsers": [
+        {
+          "isManager": true,
+          "isAdmin": true,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        },
+        {
+          "isManager": true,
+          "isAdmin": false,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello2",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        },
+        {
+          "isManager": true,
+          "isAdmin": true,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello3",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        },
+        {
+          "isManager": false,
+          "isAdmin": false,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello4",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        }
+      ]
+    }
     ```
 
   - _Possible Errors:_
