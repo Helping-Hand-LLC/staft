@@ -522,24 +522,6 @@ _Also: All admins and managers are verified that their organization matches the 
           "organization": "<org_id>",
           "phone": "1234567890",
           "ssn": "123456789"
-        },
-        {
-          "isManager": false,
-          "isAdmin": false,
-          "_id": "<profile_id>",
-          "user": "<user_id>",
-          "__v": 0,
-          "address": {
-            "street": "123 Main St",
-            "city": "Manhattan",
-            "state": "NY",
-            "zip": "12345"
-          },
-          "birthday": "2000-01-01T05:00:00.000Z",
-          "name": "hello4",
-          "organization": "<org_id>",
-          "phone": "1234567890",
-          "ssn": "123456789"
         }
       ]
     }
@@ -568,7 +550,7 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
     ```json
-    { "success": true }
+    { "org": "<org_id>" }
     ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
@@ -700,15 +682,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "createdBy": "<user_id>",
           "startDateTime": "2020-07-15T09:30:00.000Z",
           "endDateTime": "2020-07-15T11:45:00.000Z",
-          "participants": [
-            {
-              "checkedIn": { "status": false },
-              "checkedOut": { "status": false },
-              "confirmedStatus": "unconfirmed",
-              "_id": "<participant_id>",
-              "worker": "<user_id>"
-            }
-          ],
+          "participants": [],
           "createdAt": "2020-05-19T21:44:32.099Z",
           "updatedAt": "2020-05-19T21:47:05.697Z",
           "__v": 1
@@ -757,7 +731,70 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
 
     ```json
-
+    {
+      "myOrgEvents": [
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 1",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-06-15T10:30:00.000Z",
+          "endDateTime": "2020-06-15T14:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": true,
+                "datetime": "2020-10-31T04:00:00.000Z"
+              },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "rejected",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            },
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "accepted",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-16T22:40:50.815Z",
+          "updatedAt": "2020-06-02T19:40:31.533Z",
+          "__v": 9
+        },
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 2",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<particpant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-19T21:44:20.600Z",
+          "updatedAt": "2020-05-19T21:46:56.552Z",
+          "__v": 1
+        }
+      ]
+    }
     ```
 
   - _Possible Errors:_
@@ -796,25 +833,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
         "createdBy": "<user_id>",
         "startDateTime": "2020-06-15T10:30:00.000Z",
         "endDateTime": "2020-06-15T14:45:00.000Z",
-        "participants": [
-          {
-            "checkedIn": {
-              "status": true,
-              "datetime": "2020-10-31T04:00:00.000Z"
-            },
-            "checkedOut": { "status": false },
-            "confirmedStatus": "rejected",
-            "_id": "<participant_id>",
-            "worker": "<user_id>"
-          },
-          {
-            "checkedIn": { "status": false },
-            "checkedOut": { "status": false },
-            "confirmedStatus": "unconfirmed",
-            "_id": "<participant_id>",
-            "worker": "<user_id>"
-          }
-        ],
+        "participants": [],
         "createdAt": "2020-05-16T22:40:50.815Z",
         "updatedAt": "2020-05-19T21:46:43.893Z",
         "__v": 9
@@ -986,8 +1005,8 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
         "startDateTime": "2020-05-15T06:30:00",
         "endDateTime": "2020-05-15T10:45:00",
         "participants": [
-            { "worker": "<worker_id>" },
-            { "worker": "<worker_id>" }
+            { "worker": "<user_id>" },
+            { "worker": "<user_id>" }
         ]
     }
     ```
@@ -995,7 +1014,39 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
 
     ```json
-
+    {
+      "event": {
+        "repeatOptions": { "ends": null },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "Event Title",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-05-15T06:30:00.000Z",
+        "endDateTime": "2020-05-15T10:45:00.000Z",
+        "participants": [
+          {
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "accepted",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          },
+          {
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "accepted",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          }
+        ],
+        "createdAt": "2020-05-16T22:40:50.815Z",
+        "updatedAt": "2020-06-02T20:55:29.174Z",
+        "__v": 9
+      }
+    }
     ```
 
   - _Possible Errors:_
@@ -1011,7 +1062,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - attempting to modify an event that has already ended
     - attempting to modify a published event
 
-- `PATCH /organizations/:org_id/events/:event_id`
+- `PATCH /organizations/:org_id/events/:event_id/add`
 
   - **_ACCESS: PRIVATE - managers only_**
   - Adds a worker as a participant of this organization event
@@ -1025,13 +1076,23 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    { "worker": "<worker_id>" }
+    { "worker": "<user_id>" }
     ```
 
   - _Example Response:_
 
     ```json
-
+    {
+      "participants": [
+        {
+          "checkedIn": { "status": false },
+          "checkedOut": { "status": false },
+          "confirmedStatus": "unconfirmed",
+          "_id": "<participant_id>",
+          "worker": "<user_id>"
+        }
+      ]
+    }
     ```
 
   - _Possible Errors:_
@@ -1045,7 +1106,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - database connection errors
     - worker already assigned to this event
 
-- `DELETE /organizations/:org_id/events/:event_id`
+- `DELETE /organizations/:org_id/events/:event_id/remove`
 
   - **_ACCESS: PRIVATE - managers only_**
   - Removes a worker as a participant of this organization event
@@ -1059,7 +1120,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    { "worker": "<worker_id>" }
+    { "worker": "<user_id>" }
     ```
 
   - _Example Response:_
@@ -1200,15 +1261,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "name": "Pizza Hut",
           "place_id": "ChIJ07nbYjLvaIgRmyhnoGpaY1U",
           "__v": 0
-        },
-        {
-          "_id": "<location_id>",
-          "organization": "<org_id>",
-          "formatted_address": "1709 N Dixie Hwy # 106, Elizabethtown, KY 42701, United States",
-          "icon": "https:&#x2F;&#x2F;maps.gstatic.com&#x2F;mapfiles&#x2F;place_api&#x2F;icons&#x2F;restaurant-71.png",
-          "name": "Pizza Hut",
-          "place_id": "ChIJt4yZRfLpaIgRqtlJlg8dSwI",
-          "__v": 0
         }
       ]
     }
@@ -1251,20 +1303,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "place_id": "ChIJfVWZGe1EQogRXO8CP_rXmZU"
         },
         {
-          "formatted_address": "2700 Wilhite Dr, Lexington, KY 40503, United States",
-          "location": { "lat": 37.997852, "lng": -84.520653 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJXVHtQWBbQogR7U5K3yozHa4"
-        },
-        {
-          "formatted_address": "1869 Plaudit Pl, Lexington, KY 40509, United States",
-          "location": { "lat": 38.017224, "lng": -84.418568 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJPcrMl99PQogRist0h4mbLgo"
-        },
-        {
           "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
           "location": { "lat": 38.039084, "lng": -84.51431800000002 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
@@ -1293,13 +1331,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "place_id": "ChIJtdSC1rBaQogR_eQqASt8vgE"
         },
         {
-          "formatted_address": "2320 Elkhorn Rd, Lexington, KY 40509, United States",
-          "location": { "lat": 38.040744, "lng": -84.424178 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJZT7gx5NPQogRqgXPYnXYGwQ"
-        },
-        {
           "formatted_address": "808 E High St, Lexington, KY 40502, United States",
           "location": { "lat": 38.030726, "lng": -84.49023600000001 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
@@ -1314,13 +1345,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "place_id": "ChIJW1veVaBbQogR2ez9xzyVICg"
         },
         {
-          "formatted_address": "4049 Finn Way #130, Lexington, KY 40517, United States",
-          "location": { "lat": 37.9782668 "lng": -84.5281317 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJWbKK-H1cQogRs7-QsXcCzpw"
-        },
-        {
           "formatted_address": "University Drive &, Hilltop Ave, Lexington, KY 40508, United States",
           "location": { "lat": 38.0325678 "lng": -84.50135739999999 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
@@ -1328,60 +1352,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
           "place_id": "ChIJR01_XbhEQogRSQ3AWBRP5fk"
         },
         {
-          "formatted_address": "3809 Dylan Pl, Lexington, KY 40514, United States",
-          "location": { "lat": 37.981396, "lng": -84.551248 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJQThGyflcQogRwSmuxlCfc3c"
-        },
-        {
-          "formatted_address": "1600 Leestown Rd, Lexington, KY 40511, United States",
-          "location": { "lat": 38.065281, "lng": -84.527216 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJWSsNgYFDQogR6s55H86yzv4"
-        },
-        {
-          "formatted_address": "3175 Beaumont Centre Cir, Lexington, KY 40513, United States",
-          "location": { "lat": 38.0223306 "lng": -84.55925479999999 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJoctNwNRcQogRRTfE6ch6v0c"
-        },
-        {
           "formatted_address": "740 S Limestone Ave, Lexington, KY 40508, United States",
           "location": { "lat": 38.0335569 "lng": -84.508223 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
           "name": "Starbucks",
           "place_id": "ChIJOWopvbtEQogR78GWgZIdUYc"
-        },
-        {
-          "formatted_address": "1940 Pavillon Wy, Lexington, KY 40509, United States",
-          "location": { "lat": 38.022062, "lng": -84.414992 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJ97wl9d1PQogRv-tZfqHF2P0"
-        },
-        {
-          "formatted_address": "3101 Richmond Rd, Lexington, KY 40509, United States",
-          "location": { "lat": 38.003354, "lng": -84.444313 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJF--AyqVaQogR-JhN8l_TwLk"
-        },
-        {
-          "formatted_address": "101 S Limestone, Lexington, KY 40507, United States",
-          "location": { "lat": 38.045537, "lng": -84.497737 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJezZFcJRFQogRv9WbMytCpv4"
-        },
-        {
-          "formatted_address": "404 S Limestone, Lexington, KY 40508, United States",
-          "location": { "lat": 38.0399197 "lng": -84.5025994 },
-          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-          "name": "Starbucks",
-          "place_id": "ChIJJfaCfZVEQogRSPpTCrebW1o"
         }
       ]
     }
@@ -1429,10 +1404,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
       "location": {
         "_id": "<location_id>",
         "organization": "<org_id>",
-        "formatted_address": "3401 Nicholasville Rd PK7, Lexington, KY 40503, United States",
-        "icon": "https:&#x2F;&#x2F;maps.gstatic.com&#x2F;mapfiles&#x2F;place_api&#x2F;icons&#x2F;cafe-71.png",
+        "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
+        "geometry": {
+          "location": { "lat": 38.039084, "lng": -84.51431800000002 },
+        }
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
         "name": "Starbucks",
-        "place_id": "ChIJT0fjlIRcQogRT7HGb7sfArI",
+        "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
         "__v": 0
       }
     }
