@@ -74,6 +74,7 @@ _ACCESS: PUBLIC_
 _ACCESS: PRIVATE - all users_
 
 - `GET /user/me`
+
   - Retrieves the basic information for the currently logged in user
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
@@ -86,7 +87,10 @@ _ACCESS: PRIVATE - all users_
     ```
   - _Example Response:_
   - _Possible Errors:_
+    - user does not exist
+
 - `GET /user/profile/me`
+
   - Retrieves the user profile for the currently logged in user
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token-
@@ -98,6 +102,8 @@ _ACCESS: PRIVATE - all users_
     ```
   - _Example Response:_
   - _Possible Errors:_
+    - profile does not exist
+
 - `POST /user/profile`
 
   - Creates or updates a new profile for the currently logged in user
@@ -171,6 +177,7 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Response:_
   - _Possible Errors:_
 - `GET /organizations/:org_id/me`
+
   - **_ACCESS: PRIVATE - all users in this organization_**
   - Retrieves the basic information of a logged in user's organization
   - _Dependencies:_
@@ -183,6 +190,10 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker is not in this organization
+
 - `POST /organizations`
 
   - **_ACCESS: PUBLIC_**
@@ -230,6 +241,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Possible Errors:_
     - uid is required and must be unique and at least 4 characters
     - isPrivate must be a boolean (true or false)
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have admin level access
 
 - `PATCH /organizations/:org_id/addWorker`
 
@@ -255,6 +269,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Possible Errors:_
     - workerEmail is required and must be valid
     - access is required and must be either 'admin', 'manager', or 'worker'
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have admin level access
 
 - `DELETE /organizations/:org_id`
 
@@ -272,6 +289,9 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have admin level access
 
 #### Organization Workers
 
@@ -291,6 +311,9 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker is not in this organization
 
 - `GET /organizations/:org_id/workers/join/me`
 
@@ -308,6 +331,8 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
 
 - `PATCH /organizations/:org_id/workers/leave/me`
 
@@ -325,6 +350,10 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - worker profile does not exist
+    - organization does not exist
+    - worker is not in this organization
 
 #### Organization Events
 
@@ -346,6 +375,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
 
 - `GET /organizations/:org_id/events/me`
 
@@ -363,6 +395,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker is not in this organization
 
 - `GET /organizations/:org_id/events/:event_id`
 
@@ -380,6 +415,11 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
+    - event does not exist
 
 - `GET /organizations/:org_id/events/:event_id/me`
 
@@ -397,6 +437,12 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker is not in this organization
+    - event does not exist
+    - worker is not a participant of this event
 
 - `POST /organizations/:org_id/events`
 
@@ -440,6 +486,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
         - multiplier must be either 'weeks', 'months', or 'years'
       - ends must be a valid date and equal to or after startDateTime
     - links must be an array of strings that are website URLs
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
 
 - `PUT /organizations/:org_id/events:event_id`
 
@@ -471,6 +520,12 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - event does not exist
+    - worker does not have manager level access
+    - manager is not creator of this event and has not set override header
 
 - `PATCH /organizations/:org_id/events/:event_id`
 
@@ -491,6 +546,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - event does not exist
+    - worker does not have manager level access
+    - manager is not creator of this event and has not set override header
+    - worker is not participant of this event
 
 - `DELETE /organizations/:org_id/events/:event_id`
 
@@ -511,6 +573,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - event does not exist
+    - worker does not have manager level access
+    - manager is not creator of this event and has not set override header
+    - worker is not participant of this event
 
 - `PATCH /organizations/:org_id/events/:event_id/me`
 
@@ -547,6 +616,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - checkedOut
       - status must be boolean (true or false), if provided
       - dateTime must be a valid date
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - worker profile does not exist
+    - organization does not exist
+    - worker is not in this organization
+    - event does not exist
+    - worker is not participant of this event
 
 - `DELETE /organizations/:org_id/events/:event_id`
 
@@ -564,6 +640,12 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - event_id is not valid mongoose ObjectId
+    - organization does not exist
+    - event does not exist
+    - worker does not have manager level access
+    - manager is not creator of this event and has not set override header
 
 ##### Organization Event Locations
 
@@ -583,6 +665,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
 
 - `GET /organizations/:org_id/events/locations/query`
 
@@ -604,6 +689,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Response:_
   - _Possible Errors:_
     - query is required
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
 
 - `POST /organizations/:org_id/events/locations`
 
@@ -638,3 +726,6 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
       - lng must be a decimal value
     - name is required
     - place_id is required
+    - org_id is not valid mongoose ObjectId
+    - organization does not exist
+    - worker does not have manager level access
