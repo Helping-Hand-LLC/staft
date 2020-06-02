@@ -28,6 +28,8 @@ _ACCESS: PUBLIC_
 
   - _Example Response:_
   - _Possible Errors:_
+    - email is required and must be valid
+    - password is required
 
 - `POST /auth/register`
 
@@ -50,6 +52,9 @@ _ACCESS: PUBLIC_
 
   - _Example Response:_
   - _Possible Errors:_
+    - email is required and must be valid
+    - password is required and must be at least 6 characters
+    - passwordConfirm is required and must match password
 
 - `GET /auth/logout`
   - Logs out the currently logged in user
@@ -123,6 +128,15 @@ _ACCESS: PRIVATE - all users_
 
   - _Example Response:_
   - _Possible Errors:_
+    - name is required
+    - address
+      - street is required
+      - city is required
+      - state is required
+      - zip (code) is required
+    - phone is required
+    - birthday is required
+    - gender is required and must be either 'male' or 'female'
 
 - `DELETE /user/profile`
   - Deletes a user and their corresponding profile
@@ -189,6 +203,8 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - uid is required and must be unique and at least 4 characters
+    - isPrivate must be a boolean (true or false)
 
 - `PUT /organizations/:org_id`
 
@@ -212,6 +228,8 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - uid is required and must be unique and at least 4 characters
+    - isPrivate must be a boolean (true or false)
 
 - `PATCH /organizations/:org_id/addWorker`
 
@@ -235,6 +253,8 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
   - _Possible Errors:_
+    - workerEmail is required and must be valid
+    - access is required and must be either 'admin', 'manager', or 'worker'
 
 - `DELETE /organizations/:org_id`
 
@@ -409,6 +429,17 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - isPublished must be a boolean (true or false), if provided
+    - location is required
+    - startDateTime is required and must be a valid date and equal to or after endDateTime
+    - endDateTime is required and must be a valid date and equal to or before startDateTime
+    - isRepeatEvent must be boolean (true or false), if provided
+    - repeatOptions
+      - daysOfWeek must be array of 3-letter string abbreviations representing days of the week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      - frequency
+        - multiplier must be either 'weeks', 'months', or 'years'
+      - ends must be a valid date and equal to or after startDateTime
+    - links must be an array of strings that are website URLs
 
 - `PUT /organizations/:org_id/events:event_id`
 
@@ -509,6 +540,13 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - confirmedStatus must be either 'unconfirmed', 'accepted', or 'rejected'
+    - checkedIn
+      - status must be boolean (true or false), if provided
+      - dateTime must be a valid date
+    - checkedOut
+      - status must be boolean (true or false), if provided
+      - dateTime must be a valid date
 
 - `DELETE /organizations/:org_id/events/:event_id`
 
@@ -565,6 +603,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - query is required
 
 - `POST /organizations/:org_id/events/locations`
 
@@ -593,3 +632,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
   - _Example Response:_
   - _Possible Errors:_
+    - formatted_address is required
+    - location
+      - lat must be a decimal value
+      - lng must be a decimal value
+    - name is required
+    - place_id is required
