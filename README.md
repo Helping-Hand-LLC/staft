@@ -22,13 +22,15 @@ _ACCESS: PUBLIC_
     Host: http://localhost:5000
     Content-Type: application/json
 
-    {
-      "email": "hello@gmail.com",
-      "password": "123456"
-    }
+    { "email": "hello@gmail.com", "password": "123456" }
     ```
 
   - _Example Response:_
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    }
+    ```
   - _Possible Errors:_
     - database connection errors
     - user not found
@@ -57,6 +59,11 @@ _ACCESS: PUBLIC_
     ```
 
   - _Example Response:_
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    }
+    ```
   - _Possible Errors:_
     - database connection errors
     - user already registered
@@ -93,6 +100,18 @@ _ACCESS: PRIVATE - all users_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+    {
+      "user": {
+        "type": 0,
+        "_id": "<user_id>",
+        "email": "hello@gmail.com",
+        "createdAt": "2020-06-02T15:27:37.451Z",
+        "updatedAt": "2020-06-02T15:27:37.451Z",
+        "__v": 0
+      }
+    }
+    ```
   - _Possible Errors:_
     - user does not exist
     - database connection errors
@@ -109,6 +128,31 @@ _ACCESS: PRIVATE - all users_
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+    ```json
+    {
+      "populated": {
+        "isManager": false,
+        "isAdmin": false,
+        "_id": "<profile_id>",
+        "user": "<user_id>",
+        "__v": 0,
+        "address": {
+          "street": "123 Main St",
+          "city": "Manhattan",
+          "state": "NY",
+          "zip": "12345"
+        },
+        "birthday": "2000-01-01T05:00:00.000Z",
+        "createdAt": "2020-06-02T15:34:14.609Z",
+        "gender": 0,
+        "name": "hello",
+        "organization": null,
+        "phone": "1234567890",
+        "ssn": "123456789",
+        "updatedAt": "2020-06-02T15:34:14.609Z"
+      }
+    }
+    ```
   - _Possible Errors:_
     - profile does not exist
     - database connection errors
@@ -141,16 +185,43 @@ _ACCESS: PRIVATE - all users_
         "street": "123 Main St",
         "city": "Manhattan",
         "state": "NY",
-        "zip": "54321"
+        "zip": "12345"
       },
       "birthday": "01-01-2000",
       "phone": "1234567890",
-      "gender": "male",
+      "gender": 0,
       "ssn": "123456789"
     }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "profile": {
+        "isManager": false,
+        "isAdmin": false,
+        "_id": "<profile_id>",
+        "user": "<user_id>",
+        "__v": 0,
+        "address": {
+          "street": "123 Main St",
+          "city": "Manhattan",
+          "state": "NY",
+          "zip": "12345"
+        },
+        "birthday": "2000-01-01T05:00:00.000Z",
+        "createdAt": "2020-06-02T15:34:14.609Z",
+        "gender": 0,
+        "name": "hello",
+        "organization": null,
+        "phone": "1234567890",
+        "ssn": "123456789",
+        "updatedAt": "2020-06-02T15:34:14.609Z"
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - database connection errors
 
@@ -190,6 +261,17 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+
+    ```json
+    {
+      "publicOrgs": [
+        { "_id": "<org_id>", "uid": "public1" },
+        { "_id": "<org_id>", "uid": "public2" },
+        { "_id": "<org_id>", "uid": "private1" }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - database connection errors
     - no public organizations found
@@ -207,6 +289,18 @@ _Also: All admins and managers are verified that their organization matches the 
     Authorization: Bearer <token>
     ```
   - _Example Response:_
+
+    ```json
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "public1",
+        "isPrivate": false,
+        "__v": 0
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -227,13 +321,24 @@ _Also: All admins and managers are verified that their organization matches the 
     Host: http://localhost:5000
     Content-Type: application/json
 
-    {
-      "uid": "neworg",
-      "isPrivate": false
-    }
+    { "uid": "neworg", "isPrivate": false }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "neworg",
+        "isPrivate": false,
+        "createdAt": "2020-06-02T15:52:56.612Z",
+        "updatedAt": "2020-06-02T15:52:56.612Z",
+        "__v": 0
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - database connection errors
 
@@ -253,13 +358,24 @@ _Also: All admins and managers are verified that their organization matches the 
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    {
-      "uid": "public1",
-      "isPrivate": false
-    }
+    { "uid": "private2", "isPrivate": true }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "org": {
+        "_id": "<org_id>",
+        "uid": "private2",
+        "isPrivate": true,
+        "createdAt": "2020-06-02T15:52:56.612Z",
+        "updatedAt": "2020-06-02T15:55:41.029Z",
+        "__v": 0
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -282,13 +398,22 @@ _Also: All admins and managers are verified that their organization matches the 
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    {
-      "workerEmail": "random@email.com",
-      "access": "worker"
-    }
+    { "workerEmail": "random@email.com", "access": "worker" }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "worker": {
+        "email": "random@email.com",
+        "isAdmin": false,
+        "isManager": false,
+        "organization": "<org_id>"
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -340,6 +465,68 @@ _Also: All admins and managers are verified that their organization matches the 
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "orgUsers": [
+        {
+          "isManager": true,
+          "isAdmin": true,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        },
+        {
+          "isManager": true,
+          "isAdmin": false,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello2",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        },
+        {
+          "isManager": true,
+          "isAdmin": true,
+          "_id": "<profile_id>",
+          "user": "<user_id>",
+          "__v": 0,
+          "address": {
+            "street": "123 Main St",
+            "city": "Manhattan",
+            "state": "NY",
+            "zip": "12345"
+          },
+          "birthday": "2000-01-01T05:00:00.000Z",
+          "name": "hello3",
+          "organization": "<org_id>",
+          "phone": "1234567890",
+          "ssn": "123456789"
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -363,7 +550,7 @@ _Also: All admins and managers are verified that their organization matches the 
 
   - _Example Response:_
     ```json
-    { "success": true }
+    { "org": "<org_id>" }
     ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
@@ -419,6 +606,108 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "orgEvents": [
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 1",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-06-15T10:30:00.000Z",
+          "endDateTime": "2020-06-15T14:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": true,
+                "datetime": "2020-10-31T04:00:00.000Z"
+              },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "rejected",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            },
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-16T22:40:50.815Z",
+          "updatedAt": "2020-05-19T21:46:43.893Z",
+          "__v": 9
+        },
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 2",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-19T21:44:20.600Z",
+          "updatedAt": "2020-05-19T21:46:56.552Z",
+          "__v": 1
+        },
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 3",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [],
+          "createdAt": "2020-05-19T21:44:32.099Z",
+          "updatedAt": "2020-05-19T21:47:05.697Z",
+          "__v": 1
+        },
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 4",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [],
+          "createdAt": "2020-05-19T21:44:38.473Z",
+          "updatedAt": "2020-05-19T21:44:38.473Z",
+          "__v": 0
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -440,6 +729,74 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "myOrgEvents": [
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 1",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-06-15T10:30:00.000Z",
+          "endDateTime": "2020-06-15T14:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": {
+                "status": true,
+                "datetime": "2020-10-31T04:00:00.000Z"
+              },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "rejected",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            },
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "accepted",
+              "_id": "<participant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-16T22:40:50.815Z",
+          "updatedAt": "2020-06-02T19:40:31.533Z",
+          "__v": 9
+        },
+        {
+          "repeatOptions": { "daysOfWeek": [], "ends": null },
+          "isPublished": false,
+          "isRepeatEvent": false,
+          "links": [],
+          "_id": "<event_id>",
+          "organization": "<org_id>",
+          "title": "Event 2",
+          "location": "<location_id>",
+          "createdBy": "<user_id>",
+          "startDateTime": "2020-07-15T09:30:00.000Z",
+          "endDateTime": "2020-07-15T11:45:00.000Z",
+          "participants": [
+            {
+              "checkedIn": { "status": false },
+              "checkedOut": { "status": false },
+              "confirmedStatus": "unconfirmed",
+              "_id": "<particpant_id>",
+              "worker": "<user_id>"
+            }
+          ],
+          "createdAt": "2020-05-19T21:44:20.600Z",
+          "updatedAt": "2020-05-19T21:46:56.552Z",
+          "__v": 1
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -461,6 +818,29 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "event": {
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "links": [],
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "Event Title",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-06-15T10:30:00.000Z",
+        "endDateTime": "2020-06-15T14:45:00.000Z",
+        "participants": [],
+        "createdAt": "2020-05-16T22:40:50.815Z",
+        "updatedAt": "2020-05-19T21:46:43.893Z",
+        "__v": 9
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -484,6 +864,47 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "event": {
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "links": [],
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "Event Title",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-06-15T10:30:00.000Z",
+        "endDateTime": "2020-06-15T14:45:00.000Z",
+        "participants": [
+          {
+            "checkedIn": {
+              "status": true,
+              "datetime": "2020-10-31T04:00:00.000Z"
+            },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "rejected",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          },
+          {
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "unconfirmed",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          }
+        ],
+        "createdAt": "2020-05-16T22:40:50.815Z",
+        "updatedAt": "2020-05-19T21:46:43.893Z",
+        "__v": 9
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -527,14 +948,34 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
       "endDateTime": "2020-07-15T07:45:00",
       "isRepeatEvent": false,
       "repeatOptions": {},
-      "links": [
-        "www.google.com",
-        "www.facebook.com"
-      ]
+      "links": [ "www.google.com", "www.facebook.com" ]
     }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "event": {
+        "repeatOptions": { "daysOfWeek": [], "ends": null },
+        "isPublished": true,
+        "isRepeatEvent": false,
+        "links": ["www.google.com", "www.facebook.com"],
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "Some event title",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-07-15T05:30:00.000Z",
+        "endDateTime": "2020-07-15T07:45:00.000Z",
+        "participants": [],
+        "createdAt": "2020-06-02T16:23:26.162Z",
+        "updatedAt": "2020-06-02T16:23:26.162Z",
+        "__v": 0
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -564,13 +1005,50 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
         "startDateTime": "2020-05-15T06:30:00",
         "endDateTime": "2020-05-15T10:45:00",
         "participants": [
-            { "worker": "<worker_id>" },
-            { "worker": "<worker_id>" }
+            { "worker": "<user_id>" },
+            { "worker": "<user_id>" }
         ]
     }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "event": {
+        "repeatOptions": { "ends": null },
+        "isPublished": false,
+        "isRepeatEvent": false,
+        "_id": "<event_id>",
+        "organization": "<org_id>",
+        "title": "Event Title",
+        "location": "<location_id>",
+        "createdBy": "<user_id>",
+        "startDateTime": "2020-05-15T06:30:00.000Z",
+        "endDateTime": "2020-05-15T10:45:00.000Z",
+        "participants": [
+          {
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "accepted",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          },
+          {
+            "checkedIn": { "status": false },
+            "checkedOut": { "status": false },
+            "confirmedStatus": "accepted",
+            "_id": "<participant_id>",
+            "worker": "<user_id>"
+          }
+        ],
+        "createdAt": "2020-05-16T22:40:50.815Z",
+        "updatedAt": "2020-06-02T20:55:29.174Z",
+        "__v": 9
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -584,7 +1062,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - attempting to modify an event that has already ended
     - attempting to modify a published event
 
-- `PATCH /organizations/:org_id/events/:event_id`
+- `PATCH /organizations/:org_id/events/:event_id/add`
 
   - **_ACCESS: PRIVATE - managers only_**
   - Adds a worker as a participant of this organization event
@@ -598,10 +1076,25 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    { "worker": "<worker_id>" }
+    { "worker": "<user_id>" }
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "participants": [
+        {
+          "checkedIn": { "status": false },
+          "checkedOut": { "status": false },
+          "confirmedStatus": "unconfirmed",
+          "_id": "<participant_id>",
+          "worker": "<user_id>"
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - event_id is not valid mongoose ObjectId
@@ -613,7 +1106,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     - database connection errors
     - worker already assigned to this event
 
-- `DELETE /organizations/:org_id/events/:event_id`
+- `DELETE /organizations/:org_id/events/:event_id/remove`
 
   - **_ACCESS: PRIVATE - managers only_**
   - Removes a worker as a participant of this organization event
@@ -627,7 +1120,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     Content-Type: application/json
     Authorization: Bearer <token>
 
-    { "worker": "<worker_id>" }
+    { "worker": "<user_id>" }
     ```
 
   - _Example Response:_
@@ -669,19 +1162,22 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
     {
       "confirmedStatus": "accepted",
-      "checkedIn": {
-        "status": true,
-        "dateTime": "2020-05-15T06:30:00"
-      },
-      "checkedOut": {
-        "status": false
-      }
+      "checkedIn": { "status": true, "dateTime": "2020-05-15T06:30:00" },
+      "checkedOut": { "status": false }
     }
     ```
 
   - _Example Response:_
     ```json
-    { "success": true }
+    {
+      "participant": {
+        "confirmedStatus": "accepted",
+        "checkedIn": { "status": true, "dateTime": "2020-05-15T06:30:00" },
+        "checkedOut": { "status": false },
+        "_id": "<participant_id>",
+        "worker": "<user_id>"
+      }
+    }
     ```
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
@@ -735,6 +1231,41 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "locations": [
+        {
+          "_id": "<location_id>",
+          "organization": "<org_id>",
+          "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
+          "icon": "https:&#x2F;&#x2F;maps.gstatic.com&#x2F;mapfiles&#x2F;place_api&#x2F;icons&#x2F;cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ",
+          "__v": 0
+        },
+        {
+          "_id": "<location_id>",
+          "organization": "<org_id>",
+          "formatted_address": "855 S Broadway, Lexington, KY 40504, United States",
+          "icon": "https:&#x2F;&#x2F;maps.gstatic.com&#x2F;mapfiles&#x2F;place_api&#x2F;icons&#x2F;restaurant-71.png",
+          "name": "Cook Out",
+          "place_id": "ChIJlYZ3haJEQogRKfaTNfaec-8",
+          "__v": 0
+        },
+        {
+          "_id": "<location_id>",
+          "organization": "<org_id>",
+          "formatted_address": "907 N Mulberry St, Elizabethtown, KY 42701, United States",
+          "icon": "https:&#x2F;&#x2F;maps.gstatic.com&#x2F;mapfiles&#x2F;place_api&#x2F;icons&#x2F;restaurant-71.png",
+          "name": "Pizza Hut",
+          "place_id": "ChIJ07nbYjLvaIgRmyhnoGpaY1U",
+          "__v": 0
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
@@ -760,6 +1291,77 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "response": [
+        {
+          "formatted_address": "325 W Main St #130, Lexington, KY 40507, United States",
+          "location": { "lat": 38.048932, "lng": -84.49964899999999 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJfVWZGe1EQogRXO8CP_rXmZU"
+        },
+        {
+          "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
+          "location": { "lat": 38.039084, "lng": -84.51431800000002 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
+        },
+        {
+          "formatted_address": "2320 Versailles Rd, Lexington, KY 40504, United States",
+          "location": { "lat": 38.046174, "lng": -84.554683 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJDyQOzxlDQogR0RAMOUZhvK8"
+        },
+        {
+          "formatted_address": "3401 Nicholasville Rd PK7, Lexington, KY 40503, United States",
+          "location": { "lat": 37.989343, "lng": -84.52801099999999 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJT0fjlIRcQogRT7HGb7sfArI"
+        },
+        {
+          "formatted_address": "2703 Richmond Rd, Lexington, KY 40509, United States",
+          "location": { "lat": 38.009083, "lng": -84.45371399999999 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJtdSC1rBaQogR_eQqASt8vgE"
+        },
+        {
+          "formatted_address": "808 E High St, Lexington, KY 40502, United States",
+          "location": { "lat": 38.030726, "lng": -84.49023600000001 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJh_w_ttpEQogRU848Yab18MQ"
+        },
+        {
+          "formatted_address": "3939 Tates Creek Rd, Lexington, KY 40517, United States",
+          "location": { "lat": 37.974708, "lng": -84.49871999999999 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJW1veVaBbQogR2ez9xzyVICg"
+        },
+        {
+          "formatted_address": "University Drive &, Hilltop Ave, Lexington, KY 40508, United States",
+          "location": { "lat": 38.0325678 "lng": -84.50135739999999 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJR01_XbhEQogRSQ3AWBRP5fk"
+        },
+        {
+          "formatted_address": "740 S Limestone Ave, Lexington, KY 40508, United States",
+          "location": { "lat": 38.0335569 "lng": -84.508223 },
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+          "name": "Starbucks",
+          "place_id": "ChIJOWopvbtEQogR78GWgZIdUYc"
+        }
+      ]
+    }
+    ```
+
   - _Possible Errors:_
     - query is required
     - org_id is not valid mongoose ObjectId
@@ -788,10 +1390,7 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 
     {
         "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
-        "location": {
-            "lat": 38.039084,
-            "lng": -84.51431800000002
-        },
+        "location": { "lat": 38.039084, "lng": -84.51431800000002 },
         "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
         "name": "Starbucks",
         "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
@@ -799,6 +1398,24 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
     ```
 
   - _Example Response:_
+
+    ```json
+    {
+      "location": {
+        "_id": "<location_id>",
+        "organization": "<org_id>",
+        "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
+        "geometry": {
+          "location": { "lat": 38.039084, "lng": -84.51431800000002 },
+        }
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+        "name": "Starbucks",
+        "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
+        "__v": 0
+      }
+    }
+    ```
+
   - _Possible Errors:_
     - org_id is not valid mongoose ObjectId
     - organization does not exist
