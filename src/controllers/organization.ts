@@ -23,7 +23,7 @@ export const getSingleOrg: MiddlewareFn = (_req, res) =>
   res.json({ org: res.locals.org });
 
 export const createOrg: MiddlewareFn = async (req, res, next) => {
-  const { uid, isPrivate } = req.body;
+  const { uid, isPrivate, adminEmail } = req.body;
 
   try {
     // check if org exists
@@ -39,11 +39,53 @@ export const createOrg: MiddlewareFn = async (req, res, next) => {
           )
         );
 
+    // check that admin exists
+    const admin = await User.findOne({ email: adminEmail });
+
+    if (!admin)
+      return res.status(404).json(routeError('Worker does not exist'));
+
+    // check admin profile
+    const adminProfile = await Profile.findOne({
+      user: admin.id
+    });
+
+    if (!adminProfile)
+      return res
+        .status(400)
+        .json(
+          routeError(
+            'Worker must complete profile before being added to an organization'
+          )
+        );
+
+    // check admin organization
+    if (adminProfile.organization)
+      return res
+        .status(400)
+        .json(
+          routeError('Worker is already assigned to a different organization')
+        );
+
     // create new org
     org = new Organization({ uid, isPrivate });
     await org.save();
 
-    return res.json({ org });
+    // set access level and org of admin
+    adminProfile.isAdmin = true;
+    adminProfile.isManager = true;
+    adminProfile.organization = org._id;
+    await adminProfile.save();
+
+    return res.json({
+      org,
+      admin: {
+        email: adminEmail,
+        isAdmin: adminProfile.isAdmin,
+        isManager: adminProfile.isManager,
+        organization: adminProfile.organization
+      }
+    });
   } catch (err) {
     return next(err);
   }

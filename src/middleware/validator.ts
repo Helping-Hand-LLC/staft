@@ -33,6 +33,29 @@ export const registerRules: ValidatorFn = () => {
   ];
 };
 
+export const createOrUpdateProfileRules: ValidatorFn = () => {
+  return [
+    check('name').escape().notEmpty().withMessage('Name is required'),
+    check('address.street')
+      .escape()
+      .notEmpty()
+      .withMessage('Please enter a valid street address'),
+    check('address.city')
+      .escape()
+      .notEmpty()
+      .withMessage('Please enter a valid city'),
+    check('address.state').escape().notEmpty(),
+    check('address.zip').notEmpty().withMessage('Zip code is required'),
+    check('phone')
+      .notEmpty()
+      .isMobilePhone('any')
+      .withMessage('Please enter a valid phone number'),
+    check('birthday').notEmpty().toDate().withMessage('Birthday is required'),
+    check('gender').notEmpty().isIn([0, 1]).withMessage('Gender is required'),
+    check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
+  ];
+};
+
 export const createOrgRules: ValidatorFn = () => {
   return [
     check('uid')
@@ -48,7 +71,8 @@ export const createOrgRules: ValidatorFn = () => {
         }
         return true;
       }),
-    check('isPrivate').toBoolean()
+    check('isPrivate').toBoolean(),
+    check('adminEmail').notEmpty().isEmail().normalizeEmail()
   ];
 };
 
@@ -81,29 +105,6 @@ export const addWorkerToOrgRules: ValidatorFn = () => {
       .notEmpty()
       .isIn(['admin', 'manager', 'worker'])
       .withMessage('Please enter a valid access level for this worker')
-  ];
-};
-
-export const createOrUpdateProfileRules: ValidatorFn = () => {
-  return [
-    check('name').escape().notEmpty().withMessage('Name is required'),
-    check('address.street')
-      .escape()
-      .notEmpty()
-      .withMessage('Please enter a valid street address'),
-    check('address.city')
-      .escape()
-      .notEmpty()
-      .withMessage('Please enter a valid city'),
-    check('address.state').escape().notEmpty(),
-    check('address.zip').notEmpty().withMessage('Zip code is required'),
-    check('phone')
-      .notEmpty()
-      .isMobilePhone('any')
-      .withMessage('Please enter a valid phone number'),
-    check('birthday').notEmpty().toDate().withMessage('Birthday is required'),
-    check('gender').notEmpty().isIn([0, 1]).withMessage('Gender is required'),
-    check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
   ];
 };
 
