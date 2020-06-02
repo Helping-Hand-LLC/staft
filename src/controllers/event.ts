@@ -24,7 +24,7 @@ export const getAllMyOrgEvents: MiddlewareFn = async (req, res, next) => {
   try {
     const reqUser = req.user as IJwtUser;
     const orgEvents = await Event.find({
-      organization: res.locals.org.id
+      organization: res.locals.org._id
     });
 
     if (_.isEmpty(orgEvents))
@@ -38,7 +38,7 @@ export const getAllMyOrgEvents: MiddlewareFn = async (req, res, next) => {
     for (let i = 0; i < orgEvents.length; i++) {
       const event = orgEvents[i];
       const participant = event.participants.find(
-        el => el.worker === reqUser.id
+        el => el.worker == reqUser.id
       );
       if (participant) myOrgEvents.push(event);
     }

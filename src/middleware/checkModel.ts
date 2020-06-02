@@ -1,6 +1,6 @@
 import User from '../models/User';
 import Profile from '../models/Profile';
-import Organization from '../models/Organization';
+import Organization, { IOrg } from '../models/Organization';
 import Event, { IEvent } from '../models/Event';
 import MiddlewareFn, { IJwtUser } from '../config/middleware';
 import routeError from '../utils/error';
@@ -84,14 +84,15 @@ export const checkEventParticipant: MiddlewareFn = async (req, res, next) => {
         );
 
     // check worker belongs to this organization
-    if (workerProfile.organization !== res.locals.org._id)
+    const org: IOrg = res.locals.org;
+    if (String(workerProfile.organization) != String(org._id))
       return res
         .status(400)
         .json(routeError('Worker does not belong to this organization'));
 
     // check if worker belongs to this event
     const event: IEvent = res.locals.event;
-    const participant = event.participants.find(el => el.worker === worker);
+    const participant = event.participants.find(el => el.worker == worker);
 
     // set variables for controllers
     res.locals.worker = existingWorker;
