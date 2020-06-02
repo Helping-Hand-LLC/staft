@@ -222,7 +222,15 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Request:_
 
     ```http
+    PATCH /organizations/<org_id>/addWorker HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
 
+    {
+      "workerEmail": "random@email.com",
+      "access": "worker"
+    }
     ```
 
   - _Example Response:_
@@ -237,7 +245,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Request:_
 
     ```http
-
+    DELETE /organizations/<org_id> HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -254,7 +264,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/workers HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -269,7 +281,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/workers/join/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -284,7 +298,9 @@ _Also: All admins and managers are verified that their organization matches the 
   - _Example Request:_
 
     ```http
-
+    PATCH /organizations/<org_id>/workers/leave/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -303,7 +319,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/events HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -318,7 +336,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/events/<event_id>/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -333,7 +353,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/events/<event_id> HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -348,7 +370,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/events/<event_id>/me HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -363,7 +387,24 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
+    POST /organizations/<org_id>/events HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
 
+    {
+      "isPublished": true,
+      "title": "Some event title",
+      "location": "<location_id>",
+      "startDateTime": "2020-07-15T05:30:00",
+      "endDateTime": "2020-07-15T07:45:00",
+      "isRepeatEvent": false,
+      "repeatOptions": {},
+      "links": [
+        "www.google.com",
+        "www.facebook.com"
+      ]
+    }
     ```
 
   - _Example Response:_
@@ -378,7 +419,23 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
+    PUT /organizations/<org_id>/events/<event_id> HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Override-isPublished: false
+    Override-createdBy: true
+    Override-Confirmed-Participants: false
+    Authorization: Bearer <token>
 
+    {
+        "location": "<location_id>",
+        "startDateTime": "2020-05-15T06:30:00",
+        "endDateTime": "2020-05-15T10:45:00",
+        "participants": [
+            { "worker": "<worker_id>" },
+            { "worker": "<worker_id>" }
+        ]
+    }
     ```
 
   - _Example Response:_
@@ -387,13 +444,38 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
 - `PATCH /organizations/:org_id/events/:event_id`
 
   - **_ACCESS: PRIVATE - managers only_**
-  - Adds or removes a worker as a participant of this organization event
+  - Adds a worker as a participant of this organization event
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token
   - _Example Request:_
 
     ```http
+    PATCH /organizations/<org_id>/events/<event_id> HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
 
+    { "worker": "<worker_id>" }
+    ```
+
+  - _Example Response:_
+  - _Possible Errors:_
+
+- `DELETE /organizations/:org_id/events/:event_id`
+
+  - **_ACCESS: PRIVATE - managers only_**
+  - Removes a worker as a participant of this organization event
+  - _Dependencies:_
+    - Must be a logged in user with a valid JWT token
+  - _Example Request:_
+
+    ```http
+    DELETE /organizations/<org_id>/events/<event_id> HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
+
+    { "worker": "<worker_id>" }
     ```
 
   - _Example Response:_
@@ -408,7 +490,21 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
+    PATCH /organizations/<org_id>/events/<event_id>/me HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
 
+    {
+      "confirmedStatus": "accepted",
+      "checkedIn": {
+        "status": true,
+        "dateTime": "2020-05-15T06:30:00"
+      },
+      "checkedOut": {
+        "status": false
+      }
+    }
     ```
 
   - _Example Response:_
@@ -423,7 +519,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    DELETE /organizations/<org_id>/events/<event_id> HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -440,7 +538,9 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
-
+    GET /organizations/<org_id>/events/locations/stored HTTP/1.1
+    Host: http://localhost:5000
+    Authorization: Bearer <token>
     ```
 
   - _Example Response:_
@@ -455,7 +555,12 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
+    GET /organizations/<org_id>/events/locations/query HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
+    Authorization: Bearer <token>
 
+    { "query": "Starbucks Lexington KY" }
     ```
 
   - _Example Response:_
@@ -470,7 +575,20 @@ _NOTE: Admins are automatically given manager access. So routes with access leve
   - _Example Request:_
 
     ```http
+    POST /organizations/<org_id>/events/locations HTTP/1.1
+    Host: http://localhost:5000
+    Content-Type: application/json
 
+    {
+        "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
+        "location": {
+            "lat": 38.039084,
+            "lng": -84.51431800000002
+        },
+        "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+        "name": "Starbucks",
+        "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
+    }
     ```
 
   - _Example Response:_
