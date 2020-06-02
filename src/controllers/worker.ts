@@ -60,7 +60,7 @@ export const joinPublicOrg: MiddlewareFn = async (req, res, next) => {
     userProfile.isManager = false;
     userProfile.organization = res.locals.org.id;
     await userProfile.save();
-    return res.json({ success: true });
+    return res.json({ org: userProfile.organization });
   } catch (err) {
     return next(err);
   }
