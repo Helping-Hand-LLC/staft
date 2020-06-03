@@ -74,6 +74,7 @@ describe('Test isAdmin access middleware', () => {
     const next = buildNext();
 
     isAdmin(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -145,6 +146,7 @@ describe('Test isManager access middleware', () => {
     const next = buildNext();
 
     isManager(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -198,6 +200,7 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -221,6 +224,7 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -242,6 +246,7 @@ describe('Test managerIsEventCreator access middleware', () => {
     const next = buildNext();
 
     managerIsEventCreator(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -281,6 +286,7 @@ describe('Test isInOrg access middleware', () => {
     const next = buildNext();
 
     isInOrg(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
@@ -333,6 +339,7 @@ describe('Test isInEvent access middleware', () => {
     const next = buildNext();
 
     isInEvent(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.locals.participant).toBeDefined();
     expect(res.locals.participant).toEqual({ worker: '1234' });

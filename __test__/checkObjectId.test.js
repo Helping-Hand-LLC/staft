@@ -30,6 +30,7 @@ describe('Test checkObjectId middleware', () => {
     const next = buildNext();
 
     middlwareFn(req, res, next);
+    expect(next).toHaveBeenCalledWith(/* nothing */);
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
