@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
-const { buildReq, buildRes, buildNext } = require('./utils/generate');
-const mongoose = require('mongoose');
-const checkObjectId = require('../middleware/checkObjectId');
-const { routeError } = require('../utils/error');
+import { buildReq, buildRes, buildNext } from './utils/generate';
+import { Types } from 'mongoose';
+import checkObjectId from '../middleware/checkObjectId';
+import { routeError } from '../utils/error';
 
 describe('Test checkObjectId middleware', () => {
   it('Returns early for invalid object id', () => {
@@ -25,7 +25,7 @@ describe('Test checkObjectId middleware', () => {
     const middlwareFn = checkObjectId('idToCheck');
 
     const req = buildReq();
-    req.params['idToCheck'] = `${mongoose.Types.ObjectId()}`;
+    req.params['idToCheck'] = `${Types.ObjectId()}`;
     const res = buildRes();
     const next = buildNext();
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-const { routeError } = require('../utils/error');
+import { routeError } from '../utils/error';
 
 describe('Test error utility', () => {
   it('error utility returns a correctly formatted error object with message', () => {

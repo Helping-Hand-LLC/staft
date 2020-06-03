@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-const app = require('../app');
-const request = require('supertest');
+import app from '../app';
+import request from 'supertest';
 
 describe('Test auth login route', () => {
   it('Throws errors if email and password are not sent in request body', () => {

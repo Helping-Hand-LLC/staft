@@ -1,18 +1,13 @@
 /* eslint-disable no-undef */
-const {
-  buildUser,
-  buildReq,
-  buildRes,
-  buildNext
-} = require('./utils/generate');
-const {
+import { buildUser, buildReq, buildRes, buildNext } from './utils/generate';
+import {
   isAdmin,
   isManager,
   managerIsEventCreator,
   isInOrg,
   isInEvent
-} = require('../middleware/access');
-const { routeError } = require('../utils/error');
+} from '../middleware/access';
+import { routeError } from '../utils/error';
 
 // isAdmin
 describe('Test isAdmin access middleware', () => {
