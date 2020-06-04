@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "nodemon src/server.ts",
+    "server": "nodemon src/server.ts",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "check-types": "tsc --noEmit",
     "prettier": "prettier 'src/**/*.{js,ts}'",
     "format": "npm run prettier -- --write",
@@ -52,6 +54,7 @@
     "@types/supertest": "^2.0.9",
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
+    "concurrently": "^5.2.0",
     "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.11.0",
     "nodemon": "^2.0.2",
