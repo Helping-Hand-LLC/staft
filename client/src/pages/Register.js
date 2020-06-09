@@ -10,15 +10,12 @@ function Register() {
   function handleEmailChange(e) {
     setEmail(e.target.value);
   }
-
   function handlePhoneChange(e) {
     setPhone(e.target.value);
   }
-
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
-
   function handlePasswordConfirmChange(e) {
     setPasswordConfirm(e.target.value);
   }
@@ -26,11 +23,15 @@ function Register() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log('form submitted');
+    // TODO: axios request to backend
   }
 
   return (
     <div className='h-screen p-3'>
-      <div className='h-content flex flex-col rounded content-wrapper'>
+      <div
+        className='flex flex-col rounded content-wrapper'
+        style={{ height: '95%' }}
+      >
         <section className='bg-secondary p-8 rounded-t' id='display'>
           <h2 className='font-hairline text-4xl'>
             <span className='font-bold'>Sign up</span> with email and phone
@@ -40,7 +41,7 @@ function Register() {
         <section className='flex-1'>
           <form
             className='h-full flex flex-col justify-evenly items-center'
-            action='/users/register'
+            action='/register'
             method='POST'
             onSubmit={handleSubmit}
           >

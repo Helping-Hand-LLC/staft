@@ -8,13 +8,6 @@ module.exports = {
         newlightergrey: '#f0f0f0',
         newwhite: '#fdfffc'
       },
-      height: {
-        img: '200px',
-        content: '95%'
-      },
-      fontSize: {
-        '8xl': '8rem'
-      },
       boxShadow: {
         top: '0 -5px 20px 0 rgba(26, 11, 56, 0.15)'
       },

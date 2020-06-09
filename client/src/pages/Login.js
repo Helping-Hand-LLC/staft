@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import logo from '../images/A_WebVersion.png';
 
 function Login() {
@@ -9,7 +10,6 @@ function Login() {
   function handleEmailChange(e) {
     setEmail(e.target.value);
   }
-
   function handlePasswordChange(e) {
     setPassword(e.target.value);
   }
@@ -17,12 +17,18 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
     console.log('form submitted');
+    // TODO: axios request to backend
   }
 
   return (
     <div className='h-screen flex flex-col'>
       <section className='pt-6 pb-3'>
-        <img className='block mx-auto h-img' src={logo} alt='staft logo' />
+        <img
+          className='block mx-auto'
+          style={{ height: '200px' }}
+          src={logo}
+          alt='staft logo'
+        />
         <h6 className='text-center text-sm font-light uppercase'>Staft</h6>
       </section>
       <section className='rounded-lg shadow-top p-6 text-center flex-1'>
@@ -32,7 +38,8 @@ function Login() {
         <p className='text-secondary text-base font-normal mb-6'>
           Please login to continue.
         </p>
-        <form action='/users/login' method='POST' onSubmit={handleSubmit}>
+        {/* REVIEW: need action attr? */}
+        <form action='/login' method='POST' onSubmit={handleSubmit}>
           <input
             className='login-input placeholder-primary rounded-t-md'
             type='email'
