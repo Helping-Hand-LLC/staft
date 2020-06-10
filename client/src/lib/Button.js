@@ -6,8 +6,8 @@ import _ from 'lodash';
 
 const defaultProps = {
   display: 'inline-block',
-  bgColor: 'bg-primary',
-  textColor: 'text-newwhite',
+  bgColor: 'bg-blue-900 hover:bg-blue-700',
+  textColor: 'text-white',
   borderRadius: 'rounded',
   fontSize: 'text-base',
   fontWeight: 'font-normal',
@@ -48,9 +48,9 @@ export function ButtonLink(props) {
   );
 }
 
-export function Outlined(props) {
+export function Outlined() {
   return (
-    <button className='bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded'>
+    <button className='bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded'>
       Button
     </button>
   );
@@ -60,5 +60,3 @@ Button.defaultProps = defaultProps;
 Button.propTypes = propTypes;
 ButtonLink.defaultProps = defaultProps;
 ButtonLink.propTypes = propTypes;
-Outlined.defaultProps = defaultProps;
-Outlined.propTypes = propTypes;

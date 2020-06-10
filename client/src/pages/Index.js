@@ -20,16 +20,16 @@ function Index() {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       >
         <section>
-          <h1 className='uppercase text-3xl font-normal my-2 text-newwhite'>
+          <h1 className='uppercase text-3xl font-normal my-2 text-white'>
             Staft
           </h1>
-          <p className='font-light text-newwhite text-lg italic'>
+          <p className='font-light text-white text-lg italic'>
             Bringing people together, better.
           </p>
         </section>
         <section className='h-32 w-5/6 mx-auto flex flex-col justify-center'>
           <Button
-            bgColor='bg-secondary'
+            bgColor='bg-teal-500 hover:bg-teal-700'
             textTransform='uppercase'
             fontSize='text-sm'
             margin='my-4'
@@ -39,8 +39,8 @@ function Index() {
           <div className='flex justify-between'>
             <ButtonLink
               to='/register'
-              bgColor='bg-newwhite'
-              textColor='text-primary'
+              bgColor='bg-white'
+              textColor='text-blue-900'
               textTransform='uppercase'
               fontSize='text-sm'
               flex='flex-1'
@@ -50,8 +50,8 @@ function Index() {
             </ButtonLink>
             <ButtonLink
               to='/login'
-              bgColor='bg-newwhite'
-              textColor='text-primary'
+              bgColor='bg-white'
+              textColor='text-blue-900'
               textTransform='uppercase'
               fontSize='text-sm'
               flex='flex-1'

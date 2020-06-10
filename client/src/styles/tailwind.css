@@ -2,31 +2,4 @@
 
 @tailwind components;
 
-.login-input {
-  @apply block bg-newlightergrey w-full my-0 mx-auto text-center py-4 px-0 text-primary outline-none border border-solid border-light;
-}
-
-.register-input {
-  @apply block w-4/5 mx-auto my-2 p-3 text-sm outline-none rounded border border-solid border-gray-200;
-}
-
-.sidebar-link {
-  @apply font-bold text-lg my-2;
-}
-
-.tab-link {
-}
-
-.event-card {
-  @apply h-40 rounded overflow-hidden shadow-lg my-4 flex flex-col justify-between;
-}
-
-.event-heading {
-  @apply bg-newlightgrey text-newwhite p-6 text-right rounded-b;
-}
-
-.event-content {
-  @apply mt-auto text-secondary p-2;
-}
-
 @tailwind utilities;
