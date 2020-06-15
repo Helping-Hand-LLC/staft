@@ -24,7 +24,9 @@ function Login() {
   return (
     <div className='h-screen flex flex-col p-4'>
       <section className='mb-2'>
-        <CloseIcon />
+        <Link to='/'>
+          <CloseIcon />
+        </Link>
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2'>
@@ -47,7 +49,7 @@ function Login() {
               <AlternateEmailIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='email'
               name='email'
               id='email'
@@ -64,7 +66,7 @@ function Login() {
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='password'
               name='password'
               id='password'
@@ -73,9 +75,26 @@ function Login() {
               onChange={handlePasswordChange}
             />
           </label>
+          <div className='mt-6 flex justify-center'>
+            <p className='text-xs font-light mx-1'>
+              <Link
+                to='/forgot'
+                className='hover:underline text-teal-500 hover:text-teal-300'
+              >
+                Forgot Password?
+              </Link>{' '}
+              or{' '}
+              <Link
+                to='/register'
+                className='hover:underline text-teal-500 hover:text-teal-300'
+              >
+                Create an Account
+              </Link>
+            </p>
+          </div>
         </section>
         <section>
-          <small className='block mb-4'>
+          <small className='block mb-4 font-light'>
             By using Staft, you agree to our{' '}
             <Link to='#' className='text-teal-500 hover:text-teal-300'>
               Privacy Policy
@@ -104,12 +123,6 @@ function Login() {
               }}
             />
           </Button>
-          {/* <p className='mb-4 mx-0'>
-              <Link to='/forgot'>Forgot Password?</Link>
-            </p>
-            <small>
-              <Link to='/register'>Create an Account</Link>
-            </small> */}
         </section>
       </form>
     </div>

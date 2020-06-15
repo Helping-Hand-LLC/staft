@@ -29,7 +29,9 @@ function Register() {
   return (
     <div className='h-screen flex flex-col p-4'>
       <section className='mb-2'>
-        <CloseIcon />
+        <Link to='/'>
+          <CloseIcon />
+        </Link>
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2'>
@@ -52,7 +54,7 @@ function Register() {
               <AlternateEmailIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='email'
               name='email'
               id='email'
@@ -69,7 +71,7 @@ function Register() {
               <PhoneIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='tel'
               name='phone'
               id='phone'
@@ -86,7 +88,7 @@ function Register() {
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='password'
               name='password'
               id='password'
@@ -103,7 +105,7 @@ function Register() {
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2'
+              className='placeholder-gray-400 p-2 outline-none'
               type='password'
               name='passwordConfirm'
               id='passwordConfirm'
@@ -112,9 +114,12 @@ function Register() {
               onChange={handlePasswordConfirmChange}
             />
           </label>
+          <p className='mt-6 block text-center text-xs text-teal-500 hover:text-teal-300'>
+            <Link to='/login'>Already have an account? Sign in.</Link>
+          </p>
         </section>
         <section>
-          <small className='block mb-4'>
+          <small className='block mb-4 font-light'>
             By using Staft, you agree to our{' '}
             <Link to='#' className='text-teal-500 hover:text-teal-300'>
               Privacy Policy
@@ -143,9 +148,6 @@ function Register() {
               }}
             />
           </Button>
-          {/* <small className='block text-center'>
-              <Link to='/login'>Already have an account? Sign In</Link>
-            </small> */}
         </section>
       </form>
     </div>
