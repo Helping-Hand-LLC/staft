@@ -12,9 +12,10 @@ const defaultProps = {
   fontSize: 'text-base',
   fontWeight: 'font-normal',
   textTransform: 'normal-case',
-  padding: 'py-2 px-4'
+  padding: 'py-2 px-4',
   // no default margin
   // no default flex
+  extras: ''
 };
 
 const propTypes = {
@@ -25,13 +26,17 @@ const propTypes = {
   fontSize: PropTypes.string,
   fontWeight: PropTypes.string,
   textTransform: PropTypes.string,
+  padding: PropTypes.string,
   margin: PropTypes.string,
-  flex: PropTypes.string
+  flex: PropTypes.string,
+  extras: PropTypes.string
 };
 
 export function Button(props) {
   return (
-    <button className={Object.values(_.omit(props, ['children'])).join(' ')}>
+    <button
+      className={Object.values(_.omit(props, ['children', 'type'])).join(' ')}
+    >
       {props.children}
     </button>
   );

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTimes,
+  faAt,
+  faAsterisk,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 
 import { Button } from '../lib/Button';
-
-// import logo from '../images/A_WebVersion.png';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -19,32 +24,33 @@ function Login() {
   }
 
   return (
-    <div className='h-screen flex flex-col'>
-      {/* TODO: close icon */}
+    <div className='h-screen flex flex-col p-8'>
       <section>
-        {/* <img
-          className='block mx-auto'
-          style={{ height: '200px' }}
-          src={logo}
-          alt='staft logo'
-        /> */}
-        <h2 className='text-center font-bold'>Enter Credentials</h2>
+        <FontAwesomeIcon icon={faTimes} />
+      </section>
+      <section>
+        <h2 className='text-center font-bold text-xl mb-2'>
+          Enter Credentials
+        </h2>
         <p className='text-center font-light text-sm'>
           Please login with email and password to continue.
         </p>
       </section>
-      {/* REVIEW: need action attr? */}
       <form
-        action='/login'
-        method='POST'
-        className='text-center flex-1 flex flex-col justify-between'
+        className='text-center flex-1 flex flex-col justify-between pt-12'
         onSubmit={handleSubmit}
       >
         <section>
-          <label htmlFor='email' className='border-b border-gray-300'>
-            {/* TODO: @ icon */}
+          <label
+            htmlFor='email'
+            className='border-b border-gray-400 inline-block py-2'
+          >
+            <FontAwesomeIcon
+              icon={faAt}
+              className='inline-block border-r border-gray-400'
+            />
             <input
-              className='placeholder-gray-300'
+              className='placeholder-gray-400'
               type='email'
               name='email'
               id='email'
@@ -53,10 +59,16 @@ function Login() {
               onChange={handleEmailChange}
             />
           </label>
-          <label htmlFor='password' className='border-b border-gray-300'>
-            {/* TODO: * icon */}
+          <label
+            htmlFor='password'
+            className='border-b border-gray-400 inline-block py-2'
+          >
+            <FontAwesomeIcon
+              icon={faAsterisk}
+              className='inline-block border-r border-gray-400'
+            />
             <input
-              className='placeholder-gray-300'
+              className='placeholder-gray-400'
               type='password'
               name='password'
               id='password'
@@ -67,7 +79,7 @@ function Login() {
           </label>
         </section>
         <section>
-          <small className='block'>
+          <small className='block mb-4'>
             By using Staft, you agree to our{' '}
             <Link to='#' className='text-teal-500 hover:text-teal-300'>
               Privacy Policy
@@ -81,11 +93,13 @@ function Login() {
             type='submit'
             display='block'
             bgColor='bg-teal-500 hover:bg-teal-300'
+            fontWeight='font-semibold'
             fontSize='text-sm'
             textTransform='uppercase'
+            extras='w-full'
           >
             Sign In
-            {/* TODO: right arrow icon */}
+            <FontAwesomeIcon icon={faChevronRight} className='inline-block' />
           </Button>
           {/* <button
               className='bg-secondary w-full my-4 mx-auto py-4 px-0 text-newwhite text-base border-0 rounded'
