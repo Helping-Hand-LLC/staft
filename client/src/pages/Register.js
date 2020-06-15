@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTimes,
-  faAt,
-  faPhone,
-  faAsterisk,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
+
+import CloseIcon from '@material-ui/icons/Close';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import PhoneIcon from '@material-ui/icons/Phone';
+import LockIcon from '@material-ui/icons/Lock';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
 
@@ -29,9 +27,9 @@ function Register() {
   }
 
   return (
-    <div className='h-screen flex flex-col p-8'>
-      <section>
-        <FontAwesomeIcon icon={faTimes} />
+    <div className='h-screen flex flex-col p-4'>
+      <section className='mb-2'>
+        <CloseIcon />
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2'>
@@ -50,12 +48,11 @@ function Register() {
             htmlFor='email'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faAt}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <AlternateEmailIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='email'
               name='email'
               id='email'
@@ -68,12 +65,11 @@ function Register() {
             htmlFor='phone'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faPhone}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <PhoneIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='tel'
               name='phone'
               id='phone'
@@ -86,12 +82,11 @@ function Register() {
             htmlFor='password'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faAsterisk}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <LockIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='password'
               name='password'
               id='password'
@@ -104,12 +99,11 @@ function Register() {
             htmlFor='passwordConfirm'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faAsterisk}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <LockIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='password'
               name='passwordConfirm'
               id='passwordConfirm'
@@ -137,17 +131,18 @@ function Register() {
             fontWeight='font-semibold'
             fontSize='text-sm'
             textTransform='uppercase'
-            extras='w-full'
+            extras='w-full relative'
           >
             Sign Up
-            <FontAwesomeIcon icon={faChevronRight} className='inline-block' />
+            <KeyboardArrowRightIcon
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '0.5rem',
+                transform: 'translate(0, -50%)'
+              }}
+            />
           </Button>
-          {/* <button
-              className='bg-primary text-newwhite uppercase text-base font-normal w-4/5 mx-auto my-2 px-0 py-3 block rounded border-none outline-none'
-              type='submit'
-            >
-              Sign Up
-            </button> */}
           {/* <small className='block text-center'>
               <Link to='/login'>Already have an account? Sign In</Link>
             </small> */}

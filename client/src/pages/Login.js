@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTimes,
-  faAt,
-  faAsterisk,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
+
+import CloseIcon from '@material-ui/icons/Close';
+import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
+import LockIcon from '@material-ui/icons/Lock';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
 
@@ -24,9 +22,9 @@ function Login() {
   }
 
   return (
-    <div className='h-screen flex flex-col p-8'>
-      <section>
-        <FontAwesomeIcon icon={faTimes} />
+    <div className='h-screen flex flex-col p-4'>
+      <section className='mb-2'>
+        <CloseIcon />
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2'>
@@ -45,12 +43,11 @@ function Login() {
             htmlFor='email'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faAt}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <AlternateEmailIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='email'
               name='email'
               id='email'
@@ -63,12 +60,11 @@ function Login() {
             htmlFor='password'
             className='border-b border-gray-400 inline-block py-2'
           >
-            <FontAwesomeIcon
-              icon={faAsterisk}
-              className='inline-block border-r border-gray-400'
-            />
+            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
+              <LockIcon fontSize='small' />
+            </div>
             <input
-              className='placeholder-gray-400'
+              className='placeholder-gray-400 p-2'
               type='password'
               name='password'
               id='password'
@@ -96,17 +92,18 @@ function Login() {
             fontWeight='font-semibold'
             fontSize='text-sm'
             textTransform='uppercase'
-            extras='w-full'
+            extras='w-full relative'
           >
             Sign In
-            <FontAwesomeIcon icon={faChevronRight} className='inline-block' />
+            <KeyboardArrowRightIcon
+              style={{
+                position: 'absolute',
+                top: '50%',
+                right: '0.5rem',
+                transform: 'translate(0, -50%)'
+              }}
+            />
           </Button>
-          {/* <button
-              className='bg-secondary w-full my-4 mx-auto py-4 px-0 text-newwhite text-base border-0 rounded'
-              type='submit'
-            >
-              Sign In
-            </button> */}
           {/* <p className='mb-4 mx-0'>
               <Link to='/forgot'>Forgot Password?</Link>
             </p>
