@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../images/A_WebVersion.png';
+import { Button } from '../lib/Button';
+
+// import logo from '../images/A_WebVersion.png';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
-  }
+  const handleEmailChange = e => setEmail(e.target.value);
+  const handlePasswordChange = e => setPassword(e.target.value);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,56 +20,87 @@ function Login() {
 
   return (
     <div className='h-screen flex flex-col'>
-      <section className='pt-6 pb-3'>
-        <img
+      {/* TODO: close icon */}
+      <section>
+        {/* <img
           className='block mx-auto'
           style={{ height: '200px' }}
           src={logo}
           alt='staft logo'
-        />
-        <h6 className='text-center text-sm font-light uppercase'>Staft</h6>
-      </section>
-      <section className='rounded-lg shadow-top p-6 text-center flex-1'>
-        <h2 className='text-secondary text-3xl font-normal mb-px tracking-tight'>
-          Welcome,
-        </h2>
-        <p className='text-secondary text-base font-normal mb-6'>
-          Please login to continue.
+        /> */}
+        <h2 className='text-center font-bold'>Enter Credentials</h2>
+        <p className='text-center font-light text-sm'>
+          Please login with email and password to continue.
         </p>
-        {/* REVIEW: need action attr? */}
-        <form action='/login' method='POST' onSubmit={handleSubmit}>
-          <input
-            className='login-input placeholder-primary rounded-t-md'
-            type='email'
-            name='email'
-            id='email'
-            placeholder='Email'
-            value={email}
-            onChange={handleEmailChange}
-          />
-          <input
-            className='login-input placeholder-primary rounded-b-md'
-            type='password'
-            name='password'
-            id='password'
-            placeholder='Password'
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <button
-            className='bg-secondary w-full my-4 mx-auto py-4 px-0 text-newwhite text-base border-0 rounded'
+      </section>
+      {/* REVIEW: need action attr? */}
+      <form
+        action='/login'
+        method='POST'
+        className='text-center flex-1 flex flex-col justify-between'
+        onSubmit={handleSubmit}
+      >
+        <section>
+          <label htmlFor='email' className='border-b border-gray-300'>
+            {/* TODO: @ icon */}
+            <input
+              className='placeholder-gray-300'
+              type='email'
+              name='email'
+              id='email'
+              placeholder='Email Address'
+              value={email}
+              onChange={handleEmailChange}
+            />
+          </label>
+          <label htmlFor='password' className='border-b border-gray-300'>
+            {/* TODO: * icon */}
+            <input
+              className='placeholder-gray-300'
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Password'
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </label>
+        </section>
+        <section>
+          <small className='block'>
+            By using Staft, you agree to our{' '}
+            <Link to='#' className='text-teal-500 hover:text-teal-300'>
+              Privacy Policy
+            </Link>{' '}
+            and{' '}
+            <Link to='#' className='text-teal-500 hover:text-teal-300'>
+              Terms
+            </Link>
+          </small>
+          <Button
             type='submit'
+            display='block'
+            bgColor='bg-teal-500 hover:bg-teal-300'
+            fontSize='text-sm'
+            textTransform='uppercase'
           >
             Sign In
-          </button>
-        </form>
-        <p className='mb-4 mx-0'>
-          <Link to='/forgot'>Forgot Password?</Link>
-        </p>
-        <small>
-          <Link to='/register'>Create an Account</Link>
-        </small>
-      </section>
+            {/* TODO: right arrow icon */}
+          </Button>
+          {/* <button
+              className='bg-secondary w-full my-4 mx-auto py-4 px-0 text-newwhite text-base border-0 rounded'
+              type='submit'
+            >
+              Sign In
+            </button> */}
+          {/* <p className='mb-4 mx-0'>
+              <Link to='/forgot'>Forgot Password?</Link>
+            </p>
+            <small>
+              <Link to='/register'>Create an Account</Link>
+            </small> */}
+        </section>
+      </form>
     </div>
   );
 }
