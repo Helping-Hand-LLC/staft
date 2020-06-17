@@ -51,6 +51,9 @@ module.exports = {
       transitionProperty: {
         marginLeft: 'margin-left',
         marginRight: 'margin-right'
+      },
+      fontSize: {
+        '2xs': '0.65rem'
       }
     }
   },

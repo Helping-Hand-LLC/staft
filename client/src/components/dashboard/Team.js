@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 import DHeader from './Header';
 
-export default function DirectMessages({ handleClick }) {
+export default function Team({ handleClick }) {
   return (
     <>
-      <DHeader title='Messages' handleClick={handleClick} />
+      <DHeader title='Team' handleClick={handleClick} />
       <div className='h-64 flex justify-center items-center text-gray-600'>
-        Direct Messages: Coming Soon...
+        Team: Coming Soon...
       </div>
     </>
   );
 }
 
-DirectMessages.propTypes = {
+Team.propTypes = {
   handleClick: PropTypes.func.isRequired
 };
