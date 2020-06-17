@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import ViewCarouselIcon from '@material-ui/icons/ViewCarousel';
-import EventIcon from '@material-ui/icons/Event';
-import ForumIcon from '@material-ui/icons/Forum';
-import GroupIcon from '@material-ui/icons/Group';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import ViewCarouselOutlinedIcon from '@material-ui/icons/ViewCarouselOutlined';
+import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
+import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
+import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function DSidebar({ url, isOpen, handleClick }) {
+export default function DSidebar({ isOpen, handleClick }) {
+  let { url } = useRouteMatch();
+
   return (
     <section
       className={`relative h-screen w-64 ${
@@ -25,7 +27,7 @@ export default function DSidebar({ url, isOpen, handleClick }) {
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
             >
-              <ViewCarouselIcon fontSize='small' />
+              <ViewCarouselOutlinedIcon fontSize='small' />
               &nbsp; Schedule
             </NavLink>
           </li>
@@ -36,7 +38,7 @@ export default function DSidebar({ url, isOpen, handleClick }) {
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
             >
-              <ForumIcon fontSize='small' />
+              <ForumOutlinedIcon fontSize='small' />
               &nbsp; Direct Messages
             </NavLink>
           </li>
@@ -47,7 +49,7 @@ export default function DSidebar({ url, isOpen, handleClick }) {
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
             >
-              <EventIcon fontSize='small' />
+              <EventOutlinedIcon fontSize='small' />
               &nbsp; Calendar
             </NavLink>
           </li>
@@ -58,7 +60,7 @@ export default function DSidebar({ url, isOpen, handleClick }) {
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
             >
-              <GroupIcon fontSize='small' />
+              <GroupOutlinedIcon fontSize='small' />
               &nbsp; Team
             </NavLink>
           </li>

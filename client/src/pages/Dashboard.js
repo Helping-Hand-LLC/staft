@@ -15,7 +15,7 @@ export default function Dashboard() {
 
   return (
     <div className='h-screen flex flex-no-wrap overflow-x-hidden'>
-      <DSidebar isOpen={isOpen} url={url} handleClick={handleClick} />
+      <DSidebar isOpen={isOpen} handleClick={handleClick} />
 
       <section
         className={`h-screen w-full bg-white ${
