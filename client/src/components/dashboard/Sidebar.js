@@ -6,6 +6,7 @@ import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 export default function DSidebar({ isOpen, handleClick }) {
@@ -79,16 +80,18 @@ export default function DSidebar({ isOpen, handleClick }) {
       </nav>
       {/* profile */}
       <div className='flex items-center py-4 px-3'>
-        <img
-          className='rounded-full mr-3'
-          src='https://via.placeholder.com/50.png/FFFFFF'
-          alt='Worker Profile'
-          style={{ width: '35px', height: '35px' }}
-        />
-        <div className='flex-1 flex flex-col justify-center'>
-          <p className='text-sm font-medium'>Skye Brown</p>
-          <small className='text-2xs font-light'>Team Member</small>
-        </div>
+        <NavLink
+          to={`${url}/profile`}
+          className='flex-1 inline-block flex items-center rounded p-1 mr-4'
+          activeClassName='bg-white text-blue-500'
+          onClick={handleClick}
+        >
+          <AccountCircleOutlinedIcon className='mr-3' />
+          <div className='flex-1 flex flex-col justify-center'>
+            <p className='text-sm font-medium'>Skye Brown</p>
+            <small className='text-2xs font-light'>Team Member</small>
+          </div>
+        </NavLink>
         <button>
           <AddCircleIcon fontSize='large' />
         </button>

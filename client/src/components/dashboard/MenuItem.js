@@ -7,6 +7,7 @@ import DirectMessages from './DirectMessages';
 import Calendar from './Calendar';
 import Team from './Team';
 import Help from './Help';
+import Profile from './Profile';
 
 export default function DMenuItem({ handleClick }) {
   let { menuItem } = useParams();
@@ -22,6 +23,8 @@ export default function DMenuItem({ handleClick }) {
       return <Team handleClick={handleClick} />;
     case 'help':
       return <Help handleClick={handleClick} />;
+    case 'profile':
+      return <Profile handleClick={handleClick} />;
     default:
       return <Schedule handleClick={handleClick} />;
   }
