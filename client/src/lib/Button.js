@@ -35,7 +35,9 @@ const propTypes = {
 export function Button(props) {
   return (
     <button
-      className={Object.values(_.omit(props, ['children', 'type'])).join(' ')}
+      className={Object.values(
+        _.omit(props, ['style', 'children', 'type'])
+      ).join(' ')}
     >
       {props.children}
     </button>
@@ -46,17 +48,23 @@ export function ButtonLink(props) {
   return (
     <Link
       to={props.to}
-      className={Object.values(_.omit(props, ['to', 'children'])).join(' ')}
+      className={Object.values(_.omit(props, ['style', 'to', 'children'])).join(
+        ' '
+      )}
     >
       {props.children}
     </Link>
   );
 }
 
-export function Outlined() {
+export function Outlined(props) {
   return (
-    <button className='bg-transparent hover:bg-blue-900 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded'>
-      Button
+    <button
+      className={Object.values(
+        _.omit(props, ['style', 'children', 'type'])
+      ).join(' ')}
+    >
+      {props.children}
     </button>
   );
 }
@@ -65,3 +73,14 @@ Button.defaultProps = defaultProps;
 Button.propTypes = propTypes;
 ButtonLink.defaultProps = defaultProps;
 ButtonLink.propTypes = propTypes;
+Outlined.defaultProps = {
+  ...defaultProps,
+  bgColor: 'bg-transparent hover:bg-blue-900',
+  textColor: 'text-blue-900 hover:text-white',
+  fontWeight: 'font-semibold',
+  border: 'border border-blue-900 hover:border-transparent'
+};
+Outlined.propTypes = {
+  ...propTypes,
+  border: PropTypes.string
+};
