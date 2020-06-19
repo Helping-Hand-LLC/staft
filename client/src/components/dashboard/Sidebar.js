@@ -101,6 +101,5 @@ export default function DSidebar({ isOpen, handleClick }) {
 }
 
 DSidebar.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  url: PropTypes.string.isRequired
+  isOpen: PropTypes.bool.isRequired
 };
