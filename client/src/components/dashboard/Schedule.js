@@ -50,6 +50,7 @@ export default function Schedule({ handleClick }) {
         title='Schedule'
         handleClick={handleClick}
         secondaryIcon={<ArchiveOutlinedIcon />}
+        secondaryPath='/archive'
       />
       {/* tabs */}
       <div className='w-full bg-gray-200 py-2 px-4'>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -10,11 +10,16 @@ import { Outlined } from '../../lib/Button';
 import DHeader from './Header';
 
 export default function Profile({ handleClick }) {
+  const [showSsn, setShowSsn] = useState(false);
+
+  const toggleSsn = () => setShowSsn(!showSsn);
+
   return (
     <>
       <DHeader
         title='Profile'
         secondaryIcon={<EditOutlinedIcon />}
+        secondaryPath='/profile/edit'
         handleClick={handleClick}
       />
       <div>
@@ -52,12 +57,13 @@ export default function Profile({ handleClick }) {
           <div className='inline-block w-1/2 p-2 pr-4'>
             <h6 className='font-medium mb-1'>SSN</h6>
             <p className='font-light text-gray-600 flex justify-between items-center'>
-              ***-**-***
+              {showSsn ? '123-45-6789' : '***-**-****'}
               <button
                 className='text-xs hover:underline ml-4'
                 style={{ outline: 'none' }}
+                onClick={toggleSsn}
               >
-                Show
+                {showSsn ? 'Hide' : 'Show'}
               </button>
             </p>
           </div>
@@ -90,15 +96,24 @@ export default function Profile({ handleClick }) {
           </div>
         </section>
         <section className='py-4'>
-          <Link className='block w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400 flex justify-between'>
+          <Link
+            to='/settings'
+            className='block w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400 flex justify-between'
+          >
             Settings
             <KeyboardArrowRightIcon />
           </Link>
-          <Link className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'>
+          <Link
+            to='/help'
+            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+          >
             Help
             <KeyboardArrowRightIcon />
           </Link>
-          <Link className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'>
+          <Link
+            to='/about'
+            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+          >
             About Staft
             <KeyboardArrowRightIcon />
           </Link>
