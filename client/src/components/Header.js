@@ -23,7 +23,7 @@ export default function Header({
       <div className='flex-1 flex justify-center items-center'>
         <h4>{title}</h4>
       </div>
-      <div className='flex-1 flex justify-center'>
+      <div className='flex-1 flex justify-center items-start'>
         <button className='inline-block ml-auto' style={{ outline: 'none' }}>
           {secondaryIcon}
         </button>

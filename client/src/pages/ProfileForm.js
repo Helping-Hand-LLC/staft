@@ -35,12 +35,20 @@ export default function ProfileForm() {
       <Header
         title='Edit Profile'
         primaryIcon={<CloseIcon />}
+        secondaryIcon={
+          <span
+            className='text-teal-500 font-light'
+            style={{ outline: 'none' }}
+          >
+            Done
+          </span>
+        }
         backPath='/dashboard/profile'
       />
 
-      <form>
+      <form className='text-sm py-4'>
         <label className='block p-4' htmlFor='name'>
-          <p>Name</p>
+          <p className='mb-2'>Name</p>
           <input
             className='placeholder-gray-400 text-teal-500 outline-none'
             type='text'
@@ -52,7 +60,7 @@ export default function ProfileForm() {
           />
         </label>
         <label className='block p-4' htmlFor='email'>
-          <p>Email</p>
+          <p className='mb-2'>Email</p>
           <input
             className='placeholder-gray-400 text-teal-500 outline-none'
             type='email'
@@ -64,7 +72,7 @@ export default function ProfileForm() {
           />
         </label>
         <label className='block p-4' htmlFor='phone'>
-          <p>Phone</p>
+          <p className='mb-2'>Phone</p>
           <input
             className='placeholder-gray-400 text-teal-500 outline-none'
             type='tel'
@@ -76,19 +84,19 @@ export default function ProfileForm() {
           />
         </label>
         <label className='block p-4' htmlFor='birthday'>
-          <p>Birthday</p>
+          <p className='mb-2'>Birthday</p>
           <input
-            className='placeholder-gray-400 text-teal-500 outline-none'
+            className='placeholder-gray-400 outline-none p-1'
             type='date'
             name='birthday'
             id='birthday'
           />
         </label>
-        <fieldset className='p-2'>
-          <h5 className='uppercase font-medium'>Gender</h5>
+        <fieldset className='p-4'>
+          <p className='mb-2'>Gender</p>
           <label
             htmlFor='gender-male'
-            className='inline-flex items-center mt-3'
+            className='inline-flex items-center mt-3 mr-4'
           >
             <input
               type='radio'
@@ -114,21 +122,21 @@ export default function ProfileForm() {
           </label>
         </fieldset>
         <label className='block p-4' htmlFor='ssn'>
-          <p>SSN</p>
+          <p className='mb-2'>SSN</p>
           <input
             className='placeholder-gray-400 text-teal-500 outline-none'
             type='text'
             name='ssn'
             id='ssn'
-            placeholder='Social Security Number'
+            placeholder='Social Security #'
             value={ssn}
             onChange={handleChange}
           />
         </label>
         <fieldset className='p-2'>
-          <h5 className='uppercase font-medium'>Address</h5>
+          <h5 className='font-semibold'>Address</h5>
           <label className='block p-4' htmlFor='street'>
-            <p>Street</p>
+            <p className='mb-2'>Street</p>
             <input
               className='placeholder-gray-400 text-teal-500 outline-none'
               type='text'
@@ -140,7 +148,7 @@ export default function ProfileForm() {
             />
           </label>
           <label className='block p-4' htmlFor='city'>
-            <p>City</p>
+            <p className='mb-2'>City</p>
             <input
               className='placeholder-gray-400 text-teal-500 outline-none'
               type='text'
@@ -152,8 +160,8 @@ export default function ProfileForm() {
             />
           </label>
           <label className='block p-4' htmlFor='state'>
-            <p>State</p>
-            <select name='state' id='state'>
+            <p className='mb-2'>State</p>
+            <select name='state' id='state' className='p-1'>
               {_states.map(s => (
                 <option
                   value={`${s.abbreviation}`}
@@ -163,7 +171,7 @@ export default function ProfileForm() {
             </select>
           </label>
           <label className='block p-4' htmlFor='zipCode'>
-            <p>Zip Code</p>
+            <p className='mb-2'>Zip Code</p>
             <input
               className='placeholder-gray-400 text-teal-500 outline-none'
               type='text'
