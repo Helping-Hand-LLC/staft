@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, ButtonLink } from '../lib/Button';
+import { ButtonLink } from '../lib/Button';
 
 import ManInSuitImg from '../images/hunters-race-MYbhN8KaaEc-unsplash.jpg';
 
@@ -28,14 +28,15 @@ function Index() {
           </p>
         </section>
         <section className='h-32 w-5/6 mx-auto flex flex-col justify-center'>
-          <Button
+          <ButtonLink
+            to='/org/create'
             bgColor='bg-teal-500 hover:bg-teal-700'
             textTransform='uppercase'
             fontSize='text-sm'
             margin='my-4'
           >
             Create an organization
-          </Button>
+          </ButtonLink>
           <div className='flex justify-between'>
             <ButtonLink
               to='/register'

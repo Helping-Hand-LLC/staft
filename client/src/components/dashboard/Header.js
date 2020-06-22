@@ -6,7 +6,7 @@ import SortOutlinedIcon from '@material-ui/icons/SortOutlined';
 export default function DHeader({
   title,
   secondaryIcon,
-  secondaryPath,
+  secondaryPath = '!#',
   handleClick
 }) {
   return (

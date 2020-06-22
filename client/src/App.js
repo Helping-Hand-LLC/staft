@@ -10,6 +10,7 @@ import About from './pages/About';
 import Help from './pages/Help';
 import Archive from './pages/Archive';
 import ProfileForm from './pages/ProfileForm';
+import CreateOrg from './pages/CreateOrg';
 
 import './App.css';
 
@@ -17,6 +18,9 @@ function App() {
   return (
     <>
       <Switch>
+        <Route path='/org/create'>
+          <CreateOrg />
+        </Route>
         <Route path='/login'>
           <Login />
         </Route>
