@@ -5,6 +5,7 @@ import SortOutlinedIcon from '@material-ui/icons/SortOutlined';
 
 export default function DHeader({
   title,
+  subtitle,
   secondaryIcon,
   secondaryPath = '!#',
   handleClick
@@ -20,8 +21,15 @@ export default function DHeader({
           <SortOutlinedIcon />
         </button>
       </div>
-      <div className='flex-1 flex justify-center items-center'>
+      <div
+        className={`flex-1 flex ${
+          subtitle ? 'flex-col' : ''
+        } justify-center items-center`}
+      >
         <h4>{title}</h4>
+        {subtitle ? (
+          <p className='text-2xs font-light italic'>{subtitle}</p>
+        ) : null}
       </div>
       <div className='flex-1 flex justify-center'>
         <Link
@@ -38,6 +46,7 @@ export default function DHeader({
 
 DHeader.propTypes = {
   title: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   secondaryIcon: PropTypes.element,
   secondaryPath: PropTypes.string,
   handleClick: PropTypes.func.isRequired

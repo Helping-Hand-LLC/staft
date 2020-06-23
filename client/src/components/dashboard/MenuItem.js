@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
+import Activity from './Activity';
 import Schedule from './Schedule';
 import DirectMessages from './DirectMessages';
 import Calendar from './Calendar';
@@ -13,6 +14,8 @@ export default function DMenuItem({ handleClick }) {
   let { menuItem } = useParams();
 
   switch (menuItem) {
+    case 'activity':
+      return <Activity handleClick={handleClick} />;
     case 'schedule':
       return <Schedule handleClick={handleClick} />;
     case 'messages':
@@ -26,7 +29,7 @@ export default function DMenuItem({ handleClick }) {
     case 'profile':
       return <Profile handleClick={handleClick} />;
     default:
-      return <Schedule handleClick={handleClick} />;
+      return <Activity handleClick={handleClick} />;
   }
 }
 
