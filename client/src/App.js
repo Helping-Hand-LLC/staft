@@ -23,12 +23,16 @@ import Channels from './pages/organization/Channels';
 import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
+import Join from './pages/organization/Join';
 
 function App() {
   return (
     <>
       <Switch>
         {/* organization */}
+        <Route path='/org/join'>
+          <Join />
+        </Route>
         <Route path='/org/invite'>
           <Invite />
         </Route>

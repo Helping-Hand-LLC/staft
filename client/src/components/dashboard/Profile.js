@@ -5,7 +5,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-import { Outlined } from '../../lib/Button';
+import { ButtonLink, Outlined } from '../../lib/Button';
 
 import DHeader from './Header';
 
@@ -30,8 +30,28 @@ export default function Profile({ handleClick }) {
             Joined Staft on February 2020
           </small>
         </section>
+        {/* join an org banner */}
+        <section className='w-full h-32 flex flex-col justify-center items-center'>
+          <div className='w-full flex justify-between text-sm'>
+            <div>
+              <h3>Join An Organization</h3>
+              <p className='text-xs font-light'>
+                Join a Staft organization to participate in their events and
+                communicate with their team.
+              </p>
+            </div>
+            <small className='text-2xs'>123 Public Orgs</small>
+          </div>
+          <ButtonLink
+            to='/org/join'
+            bgColor='bg-teal-300 hover:bg-teal-100'
+            textTransform='uppercase'
+          >
+            Join an Organization
+          </ButtonLink>
+        </section>
+        {/* profile info */}
         <section className='py-4 text-sm'>
-          {/* type, email, name, address, phone, birthday, gender, ssn, organization, isManager, isAdmin */}
           <div className='inline-block w-1/2 p-2'>
             <h6 className='font-medium mb-1'>Name</h6>
             <p className='font-light text-gray-600'>Skye Brown</p>
