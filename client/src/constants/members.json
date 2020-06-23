@@ -1,0 +1,10 @@
+[
+  { "isAdmin": true, "isManager": true, "name": "Skye Brown" },
+  { "isAdmin": true, "isManager": true, "name": "John Doe" },
+  { "isAdmin": false, "isManager": true, "name": "Jane Doe" },
+  { "isAdmin": false, "isManager": true, "name": "John Smith" },
+  { "isAdmin": false, "isManager": true, "name": "Steve Smith" },
+  { "isAdmin": false, "isManager": false, "name": "Sally Johnson" },
+  { "isAdmin": false, "isManager": false, "name": "Lisa Anderson" },
+  { "isAdmin": false, "isManager": false, "name": "Jacob Martin" }
+]

@@ -22,20 +22,24 @@ import About from './pages/profile/About';
 import Channels from './pages/organization/Channels';
 import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
+import Invite from './pages/organization/Invite';
 
 function App() {
   return (
     <>
       <Switch>
         {/* organization */}
-        <Route path='/org/channels'>
-          <Channels />
+        <Route path='/org/invite'>
+          <Invite />
+        </Route>
+        <Route path='/org/notifications'>
+          <Notifications />
         </Route>
         <Route path='/org/details'>
           <Details />
         </Route>
-        <Route path='/org/notifications'>
-          <Notifications />
+        <Route path='/org/channels'>
+          <Channels />
         </Route>
         {/* profile */}
         <Route path='/about'>

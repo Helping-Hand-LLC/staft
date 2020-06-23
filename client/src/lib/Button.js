@@ -39,6 +39,7 @@ export function Button(props) {
     <button
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
+      style={props.style}
     >
       {props.children}
     </button>
@@ -52,6 +53,7 @@ export function ButtonLink(props) {
     <Link
       to={props.to}
       className={Object.values(_.omit(props, ignore)).join(' ')}
+      style={props.style}
     >
       {props.children}
     </Link>
@@ -65,6 +67,7 @@ export function Outlined(props) {
     <button
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
+      style={props.style}
     >
       {props.children}
     </button>

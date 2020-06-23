@@ -31,6 +31,7 @@ export default function DSidebar({ isOpen, handleClick }) {
             >
               <StarBorderOutlinedIcon fontSize='small' />
               &nbsp; Activity
+              {/* TODO: custom indicator icon */}
             </NavLink>
           </li>
           <li className='p-2 block text-white border-l-4 border-teal-500'>
