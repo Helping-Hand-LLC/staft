@@ -1,9 +1,9 @@
 import React, { useReducer } from 'react';
 import CloseIcon from '@material-ui/icons/Close';
 
-import Header from '../components/Header';
+import Header from '../../components/Header';
 
-import _states from '../constants/states.json';
+import _states from '../../constants/states.json';
 
 const initialState = {
   name: '',

@@ -1,49 +1,71 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import './App.css';
+
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
-import Settings from './pages/Settings';
-import About from './pages/About';
-import Help from './pages/Help';
-import Archive from './pages/Archive';
-import ProfileForm from './pages/ProfileForm';
 import CreateOrg from './pages/CreateOrg';
 
-import './App.css';
+// schedule
+import Archive from './pages/schedule/Archive';
+
+// profile
+import ProfileForm from './pages/profile/ProfileForm';
+import Settings from './pages/profile/Settings';
+import Help from './pages/profile/Help';
+import About from './pages/profile/About';
+
+// organization
+import Channels from './pages/organization/Channels';
+import Details from './pages/organization/Details';
+import Notifications from './pages/organization/Notifications';
 
 function App() {
   return (
     <>
       <Switch>
-        <Route path='/org/create'>
-          <CreateOrg />
+        {/* organization */}
+        <Route path='/org/channels'>
+          <Channels />
         </Route>
-        <Route path='/login'>
-          <Login />
+        <Route path='/org/details'>
+          <Details />
         </Route>
-        <Route path='/register'>
-          <Register />
+        <Route path='/org/notifications'>
+          <Notifications />
         </Route>
-        <Route path='/dashboard'>
-          <Dashboard />
-        </Route>
-        <Route path='/settings'>
-          <Settings />
-        </Route>
+        {/* profile */}
         <Route path='/about'>
           <About />
         </Route>
         <Route path='/help'>
           <Help />
         </Route>
-        <Route path='/archive'>
-          <Archive />
+        <Route path='/settings'>
+          <Settings />
         </Route>
         <Route path='/profile/edit'>
           <ProfileForm />
+        </Route>
+        {/* schedule */}
+        <Route path='/archive'>
+          <Archive />
+        </Route>
+        {/* index */}
+        <Route path='/org/create'>
+          <CreateOrg />
+        </Route>
+        <Route path='/dashboard'>
+          <Dashboard />
+        </Route>
+        <Route path='/register'>
+          <Register />
+        </Route>
+        <Route path='/login'>
+          <Login />
         </Route>
         <Route path='/'>
           <Index />
