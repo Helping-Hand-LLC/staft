@@ -85,7 +85,10 @@ export function Step4({ currentStep, uid, accessType, adminEmail }) {
     <div className='text-sm text-left'>
       <p className='flex justify-between mb-2'>
         <span className='w-2/5 font-light'>UID:</span>
-        <span className='text-teal-500 flex-1'>{uid}</span>
+        <span className='text-teal-500 flex-1'>
+          {/* TODO: needs extra validation */}
+          {uid.toLowerCase().split(' ').join('')}
+        </span>
       </p>
       <p className='flex justify-between mb-2'>
         <span className='w-2/5 font-light'>Access:</span>

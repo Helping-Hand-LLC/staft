@@ -7,32 +7,45 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { Button } from '../../lib/Button';
 
 export function PrevButton({ currentStep, prev }) {
-  return currentStep > 1 ? (
-    <Button
-      type='button'
-      display='block'
-      bgColor='bg-teal-500 hover:bg-teal-300'
-      fontWeight='font-semibold'
-      fontSize='text-sm'
-      textTransform='uppercase'
-      margin={`${currentStep === 4 ? 'mr-0 mb-1' : 'mr-1'}`}
-      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1'}`}
-      onClick={prev}
-    >
-      Prev
-      <KeyboardArrowLeftIcon
-        style={{
+  const arrowStyles =
+    currentStep === 4
+      ? {
           position: 'absolute',
           top: '50%',
           left: '0.5rem',
           transform: 'translate(0, -50%)'
-        }}
-      />
+        }
+      : {};
+
+  return currentStep > 1 ? (
+    <Button
+      type='button'
+      display='block'
+      bgColor='bg-blue-300 hover:bg-blue-100'
+      fontWeight='font-semibold'
+      fontSize='text-sm'
+      textTransform='uppercase'
+      margin={`${currentStep === 4 ? 'mr-0 mb-1' : 'mr-1'}`}
+      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1 flex'}`}
+      onClick={prev}
+    >
+      <span className='flex-1 order-2'>Prev</span>
+      <KeyboardArrowLeftIcon style={arrowStyles} />
     </Button>
   ) : null;
 }
 
 export function NextButton({ currentStep, next }) {
+  const arrowStyles =
+    currentStep === 1
+      ? {
+          position: 'absolute',
+          top: '50%',
+          right: '0.5rem',
+          transform: 'translate(0, -50%)'
+        }
+      : {};
+
   return currentStep < 4 ? (
     <Button
       type='button'
@@ -41,18 +54,11 @@ export function NextButton({ currentStep, next }) {
       fontWeight='font-semibold'
       fontSize='text-sm'
       textTransform='uppercase'
-      extras='relative flex-1'
+      extras={`relative ${currentStep === 1 ? 'w-full' : 'flex-1 flex'}`}
       onClick={next}
     >
-      Next
-      <KeyboardArrowRightIcon
-        style={{
-          position: 'absolute',
-          top: '50%',
-          right: '0.5rem',
-          transform: 'translate(0, -50%)'
-        }}
-      />
+      <span className='flex-1'>Next</span>
+      <KeyboardArrowRightIcon style={arrowStyles} />
     </Button>
   ) : null;
 }
