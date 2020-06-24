@@ -31,21 +31,26 @@ export default function Profile({ handleClick }) {
           </small>
         </section>
         {/* join an org banner */}
-        <section className='w-full h-32 flex flex-col justify-center items-center'>
-          <div className='w-full flex justify-between text-sm'>
-            <div>
-              <h3>Join An Organization</h3>
-              <p className='text-xs font-light'>
-                Join a Staft organization to participate in their events and
-                communicate with their team.
-              </p>
-            </div>
-            <small className='text-2xs'>123 Public Orgs</small>
+        <section className='w-full h-40 flex flex-col justify-around items-center p-3 my-2 border-t border-b border-gray-400'>
+          <div className='w-full text-sm relative'>
+            <h3 className='font-medium mb-2'>Join a Team!</h3>
+            <p className='text-xs font-light'>
+              Organizations allow you to participate in its events and
+              communicate with their team.
+            </p>
+            <small
+              className='text-2xs font-medium'
+              style={{ position: 'absolute', top: 0, right: 0 }}
+            >
+              247 Public Orgs
+            </small>
           </div>
           <ButtonLink
             to='/org/join'
             bgColor='bg-teal-300 hover:bg-teal-100'
             textTransform='uppercase'
+            fontSize='text-sm'
+            fontWeight='font-medium'
           >
             Join an Organization
           </ButtonLink>

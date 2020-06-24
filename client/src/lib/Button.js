@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const DEFAULT_PROPS = {
   display: 'inline-block',
-  bgColor: 'bg-blue-900 hover:bg-blue-700',
+  bgColor: 'bg-blue-500 hover:bg-blue-300',
   textColor: 'text-white',
   borderRadius: 'rounded',
   fontSize: 'text-base',
