@@ -130,14 +130,14 @@
         },
         {
           "formatted_address": "University Drive &, Hilltop Ave, Lexington, KY 40508, United States",
-          "location": { "lat": 38.0325678 "lng": -84.50135739999999 },
+          "location": { "lat": 38.0325678, "lng": -84.50135739999999 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
           "name": "Starbucks",
           "place_id": "ChIJR01_XbhEQogRSQ3AWBRP5fk"
         },
         {
           "formatted_address": "740 S Limestone Ave, Lexington, KY 40508, United States",
-          "location": { "lat": 38.0335569 "lng": -84.508223 },
+          "location": { "lat": 38.0335569, "lng": -84.508223 },
           "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
           "name": "Starbucks",
           "place_id": "ChIJOWopvbtEQogR78GWgZIdUYc"
@@ -190,11 +190,11 @@
         "organization": "<org_id>",
         "formatted_address": "870 S Broadway, Lexington, KY 40504, United States",
         "geometry": {
-          "location": { "lat": 38.039084, "lng": -84.51431800000002 },
-        }
+          "location": { "lat": 38.039084, "lng": -84.51431800000002 }
+        },
         "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
         "name": "Starbucks",
-        "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ"
+        "place_id": "ChIJOTQb-KJEQogRrOPapO4JqzQ",
         "__v": 0
       }
     }
