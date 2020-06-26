@@ -24,9 +24,7 @@ export default function CreateOrg() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    alert(
-      `Create Organization with\nUID: ${uid}\naccessType: ${accessType}\nadminEmail: ${adminEmail}`
-    );
+    console.log('form submitted');
   };
 
   // stepper functionality

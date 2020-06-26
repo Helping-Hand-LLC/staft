@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import DHeader from './Header';
+import DHeader from './DHeader';
 
-import _members from '../../constants/members.json';
+import _members from '../../../constants/members.json';
 
 function Member({ name }) {
   return (

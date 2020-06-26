@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { ButtonLink } from '../../../lib/Button';
 
-import DHeader from '../Header';
+import DHeader from '../index/DHeader';
 
 import _members from '../../../constants/members.json';
 
@@ -55,17 +55,18 @@ export default function OrgMembers({ handleClick }) {
         to='/org/invite'
         bgColor='bg-teal-300 hover:bg-teal-100'
         borderRadius='rounded-none'
-        fontSize='text-sm'
         textTransform='uppercase'
-        margin='my-4'
-        extras='w-full text-center'
-        style={{ outline: 'none' }}
+        extras='w-full text-center my-4'
       >
         Invite Members
       </ButtonLink>
     </div>
   );
 }
+
+Member.propTypes = {
+  name: PropTypes.string.isRequired
+};
 
 OrgMembers.propTypes = {
   handleClick: PropTypes.func.isRequired

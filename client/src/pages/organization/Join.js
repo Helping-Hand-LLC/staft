@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import BusinessIcon from '@material-ui/icons/Business';
@@ -60,11 +62,8 @@ export default function Join() {
         <Button
           bgColor='bg-teal-300 hover:bg-teal-100'
           borderRadius='rounded-none'
-          fontSize='text-sm'
           textTransform='uppercase'
-          margin='my-4'
-          extras='w-full text-center'
-          style={{ outline: 'none' }}
+          extras='w-full text-center my-4'
         >
           Join
         </Button>
@@ -72,3 +71,7 @@ export default function Join() {
     </>
   );
 }
+
+Org.propTypes = {
+  name: PropTypes.string.isRequired
+};

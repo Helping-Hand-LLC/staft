@@ -19,14 +19,13 @@ export function PrevButton({ currentStep, prev }) {
 
   return currentStep > 1 ? (
     <Button
-      type='button'
       display='block'
       bgColor='bg-blue-300 hover:bg-blue-100'
       fontWeight='font-semibold'
-      fontSize='text-sm'
       textTransform='uppercase'
-      margin={`${currentStep === 4 ? 'mr-0 mb-1' : 'mr-1'}`}
-      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1 flex'}`}
+      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1 flex'} ${
+        currentStep === 4 ? 'mr-0 mb-1' : 'mr-1'
+      }`}
       onClick={prev}
     >
       <span className='flex-1 order-2'>Prev</span>
@@ -48,11 +47,8 @@ export function NextButton({ currentStep, next }) {
 
   return currentStep < 4 ? (
     <Button
-      type='button'
       display='block'
-      bgColor='bg-teal-500 hover:bg-teal-300'
       fontWeight='font-semibold'
-      fontSize='text-sm'
       textTransform='uppercase'
       extras={`relative ${currentStep === 1 ? 'w-full' : 'flex-1 flex'}`}
       onClick={next}
@@ -68,9 +64,7 @@ export function FinishButton({ currentStep }) {
     <Button
       type='submit'
       display='block'
-      bgColor='bg-teal-500 hover:bg-teal-300'
       fontWeight='font-semibold'
-      fontSize='text-sm'
       textTransform='uppercase'
       extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1'}`}
     >

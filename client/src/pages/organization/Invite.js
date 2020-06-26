@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -26,18 +28,19 @@ export default function Invite() {
   const [memberEmail, setMemberEmail] = useState('');
 
   const handleMemberEmailChange = e => setMemberEmail(e.target.value);
+
   const handleSubmit = e => {
     e.preventDefault();
     console.log('form submitted');
   };
+
   const addInvitee = e => {
     e.preventDefault();
-
     // TODO: email validation
-
     setInvitees([...invitees, memberEmail]);
     setMemberEmail('');
   };
+
   const removeInvitee = removeIndex =>
     setInvitees(invitees.filter((invitee, index) => index !== removeIndex));
 
@@ -67,13 +70,7 @@ export default function Invite() {
             value={memberEmail}
             onChange={handleMemberEmailChange}
           />
-          <Button
-            fontSize='text-sm'
-            style={{ outline: 'none' }}
-            onClick={addInvitee}
-          >
-            Add
-          </Button>
+          <Button onClick={addInvitee}>Add</Button>
         </div>
         <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center'>
           <span className='h-px bg-gray-400 flex-1 mr-2'></span>
@@ -93,11 +90,8 @@ export default function Invite() {
           type='submit'
           bgColor='bg-teal-300 hover:bg-teal-100'
           borderRadius='rounded-none'
-          fontSize='text-sm'
           textTransform='uppercase'
-          margin='my-4'
-          extras='w-full text-center'
-          style={{ outline: 'none' }}
+          extras='w-full text-center my-4'
         >
           Send
         </Button>
@@ -105,3 +99,8 @@ export default function Invite() {
     </>
   );
 }
+
+Member.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired
+};

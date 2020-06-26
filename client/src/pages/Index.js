@@ -4,7 +4,7 @@ import { ButtonLink } from '../lib/Button';
 
 import ManInSuitImg from '../images/hunters-race-MYbhN8KaaEc-unsplash.jpg';
 
-function Index() {
+export default function Index() {
   return (
     <div
       className='h-screen'
@@ -28,13 +28,7 @@ function Index() {
           </p>
         </section>
         <section className='h-32 w-5/6 mx-auto flex flex-col justify-center'>
-          <ButtonLink
-            to='/org/create'
-            bgColor='bg-teal-500 hover:bg-teal-700'
-            textTransform='uppercase'
-            fontSize='text-sm'
-            margin='my-4'
-          >
+          <ButtonLink to='/org/create' textTransform='uppercase' extras='my-4'>
             Create an organization
           </ButtonLink>
           <div className='flex justify-between'>
@@ -43,9 +37,7 @@ function Index() {
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'
-              fontSize='text-sm'
-              flex='flex-1'
-              margin='mr-1'
+              extras='flex-1 mr-1'
             >
               I'm a Guest
             </ButtonLink>
@@ -54,9 +46,7 @@ function Index() {
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'
-              fontSize='text-sm'
-              flex='flex-1'
-              margin='ml-1'
+              extras='flex-1 mr-1'
             >
               Log In
             </ButtonLink>
@@ -66,5 +56,3 @@ function Index() {
     </div>
   );
 }
-
-export default Index;

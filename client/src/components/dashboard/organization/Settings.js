@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-import DHeader from '../Header';
+import DHeader from '../index/DHeader';
 
 export default function OrgSettings({ handleClick }) {
   return (
@@ -25,21 +26,21 @@ export default function OrgSettings({ handleClick }) {
         <section className='py-4'>
           <Link
             to='/org/channels'
-            className='block w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
           >
             Add or Edit Channels
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to='/org/details'
-            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Details
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to='/org/notifications'
-            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Notifications
             <KeyboardArrowRightIcon />

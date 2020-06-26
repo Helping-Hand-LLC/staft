@@ -5,21 +5,17 @@ import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
 const DEFAULT_PROPS = {
-  display: 'inline-block',
-  bgColor: 'bg-blue-500 hover:bg-blue-300',
+  bgColor: 'bg-teal-500 hover:bg-teal-300',
   textColor: 'text-white',
   borderRadius: 'rounded',
-  fontSize: 'text-base',
+  fontSize: 'text-sm',
   fontWeight: 'font-normal',
   textTransform: 'normal-case',
   padding: 'py-2 px-4',
-  // no default margin
-  // no default flex
   extras: ''
 };
 
 const PROP_TYPES = {
-  display: PropTypes.string,
   bgColor: PropTypes.string,
   textColor: PropTypes.string,
   borderRadius: PropTypes.string,
@@ -27,8 +23,6 @@ const PROP_TYPES = {
   fontWeight: PropTypes.string,
   textTransform: PropTypes.string,
   padding: PropTypes.string,
-  margin: PropTypes.string,
-  flex: PropTypes.string,
   extras: PropTypes.string
 };
 
@@ -37,9 +31,10 @@ export function Button(props) {
 
   return (
     <button
+      type='button'
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
-      style={props.style}
+      style={{ ...props.style, outline: 'none' }}
     >
       {props.children}
     </button>
@@ -53,7 +48,7 @@ export function ButtonLink(props) {
     <Link
       to={props.to}
       className={Object.values(_.omit(props, ignore)).join(' ')}
-      style={props.style}
+      style={{ ...props.style, outline: 'none' }}
     >
       {props.children}
     </Link>
@@ -65,16 +60,17 @@ export function Outlined(props) {
 
   return (
     <button
+      type='button'
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
-      style={props.style}
+      style={{ ...props.style, outline: 'none' }}
     >
       {props.children}
     </button>
   );
 }
 
-Button.defaultProps = DEFAULT_PROPS; // no default onClick
+Button.defaultProps = DEFAULT_PROPS;
 Button.propTypes = {
   ...PROP_TYPES,
   onClick: PropTypes.func
@@ -83,11 +79,10 @@ ButtonLink.defaultProps = DEFAULT_PROPS;
 ButtonLink.propTypes = PROP_TYPES;
 Outlined.defaultProps = {
   ...DEFAULT_PROPS,
-  bgColor: 'bg-transparent hover:bg-blue-900',
-  textColor: 'text-blue-900 hover:text-white',
+  bgColor: 'bg-transparent hover:bg-blue-500',
+  textColor: 'text-blue-500 hover:text-white',
   fontWeight: 'font-semibold',
-  border: 'border border-blue-900 hover:border-transparent'
-  // no default onClick
+  border: 'border border-blue-500 hover:border-transparent'
 };
 Outlined.propTypes = {
   ...PROP_TYPES,

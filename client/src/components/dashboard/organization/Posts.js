@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DHeader from '../Header';
+import DHeader from '../index/DHeader';
 
 export default function OrgPosts({ handleClick }) {
   return (

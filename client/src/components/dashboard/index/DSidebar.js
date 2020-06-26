@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useRouteMatch } from 'react-router-dom';
+
 // import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import ViewCarouselOutlinedIcon from '@material-ui/icons/ViewCarouselOutlined';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
@@ -159,7 +160,7 @@ export default function DSidebar({ isOpen, handleClick }) {
       <div className='flex items-center py-4 px-3'>
         <NavLink
           to={`${url}/profile`}
-          className='flex-1 inline-block flex items-center rounded p-1 mr-4'
+          className='flex-1 flex items-center rounded p-1 mr-4'
           activeClassName='bg-white text-blue-500'
           onClick={handleClick}
         >

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-import { ButtonLink, Outlined } from '../../lib/Button';
+import { ButtonLink, Outlined } from '../../../lib/Button';
 
-import DHeader from './Header';
+import DHeader from './DHeader';
 
 export default function Profile({ handleClick }) {
   const [showSsn, setShowSsn] = useState(false);
@@ -49,7 +50,6 @@ export default function Profile({ handleClick }) {
             to='/org/join'
             bgColor='bg-teal-300 hover:bg-teal-100'
             textTransform='uppercase'
-            fontSize='text-sm'
             fontWeight='font-medium'
           >
             Join an Organization
@@ -123,21 +123,21 @@ export default function Profile({ handleClick }) {
         <section className='py-4'>
           <Link
             to='/settings'
-            className='block w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
           >
             Settings
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to='/help'
-            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Help
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to='/about'
-            className='block w-full bg-white p-2 text-sm font-light border-b border-gray-400 flex justify-between'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             About Staft
             <KeyboardArrowRightIcon />
@@ -151,11 +151,9 @@ export default function Profile({ handleClick }) {
           <Outlined
             bgColor='bg-transparent hover:bg-red-500'
             textColor='text-red-500 hover:text-white'
-            fontSize='text-sm'
             textTransform='uppercase'
             border='border border-red-500 hover:border-transparent'
             extras='w-full'
-            style={{ outline: 'none' }}
           >
             Delete Profile & Account
           </Outlined>

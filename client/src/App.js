@@ -1,31 +1,33 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+// base styles
 import './App.css';
 
+// index routes
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CreateOrg from './pages/CreateOrg';
 
-// schedule
+// schedule routes
 import Archive from './pages/schedule/Archive';
 
-// profile
+// profile routes
 import ProfileForm from './pages/profile/ProfileForm';
 import Settings from './pages/profile/Settings';
 import Help from './pages/profile/Help';
 import About from './pages/profile/About';
 
-// organization
+// organization routes
 import Channels from './pages/organization/Channels';
 import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
 import Join from './pages/organization/Join';
 
-function App() {
+export default function App() {
   return (
     <>
       <Switch>
@@ -82,5 +84,3 @@ function App() {
     </>
   );
 }
-
-export default App;

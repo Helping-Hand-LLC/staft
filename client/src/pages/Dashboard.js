@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 
-import DSidebar from '../components/dashboard/Sidebar';
-import DMenuItem from '../components/dashboard/MenuItem';
-import DOrgItem from '../components/dashboard/organization/OrgItem';
+import DSidebar from '../components/dashboard/DSidebar';
+import DMenuItem from '../components/dashboard/DMenuItem';
+import DOrgItem from '../components/dashboard/organization/DOrgItem';
 
 export default function Dashboard() {
   // path - allows us to build <Route> paths relative to parent path

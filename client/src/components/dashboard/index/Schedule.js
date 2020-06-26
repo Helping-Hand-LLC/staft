@@ -8,9 +8,10 @@ import {
   useRouteMatch,
   useParams
 } from 'react-router-dom';
+
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 
-import DHeader from './Header';
+import DHeader from './DHeader';
 
 function Current() {
   return (
@@ -28,7 +29,7 @@ function Drafts() {
   );
 }
 
-function DFilter({ url, handleClick }) {
+function DFilter() {
   let { filter } = useParams();
 
   switch (filter) {

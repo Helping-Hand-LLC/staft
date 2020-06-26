@@ -8,18 +8,17 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleEmailChange = e => setEmail(e.target.value);
   const handlePasswordChange = e => setPassword(e.target.value);
 
-  function handleSubmit(e) {
+  const handleSubmit = e => {
     e.preventDefault();
     console.log('form submitted');
-    // TODO: axios request to backend
-  }
+  };
 
   return (
     <div className='h-screen flex flex-col p-4'>
@@ -107,9 +106,7 @@ function Login() {
           <Button
             type='submit'
             display='block'
-            bgColor='bg-teal-500 hover:bg-teal-300'
             fontWeight='font-semibold'
-            fontSize='text-sm'
             textTransform='uppercase'
             extras='w-full relative'
           >
@@ -128,5 +125,3 @@ function Login() {
     </div>
   );
 }
-
-export default Login;
