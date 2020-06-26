@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
+// import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import ViewCarouselOutlinedIcon from '@material-ui/icons/ViewCarouselOutlined';
 import EventOutlinedIcon from '@material-ui/icons/EventOutlined';
 import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
@@ -22,7 +22,7 @@ export default function DSidebar({ isOpen, handleClick }) {
       <nav>
         <h3 className='font-semibold uppercase text-sm p-3 pb-1'>Staft</h3>
         <ul className='py-2'>
-          <li className='p-2 block text-white border-l-4 border-teal-500'>
+          {/* <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
               to={`${url}/activity`}
               className='flex items-center p-1 rounded text-sm'
@@ -31,9 +31,9 @@ export default function DSidebar({ isOpen, handleClick }) {
             >
               <StarBorderOutlinedIcon fontSize='small' />
               &nbsp; Activity
-              {/* TODO: custom indicator icon */}
             </NavLink>
-          </li>
+          </li> */}
+          {/* TODO: custom indicator icon */}
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
               to={`${url}/schedule`}
@@ -103,7 +103,7 @@ export default function DSidebar({ isOpen, handleClick }) {
               &nbsp; helpinghandllc
             </p>
           </li>
-          <li className='p-2 block text-white border-l-4 border-purple-500'>
+          {/* <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
               to={`${url}/org/posts`}
               className='flex items-center p-1 rounded text-sm'
@@ -112,7 +112,7 @@ export default function DSidebar({ isOpen, handleClick }) {
             >
               &nbsp; Posts
             </NavLink>
-          </li>
+          </li> */}
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
               to={`${url}/org/events`}

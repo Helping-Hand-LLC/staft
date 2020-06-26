@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
-import OrgPosts from './Posts';
+// import OrgPosts from './Posts';
 import OrgEvents from './Events';
 import OrgDirectMessages from './DirectMessages';
 import OrgMembers from './Members';
@@ -12,8 +12,8 @@ export default function DOrgItem({ handleClick }) {
   let { orgItem } = useParams();
 
   switch (orgItem) {
-    case 'posts':
-      return <OrgPosts handleClick={handleClick} />;
+    // case 'posts':
+    //   return <OrgPosts handleClick={handleClick} />;
     case 'events':
       return <OrgEvents handleClick={handleClick} />;
     case 'messages':
@@ -23,7 +23,7 @@ export default function DOrgItem({ handleClick }) {
     case 'settings':
       return <OrgSettings handleClick={handleClick} />;
     default:
-      return <OrgPosts handleClick={handleClick} />;
+      return <OrgEvents handleClick={handleClick} />;
   }
 }
 
