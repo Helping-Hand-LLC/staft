@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 // import OrgPosts from './Posts';
 import OrgEvents from './Events';
-import OrgDirectMessages from './DirectMessages';
+import OrgChannels from './Channels';
 import OrgMembers from './Members';
 import OrgSettings from './Settings';
 
@@ -16,8 +16,8 @@ export default function DOrgItem({ handleClick }) {
     //   return <OrgPosts handleClick={handleClick} />;
     case 'events':
       return <OrgEvents handleClick={handleClick} />;
-    case 'messages':
-      return <OrgDirectMessages handleClick={handleClick} />;
+    case 'channels':
+      return <OrgChannels handleClick={handleClick} />;
     case 'members':
       return <OrgMembers handleClick={handleClick} />;
     case 'settings':

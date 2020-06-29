@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 
-import DSidebar from '../components/dashboard/DSidebar';
-import DMenuItem from '../components/dashboard/DMenuItem';
+import DSidebar from '../components/dashboard/index/DSidebar';
+import DMenuItem from '../components/dashboard/index/DMenuItem';
 import DOrgItem from '../components/dashboard/organization/DOrgItem';
 
 export default function Dashboard() {

@@ -21,7 +21,7 @@ import Help from './pages/profile/Help';
 import About from './pages/profile/About';
 
 // organization routes
-import Channels from './pages/organization/Channels';
+import EditChannels from './pages/organization/EditChannels';
 import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
@@ -44,8 +44,8 @@ export default function App() {
         <Route path='/org/details'>
           <Details />
         </Route>
-        <Route path='/org/channels'>
-          <Channels />
+        <Route path='/org/channels/edit'>
+          <EditChannels />
         </Route>
         {/* profile */}
         <Route path='/about'>

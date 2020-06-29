@@ -126,12 +126,12 @@ export default function DSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/messages`}
+              to={`${url}/org/channels`}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
             >
-              &nbsp; Direct Messages
+              &nbsp; Channels
             </NavLink>
           </li>
           <li className='p-2 block text-white border-l-4 border-purple-500'>

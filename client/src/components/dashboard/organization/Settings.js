@@ -25,7 +25,7 @@ export default function OrgSettings({ handleClick }) {
         </section>
         <section className='py-4'>
           <Link
-            to='/org/channels'
+            to='/org/channels/edit'
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
           >
             Add or Edit Channels
