@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "isPublished": false,
+    "title": "Event Title 1",
+    "location": "Townhomes at Newtown Crossing",
+    "createdBy": "John Smith",
+    "startDate": "June 29, 2020",
+    "startTime": "10:49 AM"
+  },
+  {
+    "id": 2,
+    "isPublished": false,
+    "title": "Event Title 2",
+    "location": "Cookout",
+    "createdBy": "Sally Johnson",
+    "startDate": "June 30, 2020",
+    "startTime": "11:00 AM"
+  },
+  {
+    "id": 3,
+    "isPublished": true,
+    "title": "Event Title 3",
+    "location": "Starbucks",
+    "createdBy": "John Appleseed",
+    "startDate": "July 12, 2020",
+    "startTime": "1:45 PM"
+  },
+  {
+    "id": 4,
+    "isPublished": true,
+    "location": "Henry Clay High School",
+    "createdBy": "Jacob Brown",
+    "startDate": "Aug 19, 2020",
+    "startTime": "7:00 PM"
+  },
+  {
+    "id": 5,
+    "isPublished": true,
+    "location": "West Jessamine Middle School",
+    "createdBy": "Judy Rice",
+    "startDate": "Sep 13, 2020",
+    "startTime": "12:00 AM"
+  },
+  {
+    "id": 6,
+    "isPublished": false,
+    "title": "Event Title 6",
+    "location": "University of Kentucky Student Center",
+    "createdBy": "Bob Jones",
+    "startDate": "Dec 31, 2020",
+    "startTime": "9:00 AM"
+  }
+]

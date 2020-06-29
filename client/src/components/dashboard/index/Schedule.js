@@ -12,21 +12,41 @@ import {
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 
 import DHeader from './DHeader';
+import EventCard from '../../EventCard';
+import Badge from '../../../lib/Badge';
+
+import _events from '../../../constants/events.json';
 
 function Current() {
-  return (
-    <div className='h-64 flex justify-center items-center text-gray-600'>
-      Current Events: Coming Soon...
-    </div>
-  );
+  return _events
+    .filter(event => event.isPublished === true)
+    .map(event => (
+      <EventCard
+        key={event.id}
+        badge={<Badge type='success' text='Published' />}
+        location={event.location}
+        title={event.title}
+        creator={event.createdBy}
+        startDate={event.startDate}
+        startTime={event.startTime}
+      />
+    ));
 }
 
 function Drafts() {
-  return (
-    <div className='h-64 flex justify-center items-center text-gray-600'>
-      Event Drafts: Coming Soon...
-    </div>
-  );
+  return _events
+    .filter(event => event.isPublished === false)
+    .map(event => (
+      <EventCard
+        key={event.id}
+        badge={<Badge type='danger' text='Draft' />}
+        location={event.location}
+        title={event.title}
+        creator={event.createdBy}
+        startDate={event.startDate}
+        startTime={event.startTime}
+      />
+    ));
 }
 
 function DFilter() {
@@ -54,8 +74,8 @@ export default function Schedule({ handleClick }) {
         secondaryPath='/archive'
       />
       {/* tabs */}
-      <div className='w-full bg-gray-200 py-2 px-4'>
-        <ul className='flex bg-gray-400 rounded p-1'>
+      <div className='w-full py-2 px-4'>
+        <ul className='flex bg-gray-300 rounded p-1'>
           <li className='flex-1 mr-2'>
             <NavLink
               to={`${url}/current`}
@@ -77,15 +97,17 @@ export default function Schedule({ handleClick }) {
         </ul>
       </div>
       {/* main */}
-      <Switch>
-        <Route path={`${path}/:filter`}>
-          <DFilter url={url} handleClick={handleClick} />
-        </Route>
-        {/* go to current for unknown routes */}
-        <Route exact path={path}>
-          <Redirect to={`${url}/current`} />
-        </Route>
-      </Switch>
+      <div className='px-3 py-4'>
+        <Switch>
+          <Route path={`${path}/:filter`}>
+            <DFilter url={url} handleClick={handleClick} />
+          </Route>
+          {/* go to current for unknown routes */}
+          <Route exact path={path}>
+            <Redirect to={`${url}/current`} />
+          </Route>
+        </Switch>
+      </div>
     </>
   );
 }
