@@ -46,6 +46,7 @@ module.exports = {
         }
       },
       boxShadow: {
+        topSm: '0 -5px 5px 0 rgba(0, 0, 0, 0.05)',
         top: '0 -5px 20px 0 rgba(26, 11, 56, 0.15)'
       },
       transitionProperty: {

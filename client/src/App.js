@@ -26,12 +26,16 @@ import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
 import Join from './pages/organization/Join';
+import SingleEvent from './pages/organization/SingleEvent';
 
 export default function App() {
   return (
     <>
       <Switch>
         {/* organization */}
+        <Route path='/org/events/single'>
+          <SingleEvent />
+        </Route>
         <Route path='/org/join'>
           <Join />
         </Route>
