@@ -17,7 +17,7 @@ function Member({ name }) {
 
 export default function Team({ handleClick }) {
   return (
-    <div className='h-screen relative'>
+    <div className='pt-16'>
       <DashboardHeader
         title='Team'
         subtitle='helpinghandllc'

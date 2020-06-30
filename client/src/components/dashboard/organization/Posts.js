@@ -5,7 +5,7 @@ import DashboardHeader from '../DashboardHeader';
 
 export default function OrgPosts({ handleClick }) {
   return (
-    <>
+    <div className='pt-16'>
       <DashboardHeader
         title='Posts'
         subtitle='helpinghandllc'
@@ -14,7 +14,7 @@ export default function OrgPosts({ handleClick }) {
       <div className='h-64 flex justify-center items-center text-gray-600'>
         Org Posts: Coming Soon...
       </div>
-    </>
+    </div>
   );
 }
 

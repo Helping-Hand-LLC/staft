@@ -32,7 +32,7 @@ export default function ProfileForm() {
   const { name, email, phone, ssn, street, city, zipCode } = state;
 
   return (
-    <>
+    <div className='mt-10'>
       <Header
         title='Edit Profile'
         primaryIcon={<CloseIcon />}
@@ -185,6 +185,6 @@ export default function ProfileForm() {
           </label>
         </fieldset>
       </form>
-    </>
+    </div>
   );
 }

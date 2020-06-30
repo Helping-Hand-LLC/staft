@@ -25,7 +25,7 @@ export default function Join() {
   const handleSearchTermChange = e => setSearchTerm(e.target.value);
 
   return (
-    <>
+    <div className='pt-10'>
       <Header
         title='Join'
         primaryIcon={<CloseIcon />}
@@ -68,7 +68,7 @@ export default function Join() {
           Join
         </Button>
       </form>
-    </>
+    </div>
   );
 }
 

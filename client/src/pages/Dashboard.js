@@ -21,7 +21,9 @@ export default function Dashboard() {
       <section
         className={`h-screen w-full bg-white ${
           isOpen ? '-mr-64' : 'mr-0'
-        } duration-500 transition-marginRight`}
+        } duration-500 transition-marginRight ${
+          isOpen ? 'overflow-y-hidden' : ''
+        }`}
       >
         <Switch>
           <Route path={`${path}/org/:orgItem`}>

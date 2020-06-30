@@ -19,7 +19,7 @@ function Member({ name }) {
 
 export default function OrgMembers({ handleClick }) {
   return (
-    <div className='h-screen relative'>
+    <div className='pt-16'>
       <DashboardHeader
         title='Members'
         subtitle='helpinghandllc'
@@ -51,15 +51,17 @@ export default function OrgMembers({ handleClick }) {
             ))}
         </div>
       </section>
-      <ButtonLink
-        to='/org/invite'
-        bgColor='bg-teal-300 hover:bg-teal-100'
-        borderRadius='rounded-none'
-        textTransform='uppercase'
-        extras='w-full text-center my-4'
-      >
-        Invite Members
-      </ButtonLink>
+      <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
+        <ButtonLink
+          to='/org/invite'
+          bgColor='bg-teal-300 hover:bg-teal-100'
+          textTransform='uppercase'
+          fontWeight='font-semibold'
+          extras='block w-full text-center'
+        >
+          Invite Members
+        </ButtonLink>
+      </section>
     </div>
   );
 }

@@ -23,19 +23,20 @@ export default function SingleEvent() {
   } = location.state;
 
   return (
-    <div
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}
-      className='pt-10 pb-3'
-    >
+    <div className='pt-10 pb-3 bg-gray-200'>
       {/* FIXME: backPath for team should be different */}
       <Header title={title} backPath='/dashboard/org/events' />
 
       <div className='w-full px-2 pt-4 pb-16'>
-        <div className='rounded overflow-hidden border border-gray-300 shadow bg-white'>
-          <section className='px-6 py-2'>
-            <img className='inline-block h-12 w-10' src={StaftIcon} alt='' />
+        <div className='rounded overflow-hidden border border-gray-300 shadow bg-gray-200'>
+          <section className='px-6 py-2 bg-white'>
+            <img
+              className='inline-block h-12 w-10 my-1'
+              src={StaftIcon}
+              alt=''
+            />
             <h3 className='font-bold text-xl mb-2'>{eventLocation}</h3>
-            <small className='block text-gray-500 text-sm font-light mb-2'>
+            <small className='block text-gray-600 text-xs font-light mb-2'>
               Creator: {creator}
             </small>
             <p className='text-sm mb-2'>
@@ -49,13 +50,13 @@ export default function SingleEvent() {
               </span>
             </p>
           </section>
-          <section className='px-6 py-2'>
-            <h4 className='text-sm text-gray-600 font-light uppercase'>
+          <section className='px-6 py-4 bg-white border-b border-gray-400'>
+            <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Workers, Chat, & Photos
             </h4>
             <Link
               to='!#'
-              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light border-b border-gray-400'
+              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
                 <small className='block text-gray-600'>Participants:</small>
@@ -65,7 +66,7 @@ export default function SingleEvent() {
             </Link>
             <Link
               to='!#'
-              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light border-b border-gray-400'
+              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
                 <small className='block text-gray-600'>Event Chat: (off)</small>
@@ -75,7 +76,7 @@ export default function SingleEvent() {
             </Link>
             <Link
               to='!#'
-              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light border-b border-gray-400'
+              className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
                 <small className='block text-gray-600'>Photos:</small>
@@ -84,8 +85,8 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
           </section>
-          <section className='w-full p-4 border-t border-b border-gray-400 mb-1 mt-2'>
-            <h4 className='text-sm text-gray-600 font-light uppercase'>
+          <section className='w-full p-4 border-t border-b border-gray-400 my-1 bg-white'>
+            <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Event Details
             </h4>
             <Link
@@ -95,8 +96,8 @@ export default function SingleEvent() {
               Add Event Details
             </Link>
           </section>
-          <section className='w-full p-4 border-t border-b border-gray-400 my-1'>
-            <h4 className='text-sm text-gray-600 font-light uppercase'>
+          <section className='w-full p-4 border-t border-b border-gray-400 my-1 bg-white'>
+            <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Links
             </h4>
             <Link
@@ -106,21 +107,21 @@ export default function SingleEvent() {
               Add Link
             </Link>
           </section>
-          <section className='w-full p-4 border-t border-gray-400 mt-1'>
+          <section className='w-full p-4 border-t border-gray-400 mt-1 bg-white'>
             <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Options
             </h4>
-            <div className='flex items-center'>
+            <div className='flex items-center text-xs text-center font-light'>
               <Link
                 to='!#'
-                className='inline-block p-4 text-teal-500 text-sm flex-1 text-center hover:bg-teal-500 hover:text-white border-r border-gray-200'
+                className='inline-block p-4 text-teal-500 flex-1 hover:bg-teal-500 hover:text-white border-r border-gray-200'
               >
-                <EditIcon />
+                <EditIcon className='mb-1' />
                 <br />
                 Edit Event
               </Link>
-              <button className='inline-block p-4 text-red-500 text-sm flex-1 text-center hover:bg-red-500 hover:text-white'>
-                <DeleteForeverIcon />
+              <button className='inline-block p-4 text-red-500 flex-1 hover:bg-red-500 hover:text-white'>
+                <DeleteForeverIcon className='mb-1' />
                 <br />
                 Delete Event
               </button>

@@ -9,7 +9,7 @@ import DashboardHeader from '../DashboardHeader';
 
 export default function OrgSettings({ handleClick }) {
   return (
-    <>
+    <div className='pt-16'>
       <DashboardHeader
         title='Settings'
         subtitle='helpinghandllc'
@@ -59,7 +59,7 @@ export default function OrgSettings({ handleClick }) {
           </button>
         </section>
       </div>
-    </>
+    </div>
   );
 }
 

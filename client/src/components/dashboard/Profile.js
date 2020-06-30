@@ -6,7 +6,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-import { ButtonLink, Outlined } from '../../../lib/Button';
+import { ButtonLink, Outlined } from '../../lib/Button';
 
 import DashboardHeader from './DashboardHeader';
 
@@ -16,7 +16,7 @@ export default function Profile({ handleClick }) {
   const toggleSsn = () => setShowSsn(!showSsn);
 
   return (
-    <>
+    <div className='pt-16'>
       <DashboardHeader
         title='Profile'
         secondaryIcon={<EditOutlinedIcon />}
@@ -159,7 +159,7 @@ export default function Profile({ handleClick }) {
           </Outlined>
         </section>
       </div>
-    </>
+    </div>
   );
 }
 

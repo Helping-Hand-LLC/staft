@@ -10,7 +10,7 @@ export default function Details() {
   const handleAccessTypeChange = e => setAccessType(e.target.value);
 
   return (
-    <>
+    <div className='pt-10'>
       <Header
         title='Details'
         secondaryIcon={
@@ -71,6 +71,6 @@ export default function Details() {
           <span className='flex-1 text-left'>Private (invite only)</span>
         </label>
       </form>
-    </>
+    </div>
   );
 }

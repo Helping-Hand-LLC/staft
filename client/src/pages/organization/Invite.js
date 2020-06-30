@@ -45,7 +45,7 @@ export default function Invite() {
     setInvitees(invitees.filter((invitee, index) => index !== removeIndex));
 
   return (
-    <>
+    <div className='pt-10'>
       <Header
         title='Invite'
         primaryIcon={<CloseIcon />}
@@ -96,7 +96,7 @@ export default function Invite() {
           Send
         </Button>
       </form>
-    </>
+    </div>
   );
 }
 

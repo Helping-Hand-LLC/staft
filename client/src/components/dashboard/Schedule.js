@@ -12,7 +12,7 @@ import {
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 
 import DashboardHeader from './DashboardHeader';
-import EventCard from '../../EventCard';
+import EventCard from '../../lib/EventCard';
 import Badge from '../../lib/Badge';
 
 import _events from '../../constants/events.json';
@@ -66,7 +66,7 @@ export default function Schedule({ handleClick }) {
   let { url, path } = useRouteMatch();
 
   return (
-    <>
+    <div className='pt-16'>
       <DashboardHeader
         title='Schedule'
         handleClick={handleClick}
@@ -108,7 +108,7 @@ export default function Schedule({ handleClick }) {
           </Route>
         </Switch>
       </div>
-    </>
+    </div>
   );
 }
 

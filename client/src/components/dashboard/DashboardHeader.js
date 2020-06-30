@@ -12,7 +12,7 @@ export default function DashboardHeader({
   handleClick
 }) {
   return (
-    <div className='p-3 flex'>
+    <div className='bg-white w-full fixed top-0 p-3 flex shadow-sm'>
       <div className='flex-1 flex justify-center'>
         <button
           className='inline-block mr-auto'
