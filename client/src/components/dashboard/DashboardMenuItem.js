@@ -10,18 +10,18 @@ import Team from './Team';
 import Help from './Help';
 import Profile from './Profile';
 
-export default function DashboardMenuItem({ handleClick }) {
+export default function DashboardMenuItem({ isOpen, handleClick }) {
   let { menuItem } = useParams();
 
   switch (menuItem) {
     // case 'activity':
     //   return <Activity handleClick={handleClick} />;
     case 'schedule':
-      return <Schedule handleClick={handleClick} />;
+      return <Schedule isOpen={isOpen} handleClick={handleClick} />;
     case 'messages':
       return <DirectMessages handleClick={handleClick} />;
     case 'calendar':
-      return <Calendar handleClick={handleClick} />;
+      return <Calendar isOpen={isOpen} handleClick={handleClick} />;
     case 'team':
       return <Team handleClick={handleClick} />;
     case 'help':
@@ -29,10 +29,11 @@ export default function DashboardMenuItem({ handleClick }) {
     case 'profile':
       return <Profile handleClick={handleClick} />;
     default:
-      return <Schedule handleClick={handleClick} />;
+      return <Schedule isOpen={isOpen} handleClick={handleClick} />;
   }
 }
 
 DashboardMenuItem.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired
 };

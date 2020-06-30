@@ -10,7 +10,9 @@ import {
 } from 'react-router-dom';
 
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import AddIcon from '@material-ui/icons/Add';
 
+import { FloatingAction } from '../../lib/Button';
 import DashboardHeader from './DashboardHeader';
 import EventCard from '../../lib/EventCard';
 import Badge from '../../lib/Badge';
@@ -62,7 +64,7 @@ function DFilter() {
   }
 }
 
-export default function Schedule({ handleClick }) {
+export default function Schedule({ isOpen, handleClick }) {
   let { url, path } = useRouteMatch();
 
   return (
@@ -108,10 +110,15 @@ export default function Schedule({ handleClick }) {
           </Route>
         </Switch>
       </div>
+      {/* TODO: fade-in when isOpen is false */}
+      <FloatingAction style={{ display: isOpen ? 'none' : 'inline-block' }}>
+        <AddIcon />
+      </FloatingAction>
     </div>
   );
 }
 
 Schedule.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired
 };

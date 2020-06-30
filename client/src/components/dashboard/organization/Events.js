@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AddIcon from '@material-ui/icons/Add';
 
 import DashboardHeader from '../DashboardHeader';
+
+import { FloatingAction } from '../../../lib/Button';
 import EventCard from '../../../lib/EventCard';
 import Badge from '../../../lib/Badge';
 
 import _events from '../../../constants/events.json';
 
-export default function OrgEvents({ handleClick }) {
+export default function OrgEvents({ isOpen, handleClick }) {
   return (
     <div className='pt-16'>
       <DashboardHeader
@@ -33,10 +36,15 @@ export default function OrgEvents({ handleClick }) {
           />
         ))}
       </div>
+      {/* TODO: fade-in when isOpen is false */}
+      <FloatingAction style={{ display: isOpen ? 'none' : 'inline-block' }}>
+        <AddIcon />
+      </FloatingAction>
     </div>
   );
 }
 
 OrgEvents.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired
 };

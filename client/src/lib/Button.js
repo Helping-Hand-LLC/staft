@@ -70,6 +70,27 @@ export function Outlined(props) {
   );
 }
 
+export function FloatingAction(props) {
+  const ignore = ['style', 'children', 'type', 'onClick'];
+
+  return (
+    <button
+      type='button'
+      className={Object.values(_.omit(props, ignore)).join(' ')}
+      onClick={props.onClick}
+      style={{
+        ...props.style,
+        outline: 'none',
+        position: 'fixed',
+        bottom: '1rem',
+        right: '0.5rem'
+      }}
+    >
+      {props.children}
+    </button>
+  );
+}
+
 Button.defaultProps = DEFAULT_PROPS;
 Button.propTypes = {
   ...PROP_TYPES,
@@ -85,6 +106,18 @@ Outlined.defaultProps = {
   border: 'border border-blue-500 hover:border-transparent'
 };
 Outlined.propTypes = {
+  ...PROP_TYPES,
+  border: PropTypes.string,
+  onClick: PropTypes.func
+};
+FloatingAction.defaultProps = {
+  ...DEFAULT_PROPS,
+  border: '',
+  borderRadius: 'rounded-full',
+  padding: '',
+  extras: 'w-10 h-10'
+};
+FloatingAction.propTypes = {
   ...PROP_TYPES,
   border: PropTypes.string,
   onClick: PropTypes.func

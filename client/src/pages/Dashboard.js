@@ -27,10 +27,10 @@ export default function Dashboard() {
       >
         <Switch>
           <Route path={`${path}/org/:orgItem`}>
-            <DashboardOrgItem handleClick={handleClick} />
+            <DashboardOrgItem handleClick={handleClick} isOpen={isOpen} />
           </Route>
           <Route path={`${path}/:menuItem`}>
-            <DashboardMenuItem handleClick={handleClick} />
+            <DashboardMenuItem handleClick={handleClick} isOpen={isOpen} />
           </Route>
           {/* go to schedule for unknown routes */}
           <Route exact path={path}>

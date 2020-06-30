@@ -9,7 +9,7 @@ import ForumOutlinedIcon from '@material-ui/icons/ForumOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
 
 export default function DashboardSidebar({ isOpen, handleClick }) {
   let { url } = useRouteMatch();
@@ -170,8 +170,8 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
             <small className='text-2xs font-light'>Team Member</small>
           </div>
         </NavLink>
-        <button>
-          <AddCircleIcon fontSize='large' />
+        <button className='bg-teal-500 text-white rounded-full flex justify-center items-center p-1'>
+          <AddIcon />
         </button>
       </div>
     </section>

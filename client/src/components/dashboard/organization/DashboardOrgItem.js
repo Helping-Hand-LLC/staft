@@ -8,14 +8,14 @@ import OrgChannels from './Channels';
 import OrgMembers from './Members';
 import OrgSettings from './Settings';
 
-export default function DashboardOrgItem({ handleClick }) {
+export default function DashboardOrgItem({ isOpen, handleClick }) {
   let { orgItem } = useParams();
 
   switch (orgItem) {
     // case 'posts':
     //   return <OrgPosts handleClick={handleClick} />;
     case 'events':
-      return <OrgEvents handleClick={handleClick} />;
+      return <OrgEvents isOpen={isOpen} handleClick={handleClick} />;
     case 'channels':
       return <OrgChannels handleClick={handleClick} />;
     case 'members':
@@ -28,5 +28,6 @@ export default function DashboardOrgItem({ handleClick }) {
 }
 
 DashboardOrgItem.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
   handleClick: PropTypes.func.isRequired
 };
