@@ -1,7 +1,8 @@
 import React, { useReducer } from 'react';
+
 import CloseIcon from '@material-ui/icons/Close';
 
-import Header from '../../components/Header';
+import Header from '../../lib/Header';
 
 import _states from '../../constants/states.json';
 

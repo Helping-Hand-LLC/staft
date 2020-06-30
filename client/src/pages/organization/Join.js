@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 import BusinessIcon from '@material-ui/icons/Business';
 
-import Header from '../../components/Header';
+import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
 import _organizations from '../../constants/organizations.json';

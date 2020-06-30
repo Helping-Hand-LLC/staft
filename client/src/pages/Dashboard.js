@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 
-import DSidebar from '../components/dashboard/index/DSidebar';
-import DMenuItem from '../components/dashboard/index/DMenuItem';
-import DOrgItem from '../components/dashboard/organization/DOrgItem';
+import DashboardSidebar from '../components/dashboard/DashboardSidebar';
+import DashboardMenuItem from '../components/dashboard/DashboardMenuItem';
+import DashboardOrgItem from '../components/dashboard/organization/DashboardOrgItem';
 
 export default function Dashboard() {
   // path - allows us to build <Route> paths relative to parent path
@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   return (
     <div className='h-screen flex flex-no-wrap overflow-x-hidden'>
-      <DSidebar isOpen={isOpen} handleClick={handleClick} />
+      <DashboardSidebar isOpen={isOpen} handleClick={handleClick} />
 
       <section
         className={`h-screen w-full bg-white ${
@@ -25,10 +25,10 @@ export default function Dashboard() {
       >
         <Switch>
           <Route path={`${path}/org/:orgItem`}>
-            <DOrgItem handleClick={handleClick} />
+            <DashboardOrgItem handleClick={handleClick} />
           </Route>
           <Route path={`${path}/:menuItem`}>
-            <DMenuItem handleClick={handleClick} />
+            <DashboardMenuItem handleClick={handleClick} />
           </Route>
           {/* go to schedule for unknown routes */}
           <Route exact path={path}>

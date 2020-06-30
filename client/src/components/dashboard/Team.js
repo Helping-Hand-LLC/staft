@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import DHeader from './DHeader';
+import DashboardHeader from './DashboardHeader';
 
-import _members from '../../../constants/members.json';
+import _members from '../../constants/members.json';
 
 function Member({ name }) {
   return (
@@ -18,7 +18,7 @@ function Member({ name }) {
 export default function Team({ handleClick }) {
   return (
     <div className='h-screen relative'>
-      <DHeader
+      <DashboardHeader
         title='Team'
         subtitle='helpinghandllc'
         handleClick={handleClick}

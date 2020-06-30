@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import SortOutlinedIcon from '@material-ui/icons/SortOutlined';
 
-export default function DHeader({
+export default function DashboardHeader({
   title,
   subtitle,
   secondaryIcon,
@@ -45,7 +45,7 @@ export default function DHeader({
   );
 }
 
-DHeader.propTypes = {
+DashboardHeader.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   secondaryIcon: PropTypes.element,

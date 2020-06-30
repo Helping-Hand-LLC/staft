@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { ButtonLink } from '../../../lib/Button';
 
-import DHeader from '../index/DHeader';
+import DashboardHeader from '../DashboardHeader';
 
 import _members from '../../../constants/members.json';
 
@@ -20,7 +20,7 @@ function Member({ name }) {
 export default function OrgMembers({ handleClick }) {
   return (
     <div className='h-screen relative'>
-      <DHeader
+      <DashboardHeader
         title='Members'
         subtitle='helpinghandllc'
         handleClick={handleClick}

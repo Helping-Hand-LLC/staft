@@ -11,11 +11,11 @@ import {
 
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 
-import DHeader from './DHeader';
+import DashboardHeader from './DashboardHeader';
 import EventCard from '../../EventCard';
-import Badge from '../../../lib/Badge';
+import Badge from '../../lib/Badge';
 
-import _events from '../../../constants/events.json';
+import _events from '../../constants/events.json';
 
 function Current() {
   return _events
@@ -67,7 +67,7 @@ export default function Schedule({ handleClick }) {
 
   return (
     <>
-      <DHeader
+      <DashboardHeader
         title='Schedule'
         handleClick={handleClick}
         secondaryIcon={<ArchiveOutlinedIcon />}

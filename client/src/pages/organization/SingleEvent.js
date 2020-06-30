@@ -1,17 +1,16 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Link, useLocation } from 'react-router-dom';
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import Header from '../../components/Header';
+import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
 import StaftIcon from '../../images/A_WebVersion.png';
 
-function SingleEvent() {
+export default function SingleEvent() {
   const location = useLocation();
 
   const {
@@ -142,19 +141,3 @@ function SingleEvent() {
     </div>
   );
 }
-
-// SingleEvent.propTypes = {
-//   location: PropTypes.string.isRequired,
-//   title: PropTypes.string,
-//   creator: PropTypes.string.isRequired,
-//   startDate: PropTypes.string.isRequired,
-//   startTime: PropTypes.string.isRequired,
-//   address: PropTypes.shape({
-//     street: PropTypes.string.isRequired,
-//     city: PropTypes.string.isRequired,
-//     state: PropTypes.string.isRequired,
-//     zip: PropTypes.string.isRequired
-//   }).isRequired
-// };
-
-export default SingleEvent;

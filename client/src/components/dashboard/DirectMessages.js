@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DHeader from './DHeader';
+import DashboardHeader from './DashboardHeader';
 
 export default function DirectMessages({ handleClick }) {
   return (
     <>
-      <DHeader title='Messages' handleClick={handleClick} />
+      <DashboardHeader title='Messages' handleClick={handleClick} />
       <div className='h-64 flex justify-center items-center text-gray-600'>
         Direct Messages: Coming Soon...
       </div>

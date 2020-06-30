@@ -10,7 +10,7 @@ import Team from './Team';
 import Help from './Help';
 import Profile from './Profile';
 
-export default function DMenuItem({ handleClick }) {
+export default function DashboardMenuItem({ handleClick }) {
   let { menuItem } = useParams();
 
   switch (menuItem) {
@@ -33,6 +33,6 @@ export default function DMenuItem({ handleClick }) {
   }
 }
 
-DMenuItem.propTypes = {
+DashboardMenuItem.propTypes = {
   handleClick: PropTypes.func.isRequired
 };

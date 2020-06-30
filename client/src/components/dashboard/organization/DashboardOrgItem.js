@@ -8,7 +8,7 @@ import OrgChannels from './Channels';
 import OrgMembers from './Members';
 import OrgSettings from './Settings';
 
-export default function DOrgItem({ handleClick }) {
+export default function DashboardOrgItem({ handleClick }) {
   let { orgItem } = useParams();
 
   switch (orgItem) {
@@ -27,6 +27,6 @@ export default function DOrgItem({ handleClick }) {
   }
 }
 
-DOrgItem.propTypes = {
+DashboardOrgItem.propTypes = {
   handleClick: PropTypes.func.isRequired
 };

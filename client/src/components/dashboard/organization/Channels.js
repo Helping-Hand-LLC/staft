@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DHeader from '../index/DHeader';
+import DashboardHeader from '../DashboardHeader';
 
 export default function OrgChannels({ handleClick }) {
   return (
     <>
-      <DHeader
+      <DashboardHeader
         title='Channels'
         subtitle='helpinghandllc'
         handleClick={handleClick}

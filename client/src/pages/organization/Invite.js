@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import Header from '../../components/Header';
+import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
 function Member({ name, handleClick }) {

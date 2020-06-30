@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DHeader from './DHeader';
+import DashboardHeader from './DashboardHeader';
 
-export default function Calendar({ handleClick }) {
+export default function Help({ handleClick }) {
   return (
     <>
-      <DHeader title='Calendar' handleClick={handleClick} />
+      <DashboardHeader title='Help' handleClick={handleClick} />
       <div className='h-64 flex justify-center items-center text-gray-600'>
-        Calendar: Coming Soon...
+        Help FAQ: Coming Soon...
       </div>
     </>
   );
 }
 
-Calendar.propTypes = {
+Help.propTypes = {
   handleClick: PropTypes.func.isRequired
 };

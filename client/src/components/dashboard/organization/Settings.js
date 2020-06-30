@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-import DHeader from '../index/DHeader';
+import DashboardHeader from '../DashboardHeader';
 
 export default function OrgSettings({ handleClick }) {
   return (
     <>
-      <DHeader
+      <DashboardHeader
         title='Settings'
         subtitle='helpinghandllc'
         handleClick={handleClick}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Header from '../../components/Header';
+import Header from '../../lib/Header';
 
 export default function Details() {
   const [uid, setUid] = useState('');

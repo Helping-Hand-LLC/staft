@@ -8,7 +8,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { ButtonLink, Outlined } from '../../../lib/Button';
 
-import DHeader from './DHeader';
+import DashboardHeader from './DashboardHeader';
 
 export default function Profile({ handleClick }) {
   const [showSsn, setShowSsn] = useState(false);
@@ -17,7 +17,7 @@ export default function Profile({ handleClick }) {
 
   return (
     <>
-      <DHeader
+      <DashboardHeader
         title='Profile'
         secondaryIcon={<EditOutlinedIcon />}
         secondaryPath='/profile/edit'

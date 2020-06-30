@@ -11,7 +11,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function DSidebar({ isOpen, handleClick }) {
+export default function DashboardSidebar({ isOpen, handleClick }) {
   let { url } = useRouteMatch();
 
   return (
@@ -178,6 +178,6 @@ export default function DSidebar({ isOpen, handleClick }) {
   );
 }
 
-DSidebar.propTypes = {
+DashboardSidebar.propTypes = {
   isOpen: PropTypes.bool.isRequired
 };

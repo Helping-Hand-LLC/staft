@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import DHeader from '../index/DHeader';
+import DashboardHeader from '../DashboardHeader';
 
 export default function OrgPosts({ handleClick }) {
   return (
     <>
-      <DHeader
+      <DashboardHeader
         title='Posts'
         subtitle='helpinghandllc'
         handleClick={handleClick}
