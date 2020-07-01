@@ -27,12 +27,16 @@ import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
 import Join from './pages/organization/Join';
 import SingleEvent from './pages/organization/SingleEvent';
+import CreateEvent from './pages/organization/CreateEvent';
 
 export default function App() {
   return (
     <>
       <Switch>
         {/* organization */}
+        <Route path='/org/events/create'>
+          <CreateEvent />
+        </Route>
         <Route path='/org/events/single'>
           <SingleEvent />
         </Route>

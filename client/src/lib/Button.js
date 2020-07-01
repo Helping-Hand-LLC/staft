@@ -31,7 +31,7 @@ export function Button(props) {
 
   return (
     <button
-      type='button'
+      type={props.type || 'button'}
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
       style={{ ...props.style, outline: 'none' }}
@@ -91,6 +91,26 @@ export function FloatingAction(props) {
   );
 }
 
+export function FloatingActionLink(props) {
+  const ignore = ['style', 'to', 'children'];
+
+  return (
+    <Link
+      to={props.to}
+      className={Object.values(_.omit(props, ignore)).join(' ')}
+      style={{
+        ...props.style,
+        outline: 'none',
+        position: 'fixed',
+        bottom: '1rem',
+        right: '0.5rem'
+      }}
+    >
+      {props.children}
+    </Link>
+  );
+}
+
 Button.defaultProps = DEFAULT_PROPS;
 Button.propTypes = {
   ...PROP_TYPES,
@@ -121,4 +141,15 @@ FloatingAction.propTypes = {
   ...PROP_TYPES,
   border: PropTypes.string,
   onClick: PropTypes.func
+};
+FloatingActionLink.defaultProps = {
+  ...DEFAULT_PROPS,
+  border: '',
+  borderRadius: 'rounded-full',
+  padding: 'p-2',
+  extras: ''
+};
+FloatingActionLink.propTypes = {
+  ...PROP_TYPES,
+  border: PropTypes.string
 };

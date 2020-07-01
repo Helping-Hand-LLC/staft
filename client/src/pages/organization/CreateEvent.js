@@ -9,21 +9,32 @@ import {
   NextButton,
   FinishButton
 } from '../../components/stepForm/StepButton';
-import { Step1, Step2, Step3, Step4 } from '../components/createEvent/Steps';
+import { Step1, Step2, Step3, Step4 } from '../../components/createEvent/Steps';
+import Info from '../../components/createEvent/Info';
 
 export default function CreateEvent() {
   const [currentStep, setCurrentStep] = useState(1);
   const [eventTitle, setEventTitle] = useState('');
   const [location, setLocation] = useState({});
-  // const [links, setLinks] = useState([]);
+  const [singleLink, setSingleLink] = useState('');
+  const [links, setLinks] = useState([]);
 
   const handleEventTitleChange = e => setEventTitle(e.target.value);
   const handleLocationChange = e => setLocation(JSON.parse(e.target.value));
-  // TODO: links handleChange
+  const handleSingleLinkChange = e => setSingleLink(e.target.value);
+
+  const addLink = e => {
+    e.preventDefault();
+    setLinks([...links, singleLink]);
+    setSingleLink('');
+  };
+
+  const removeLink = removeIndex =>
+    setLinks(links.filter((link, i) => i !== removeIndex));
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('form submitted');
+    console.log('form submitted', eventTitle, location, links);
   };
 
   // stepper functionality
@@ -40,10 +51,12 @@ export default function CreateEvent() {
     <div className='h-screen flex flex-col p-4 relative'>
       <ProgressIndicator currentStep={currentStep} />
       <section className='mb-2'>
-        <Link to='/'>
+        {/* FIXME: dynamic back link */}
+        <Link to='/dashboard'>
           <CloseIcon />
         </Link>
       </section>
+      <Info currentStep={currentStep} />
       <form
         className='text-center flex-1 flex flex-col justify-between pt-12'
         onSubmit={handleSubmit}
@@ -59,17 +72,20 @@ export default function CreateEvent() {
             location={location}
             handleChange={handleLocationChange}
           />
-          {/* <Step3
+          <Step3
             currentStep={currentStep}
-            adminEmail={adminEmail}
-            handleChange={handleAdminEmailChange}
+            singleLink={singleLink}
+            links={links}
+            addLink={addLink}
+            removeLink={removeLink}
+            handleChange={handleSingleLinkChange}
           />
           <Step4
             currentStep={currentStep}
-            uid={uid}
-            accessType={accessType}
-            adminEmail={adminEmail}
-          /> */}
+            eventTitle={eventTitle}
+            location={location}
+            links={links}
+          />
         </section>
         <section
           className={`${currentStep === 4 ? '' : 'flex justify-between'}`}

@@ -170,7 +170,11 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
             <small className='text-2xs font-light'>Team Member</small>
           </div>
         </NavLink>
-        <button className='bg-teal-500 text-white rounded-full flex justify-center items-center p-1'>
+        {/* FIXME: should be link to CreateEvent */}
+        <button
+          className='bg-teal-500 text-white rounded-full flex justify-center items-center p-1'
+          style={{ outline: 'none' }}
+        >
           <AddIcon />
         </button>
       </div>

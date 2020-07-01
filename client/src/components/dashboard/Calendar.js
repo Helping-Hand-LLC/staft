@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 
-import { FloatingAction } from '../../lib/Button';
+import { FloatingActionLink } from '../../lib/Button';
 
 import DashboardHeader from './DashboardHeader';
 
@@ -14,9 +14,12 @@ export default function Calendar({ isOpen, handleClick }) {
         Calendar: Coming Soon...
       </div>
       {/* TODO: fade-in when isOpen is false */}
-      <FloatingAction style={{ display: isOpen ? 'none' : 'inline-block' }}>
+      <FloatingActionLink
+        to='/org/events/create'
+        style={{ display: isOpen ? 'none' : 'inline-block' }}
+      >
         <AddIcon />
-      </FloatingAction>
+      </FloatingActionLink>
     </div>
   );
 }

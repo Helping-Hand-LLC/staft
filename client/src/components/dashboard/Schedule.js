@@ -12,7 +12,7 @@ import {
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import AddIcon from '@material-ui/icons/Add';
 
-import { FloatingAction } from '../../lib/Button';
+import { FloatingActionLink } from '../../lib/Button';
 import DashboardHeader from './DashboardHeader';
 import EventCard from '../../lib/EventCard';
 import Badge from '../../lib/Badge';
@@ -111,9 +111,12 @@ export default function Schedule({ isOpen, handleClick }) {
         </Switch>
       </div>
       {/* TODO: fade-in when isOpen is false */}
-      <FloatingAction style={{ display: isOpen ? 'none' : 'inline-block' }}>
+      <FloatingActionLink
+        to='/org/events/create'
+        style={{ display: isOpen ? 'none' : 'inline-block' }}
+      >
         <AddIcon />
-      </FloatingAction>
+      </FloatingActionLink>
     </div>
   );
 }
