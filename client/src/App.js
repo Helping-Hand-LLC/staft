@@ -26,8 +26,8 @@ import Details from './pages/organization/Details';
 import Notifications from './pages/organization/Notifications';
 import Invite from './pages/organization/Invite';
 import Join from './pages/organization/Join';
-import SingleEvent from './pages/organization/SingleEvent';
-import CreateEvent from './pages/organization/CreateEvent';
+import SingleEvent from './pages/event/SingleEvent';
+import CreateEvent from './pages/event/CreateEvent';
 
 export default function App() {
   return (

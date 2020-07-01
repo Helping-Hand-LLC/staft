@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Badge({ type, text }) {
+export default function Badge({ type, text }) {
   let bgColor;
 
   switch (type) {
@@ -17,7 +17,7 @@ function Badge({ type, text }) {
 
   return (
     <span
-      className={`inline-block ${bgColor} text-black rounded-full px-3 py-1 text-xs font-bold uppercase flex justify-center items-center`}
+      className={`${bgColor} text-black rounded-full px-3 py-1 text-xs font-bold uppercase flex justify-center items-center`}
     >
       {text}
     </span>
@@ -25,8 +25,6 @@ function Badge({ type, text }) {
 }
 
 Badge.propTypes = {
-  type: PropTypes.oneOf(['danger', 'success']).isRequired,
+  type: PropTypes.oneOf(['danger', 'success']),
   text: PropTypes.string.isRequired
 };
-
-export default Badge;
