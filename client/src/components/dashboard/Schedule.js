@@ -25,6 +25,7 @@ function Current() {
     .map(event => (
       <EventCard
         key={event.id}
+        id={event.id}
         badge={<Badge type='success' text='Published' />}
         location={event.location}
         title={event.title}
@@ -41,6 +42,7 @@ function Drafts() {
     .map(event => (
       <EventCard
         key={event.id}
+        id={event.id}
         badge={<Badge type='danger' text='Draft' />}
         location={event.location}
         title={event.title}

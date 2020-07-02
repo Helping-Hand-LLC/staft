@@ -22,6 +22,7 @@ export default function OrgEvents({ isOpen, handleClick }) {
         {_events.map(event => (
           <EventCard
             key={event.id}
+            id={event.id}
             badge={
               <Badge
                 type={event.isPublished ? 'success' : 'danger'}

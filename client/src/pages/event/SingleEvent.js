@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
@@ -14,6 +14,7 @@ import Badge from '../../lib/Badge';
 import StaftIcon from '../../images/A_WebVersion.png';
 
 export default function SingleEvent() {
+  const { id } = useParams();
   const location = useLocation();
 
   const {
@@ -77,7 +78,7 @@ export default function SingleEvent() {
               Workers, Chat, & Photos
             </h4>
             <Link
-              to='!#'
+              to={`/org/events/single/${id}/participants`}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -135,7 +136,7 @@ export default function SingleEvent() {
             </h4>
             <div className='flex items-center text-xs text-center font-light'>
               <Link
-                to='!#'
+                to={`/org/events/single/${id}/edit`}
                 className='inline-block p-4 text-teal-500 flex-1 hover:bg-teal-500 hover:text-white border-r border-gray-200'
               >
                 <EditIcon className='mb-1' />
@@ -156,6 +157,7 @@ export default function SingleEvent() {
       </div>
       <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
         <Button
+          // {`/org/events/single/${id}/invite`}
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'

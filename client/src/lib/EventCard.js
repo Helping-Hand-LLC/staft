@@ -6,7 +6,15 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 import StaftIcon from '../images/A_WebVersion.png';
 
-function EventCard({ badge, location, title, creator, startDate, startTime }) {
+function EventCard({
+  id,
+  badge,
+  location,
+  title,
+  creator,
+  startDate,
+  startTime
+}) {
   return (
     <div className='rounded overflow-hidden border border-gray-300 mb-2 shadow'>
       <div className='px-6 mt-4 flex justify-between'>
@@ -15,7 +23,7 @@ function EventCard({ badge, location, title, creator, startDate, startTime }) {
       </div>
       <Link
         to={{
-          pathname: '/org/events/single',
+          pathname: `/org/events/single/${id}`,
           state: {
             eventLocation: location,
             title,
@@ -51,6 +59,7 @@ function EventCard({ badge, location, title, creator, startDate, startTime }) {
 }
 
 EventCard.propTypes = {
+  id: PropTypes.number.isRequired,
   badge: PropTypes.element,
   location: PropTypes.string.isRequired,
   title: PropTypes.string,
