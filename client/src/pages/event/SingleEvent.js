@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import {
   editEventPath,
-  // inviteParticipantPath,
+  inviteParticipantPath,
   participantListPath
 } from '../../constants/paths';
 
@@ -13,7 +13,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 import Header from '../../lib/Header';
-import { Button } from '../../lib/Button';
+import { ButtonLink } from '../../lib/Button';
 import Badge from '../../lib/Badge';
 
 import StaftIcon from '../../images/A_WebVersion.png';
@@ -33,7 +33,7 @@ export default function SingleEvent() {
 
   return (
     <div className='pt-10 pb-3 bg-gray-200'>
-      <Header title={title} />
+      <Header title={title || 'Event'} />
 
       <div className='w-full px-2 pt-4 pb-16'>
         <div className='rounded overflow-hidden border border-gray-300 shadow bg-gray-200'>
@@ -167,15 +167,15 @@ export default function SingleEvent() {
         </div>
       </div>
       <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
-        <Button
-          // TODO: {`/org/events/single/${id}/invite`}
+        <ButtonLink
+          to={inviteParticipantPath(id)}
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'
-          extras='w-full'
+          extras='block w-full text-center'
         >
           Invite Workers
-        </Button>
+        </ButtonLink>
       </section>
     </div>
   );

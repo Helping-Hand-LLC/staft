@@ -22,7 +22,7 @@ export const routes = [
   { path: paths.ORG_JOIN_PATH, component: pages.Join },
   { path: paths.CREATE_EVENT_PATH, component: pages.CreateEvent },
   { path: paths.EDIT_EVENT_PATH, component: pages.EditEvent },
-  { path: paths.SINGLE_EVENT_PATH, component: pages.SingleEvent },
   { path: paths.INVITE_PARTICIPANT_PATH, component: pages.InviteParticipant },
-  { path: paths.PARTICIPANT_LIST_PATH, component: pages.ParticipantList }
+  { path: paths.PARTICIPANT_LIST_PATH, component: pages.ParticipantList },
+  { path: paths.SINGLE_EVENT_PATH, component: pages.SingleEvent }
 ];

@@ -1,10 +1,109 @@
-import React from 'react';
-// import PropTypes from 'prop-types'
+import React, { useState } from 'react';
 
-export default function InviteParticipant() {
-  return <div>Invite Participant</div>;
+import CloseIcon from '@material-ui/icons/Close';
+import SearchIcon from '@material-ui/icons/Search';
+
+import Header from '../../lib/Header';
+import { Button } from '../../lib/Button';
+
+import _members from '../../constants/members.json';
+
+function WorkerCheckbox({ label, isSelected, handleChange }) {
+  return (
+    <label
+      className='p-2 flex items-center border-b border-gray-400 font-light text-sm'
+      htmlFor={label}
+    >
+      <input
+        type='checkbox'
+        name={label}
+        id={label}
+        checked={isSelected}
+        onChange={handleChange}
+        className='mr-2'
+      />
+      {label}
+    </label>
+  );
 }
 
-// InviteParticipant.propTypes = {
+export default function InviteParticipant() {
+  const [participants, setParticipants] = useState(
+    _members.reduce(
+      (members, member) => ({
+        ...members,
+        [member.name]: false
+      }),
+      {}
+    )
+  );
+  const [searchTerm, setSearchTerm] = useState('');
 
-// }
+  const handleSearchTermChange = e => setSearchTerm(e.target.value);
+  const handleCheckboxChange = e => {
+    const { name } = e.target;
+    setParticipants({ ...participants, [name]: !participants[name] });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    Object.keys(participants)
+      .filter(p => participants[p])
+      .forEach(p => console.log(p, 'is selected'));
+  };
+
+  return (
+    <div style={{ paddingTop: '3.1rem' }}>
+      <Header title='Add Workers' primaryIcon={<CloseIcon />} />
+
+      <form className='text-sm' onSubmit={handleSubmit}>
+        {/* search bar */}
+        <div className='w-full flex justify-between items-center bg-gray-300'>
+          <SearchIcon fontSize='small' className='text-gray-500 mx-2' />
+          <input
+            className='p-2 w-full outline-none text-teal-500 bg-gray-300'
+            type='search'
+            name='worker-search'
+            id='worker-search'
+            placeholder='Search'
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+          />
+        </div>
+        {/* organization workers list */}
+        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center'>
+          Organization Workers
+          <span className='h-px bg-gray-400 flex-1 ml-2'></span>
+        </h4>
+
+        {_members
+          .filter(
+            member =>
+              member.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1
+          )
+          .map((m, i) => (
+            <WorkerCheckbox
+              key={i}
+              label={m.name}
+              isSelected={participants[m.name]}
+              handleChange={handleCheckboxChange}
+            />
+          ))}
+
+        {/* save participants */}
+        <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
+          <Button
+            type='submit'
+            bgColor='bg-teal-300 hover:bg-teal-100'
+            textTransform='uppercase'
+            fontWeight='font-semibold'
+            extras='w-full'
+          >
+            Save Participants
+          </Button>
+        </section>
+      </form>
+    </div>
+  );
+}

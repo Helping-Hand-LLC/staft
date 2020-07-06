@@ -25,7 +25,7 @@ export default function Join() {
   const handleSearchTermChange = e => setSearchTerm(e.target.value);
 
   return (
-    <div className='pt-10'>
+    <div style={{ paddingTop: '3.1rem' }}>
       <Header title='Join' primaryIcon={<CloseIcon />} />
 
       <form className='text-sm'>
