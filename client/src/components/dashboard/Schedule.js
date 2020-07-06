@@ -10,7 +10,12 @@ import {
 } from 'react-router-dom';
 import {
   CREATE_EVENT_PATH,
-  SCHEDULE_ARCHIVE_PATH
+  SCHEDULE_ARCHIVE_PATH,
+  D_SCHEDULE_CURRENT_PATH,
+  D_SCHEDULE_DRAFTS_PATH,
+  dashboardScheduleCurrentPath,
+  dashboardScheduleDraftsPath,
+  dashboardScheduleFilterPath
 } from '../../constants/paths';
 
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
@@ -63,9 +68,9 @@ function DFilter() {
   let { filter } = useParams();
 
   switch (filter) {
-    case 'current':
+    case D_SCHEDULE_CURRENT_PATH:
       return <Current />;
-    case 'drafts':
+    case D_SCHEDULE_DRAFTS_PATH:
       return <Drafts />;
     default:
       return <Current />;
@@ -88,7 +93,7 @@ export default function Schedule({ isOpen, handleClick }) {
         <ul className='flex bg-gray-300 rounded p-1'>
           <li className='flex-1 mr-2'>
             <NavLink
-              to={`${url}/current`}
+              to={dashboardScheduleCurrentPath(url)}
               className='block rounded bg-transparent text-teal-500 text-sm font-light text-center'
               activeClassName='bg-white'
             >
@@ -97,7 +102,7 @@ export default function Schedule({ isOpen, handleClick }) {
           </li>
           <li className='flex-1 mr-2'>
             <NavLink
-              to={`${url}/drafts`}
+              to={dashboardScheduleDraftsPath(url)}
               className='block rounded bg-transparent text-teal-500 text-sm font-light text-center'
               activeClassName='bg-white'
             >
@@ -109,12 +114,12 @@ export default function Schedule({ isOpen, handleClick }) {
       {/* main */}
       <div className='px-3 py-4'>
         <Switch>
-          <Route path={`${path}/:filter`}>
+          <Route path={dashboardScheduleFilterPath(path)}>
             <DFilter url={url} handleClick={handleClick} />
           </Route>
           {/* go to current for unknown routes */}
           <Route exact path={path}>
-            <Redirect to={`${url}/current`} />
+            <Redirect to={dashboardScheduleCurrentPath(url)} />
           </Route>
         </Switch>
       </div>

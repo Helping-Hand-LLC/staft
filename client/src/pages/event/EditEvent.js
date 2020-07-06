@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { useLocation } from 'react-router-dom';
+import { buildUrl } from '../../constants/paths';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -19,7 +20,7 @@ function EventLink({ url, handleClick }) {
     <li className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm'>
       <LanguageIcon />
       <a
-        href={`https://${url}`}
+        href={buildUrl(url)}
         target='_blank'
         rel='noopener noreferrer'
         className='underline'

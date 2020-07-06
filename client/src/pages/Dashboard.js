@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import {
+  dashboardOrgItemPath,
+  dashboardMenuItemPath,
+  dashboardSchedulePath
+} from '../constants/paths';
 
 import DashboardSidebar from '../components/dashboard/DashboardSidebar';
 import DashboardMenuItem from '../components/dashboard/DashboardMenuItem';
@@ -26,15 +31,15 @@ export default function Dashboard() {
         }`}
       >
         <Switch>
-          <Route path={`${path}/org/:orgItem`}>
+          <Route path={dashboardOrgItemPath(path)}>
             <DashboardOrgItem handleClick={handleClick} isOpen={isOpen} />
           </Route>
-          <Route path={`${path}/:menuItem`}>
+          <Route path={dashboardMenuItemPath(path)}>
             <DashboardMenuItem handleClick={handleClick} isOpen={isOpen} />
           </Route>
           {/* go to schedule for unknown routes */}
           <Route exact path={path}>
-            <Redirect to={`${url}/schedule`} />
+            <Redirect to={dashboardSchedulePath(url)} />
           </Route>
         </Switch>
       </section>

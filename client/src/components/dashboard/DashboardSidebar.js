@@ -1,7 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useRouteMatch } from 'react-router-dom';
-import { CREATE_EVENT_PATH } from '../../constants/paths';
+import {
+  CREATE_EVENT_PATH,
+  // dashboardActivityPath,
+  dashboardSchedulePath,
+  dashboardMessagesPath,
+  dashboardCalendarPath,
+  dashboardTeamPath,
+  dashboardHelpPath,
+  dashboardProfilePath,
+  // dashboardOrgPostsPath,
+  dashboardOrgEventsPath,
+  dashboardOrgChannelsPath,
+  dashboardOrgWorkersPath,
+  dashboardOrgSettingsPath
+} from '../../constants/paths';
 
 // import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import ViewCarouselOutlinedIcon from '@material-ui/icons/ViewCarouselOutlined';
@@ -28,7 +42,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
         <ul className='py-2'>
           {/* <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/activity`}
+              to={dashboardActivityPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -40,7 +54,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           {/* TODO: custom indicator icon */}
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/schedule`}
+              to={dashboardSchedulePath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -51,7 +65,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/messages`}
+              to={dashboardMessagesPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -62,7 +76,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/calendar`}
+              to={dashboardCalendarPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -73,7 +87,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/team`}
+              to={dashboardTeamPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -84,7 +98,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
-              to={`${url}/help`}
+              to={dashboardHelpPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -109,7 +123,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           {/* <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/posts`}
+              to={dashboardOrgPostsPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -119,7 +133,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li> */}
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/events`}
+              to={dashboardOrgEventsPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -129,7 +143,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/channels`}
+              to={dashboardOrgChannelsPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -139,7 +153,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/workers`}
+              to={dashboardOrgWorkersPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -149,7 +163,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
           <li className='p-2 block text-white border-l-4 border-purple-500'>
             <NavLink
-              to={`${url}/org/settings`}
+              to={dashboardOrgSettingsPath(url)}
               className='flex items-center p-1 rounded text-sm'
               activeClassName='bg-white text-blue-500'
               onClick={handleClick}
@@ -162,7 +176,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
       {/* profile */}
       <div className='flex items-center py-4 px-3'>
         <NavLink
-          to={`${url}/profile`}
+          to={dashboardProfilePath(url)}
           className='flex-1 flex items-center rounded p-1 mr-4'
           activeClassName='bg-white text-blue-500'
           onClick={handleClick}

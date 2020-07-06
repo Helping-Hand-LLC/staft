@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import {
+  // D_ORG_POSTS_PATH,
+  D_ORG_EVENTS_PATH,
+  D_ORG_CHANNELS_PATH,
+  D_ORG_WORKERS_PATH,
+  D_ORG_SETTINGS_PATH
+} from '../../../constants/paths';
 
 // import OrgPosts from './Posts';
 import OrgEvents from './Events';
@@ -12,15 +19,15 @@ export default function DashboardOrgItem({ isOpen, handleClick }) {
   let { orgItem } = useParams();
 
   switch (orgItem) {
-    // case 'posts':
+    // case D_ORG_POSTS_PATH:
     //   return <OrgPosts handleClick={handleClick} />;
-    case 'events':
+    case D_ORG_EVENTS_PATH:
       return <OrgEvents isOpen={isOpen} handleClick={handleClick} />;
-    case 'channels':
+    case D_ORG_CHANNELS_PATH:
       return <OrgChannels handleClick={handleClick} />;
-    case 'workers':
+    case D_ORG_WORKERS_PATH:
       return <OrgWorkers handleClick={handleClick} />;
-    case 'settings':
+    case D_ORG_SETTINGS_PATH:
       return <OrgSettings handleClick={handleClick} />;
     default:
       return <OrgEvents handleClick={handleClick} />;
