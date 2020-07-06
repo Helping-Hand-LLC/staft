@@ -140,7 +140,14 @@ export default function SingleEvent() {
             </h4>
             <div className='flex items-center text-xs text-center font-light'>
               <Link
-                to={editEventPath(id)}
+                to={{
+                  pathname: editEventPath(id),
+                  state: {
+                    oldTitle: title,
+                    oldLocation: eventLocation,
+                    oldLinks: []
+                  }
+                }}
                 className='inline-block p-4 text-teal-500 flex-1 hover:bg-teal-500 hover:text-white border-r border-gray-200'
               >
                 <EditIcon className='mb-1' />
