@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useHistory } from 'react-router-dom';
 import {
   editEventPath,
   inviteParticipantPath,
@@ -21,6 +21,7 @@ import StaftIcon from '../../images/A_WebVersion.png';
 export default function SingleEvent() {
   const { id } = useParams();
   const location = useLocation();
+  const history = useHistory();
 
   const {
     eventLocation,
@@ -92,7 +93,17 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
             <Link
-              to='!#'
+              to={{
+                pathname: history.location.pathname,
+                state: {
+                  eventLocation,
+                  title,
+                  creator,
+                  startDate,
+                  startTime,
+                  address
+                }
+              }}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -102,7 +113,17 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
             <Link
-              to='!#'
+              to={{
+                pathname: history.location.pathname,
+                state: {
+                  eventLocation,
+                  title,
+                  creator,
+                  startDate,
+                  startTime,
+                  address
+                }
+              }}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -117,7 +138,17 @@ export default function SingleEvent() {
               Event Details
             </h4>
             <Link
-              to='!#'
+              to={{
+                pathname: history.location.pathname,
+                state: {
+                  eventLocation,
+                  title,
+                  creator,
+                  startDate,
+                  startTime,
+                  address
+                }
+              }}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
             >
               Add Event Details
@@ -128,7 +159,17 @@ export default function SingleEvent() {
               Links
             </h4>
             <Link
-              to='!#'
+              to={{
+                pathname: history.location.pathname,
+                state: {
+                  eventLocation,
+                  title,
+                  creator,
+                  startDate,
+                  startTime,
+                  address
+                }
+              }}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
             >
               Add Link

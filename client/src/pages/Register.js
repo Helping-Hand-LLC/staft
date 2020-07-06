@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { LOGIN_PATH } from '../constants/paths';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -12,6 +12,8 @@ import { Button } from '../lib/Button';
 import BackButton from '../lib/BackButton';
 
 export default function Register() {
+  const history = useHistory();
+
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -122,11 +124,17 @@ export default function Register() {
         <section>
           <small className='block mb-4 font-light'>
             By using Staft, you agree to our{' '}
-            <Link to='!#' className='text-teal-500 hover:text-teal-300'>
+            <Link
+              to={history.location.pathname}
+              className='text-teal-500 hover:text-teal-300'
+            >
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link to='!#' className='text-teal-500 hover:text-teal-300'>
+            <Link
+              to={history.location.pathname}
+              className='text-teal-500 hover:text-teal-300'
+            >
               Terms
             </Link>
           </small>
