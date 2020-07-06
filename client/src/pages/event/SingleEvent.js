@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, useLocation, useParams, useHistory } from 'react-router-dom';
 import {
   editEventPath,
@@ -6,6 +7,7 @@ import {
   participantListPath
 } from '../../constants/paths';
 
+import LanguageIcon from '@material-ui/icons/Language';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -18,6 +20,23 @@ import Badge from '../../lib/Badge';
 
 import StaftIcon from '../../images/A_WebVersion.png';
 
+function EventLink({ url }) {
+  return (
+    <li className='p-1 flex items-center font-light text-xs text-gray-700'>
+      <LanguageIcon className='w-1/5 mr-2' fontSize='small' />
+      <a
+        href={`https://${url}`}
+        target='_blank'
+        rel='noopener noreferrer'
+        className='underline flex-1'
+      >
+        {url}
+        {'   '}
+      </a>
+    </li>
+  );
+}
+
 export default function SingleEvent() {
   const { id } = useParams();
   const location = useLocation();
@@ -29,7 +48,8 @@ export default function SingleEvent() {
     creator,
     startDate,
     startTime,
-    address
+    address,
+    links
   } = location.state;
 
   return (
@@ -101,7 +121,8 @@ export default function SingleEvent() {
                   creator,
                   startDate,
                   startTime,
-                  address
+                  address,
+                  links
                 }
               }}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
@@ -121,7 +142,8 @@ export default function SingleEvent() {
                   creator,
                   startDate,
                   startTime,
-                  address
+                  address,
+                  links
                 }
               }}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
@@ -146,7 +168,8 @@ export default function SingleEvent() {
                   creator,
                   startDate,
                   startTime,
-                  address
+                  address,
+                  links
                 }
               }}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
@@ -158,6 +181,11 @@ export default function SingleEvent() {
             <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Links
             </h4>
+            <ul className='mb-2'>
+              {links.map((link, index) => (
+                <EventLink key={index} url={link} />
+              ))}
+            </ul>
             <Link
               to={{
                 pathname: history.location.pathname,
@@ -167,7 +195,8 @@ export default function SingleEvent() {
                   creator,
                   startDate,
                   startTime,
-                  address
+                  address,
+                  links
                 }
               }}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
@@ -186,7 +215,7 @@ export default function SingleEvent() {
                   state: {
                     oldTitle: title,
                     oldLocation: eventLocation,
-                    oldLinks: []
+                    oldLinks: links
                   }
                 }}
                 className='inline-block p-4 text-teal-500 flex-1 hover:bg-teal-500 hover:text-white border-r border-gray-200'
@@ -221,3 +250,7 @@ export default function SingleEvent() {
     </div>
   );
 }
+
+EventLink.propTypes = {
+  url: PropTypes.string.isRequired
+};

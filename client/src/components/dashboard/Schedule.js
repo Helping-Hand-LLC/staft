@@ -36,6 +36,7 @@ function Current() {
         creator={event.createdBy}
         startDate={event.startDate}
         startTime={event.startTime}
+        links={event.links}
       />
     ));
 }
@@ -53,6 +54,7 @@ function Drafts() {
         creator={event.createdBy}
         startDate={event.startDate}
         startTime={event.startTime}
+        links={event.links}
       />
     ));
 }

@@ -14,7 +14,8 @@ function EventCard({
   title,
   creator,
   startDate,
-  startTime
+  startTime,
+  links
 }) {
   return (
     <div className='rounded overflow-hidden border border-gray-300 mb-2 shadow'>
@@ -36,7 +37,8 @@ function EventCard({
               city: 'New York City',
               state: 'NY',
               zip: '56789'
-            }
+            },
+            links
           }
         }}
         className='block px-6 py-2 border-l-4 border-teal-500'
@@ -66,7 +68,8 @@ EventCard.propTypes = {
   title: PropTypes.string,
   creator: PropTypes.string.isRequired,
   startDate: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired
+  startTime: PropTypes.string.isRequired,
+  links: PropTypes.array.isRequired
 };
 
 export default EventCard;

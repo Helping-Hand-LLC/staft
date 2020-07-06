@@ -36,6 +36,7 @@ export default function OrgEvents({ isOpen, handleClick }) {
             creator={event.createdBy}
             startDate={event.startDate}
             startTime={event.startTime}
+            links={event.links}
           />
         ))}
       </div>
