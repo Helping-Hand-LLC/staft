@@ -33,6 +33,7 @@ export default function DashboardHeader({
         ) : null}
       </div>
       <div className='flex-1 flex justify-center'>
+        {/* FIXME: some should be submit buttons */}
         <Link
           to={secondaryPath}
           className='inline-block ml-auto'

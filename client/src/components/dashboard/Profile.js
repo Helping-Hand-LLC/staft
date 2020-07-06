@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  EDIT_PROFILE_PATH,
+  ORG_JOIN_PATH,
+  PROFILE_SETTINGS_PATH,
+  PROFILE_HELP_PATH,
+  PROFILE_ABOUT_PATH
+} from '../../constants/paths';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -20,7 +27,7 @@ export default function Profile({ handleClick }) {
       <DashboardHeader
         title='Profile'
         secondaryIcon={<EditOutlinedIcon />}
-        secondaryPath='/profile/edit'
+        secondaryPath={EDIT_PROFILE_PATH}
         handleClick={handleClick}
       />
       <div>
@@ -47,7 +54,7 @@ export default function Profile({ handleClick }) {
             </small>
           </div>
           <ButtonLink
-            to='/org/join'
+            to={ORG_JOIN_PATH}
             bgColor='bg-teal-300 hover:bg-teal-100'
             textTransform='uppercase'
             fontWeight='font-medium'
@@ -122,21 +129,21 @@ export default function Profile({ handleClick }) {
         </section>
         <section className='py-4'>
           <Link
-            to='/settings'
+            to={PROFILE_SETTINGS_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
           >
             Settings
             <KeyboardArrowRightIcon />
           </Link>
           <Link
-            to='/help'
+            to={PROFILE_HELP_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Help
             <KeyboardArrowRightIcon />
           </Link>
           <Link
-            to='/about'
+            to={PROFILE_ABOUT_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             About Staft

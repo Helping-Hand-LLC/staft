@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { singleEventPath } from '../constants/paths';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
@@ -23,7 +24,7 @@ function EventCard({
       </div>
       <Link
         to={{
-          pathname: `/org/events/single/${id}`,
+          pathname: singleEventPath(id),
           state: {
             eventLocation: location,
             title,

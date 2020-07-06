@@ -26,11 +26,7 @@ export default function Join() {
 
   return (
     <div className='pt-10'>
-      <Header
-        title='Join'
-        primaryIcon={<CloseIcon />}
-        backPath='/dashboard/profile'
-      />
+      <Header title='Join' primaryIcon={<CloseIcon />} />
 
       <form className='text-sm'>
         <div className='w-full flex justify-between items-center bg-gray-300'>

@@ -44,7 +44,6 @@ export default function ProfileForm() {
             Done
           </span>
         }
-        backPath='/dashboard/profile'
       />
 
       <form className='text-sm py-4'>

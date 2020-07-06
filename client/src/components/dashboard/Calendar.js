@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
+import { CREATE_ORG_PATH } from '../../constants/paths';
 
 import { FloatingActionLink } from '../../lib/Button';
 
@@ -15,7 +16,7 @@ export default function Calendar({ isOpen, handleClick }) {
       </div>
       {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
-        to='/org/events/create'
+        to={CREATE_ORG_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}
       >
         <AddIcon />

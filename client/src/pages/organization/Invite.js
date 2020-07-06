@@ -46,11 +46,7 @@ export default function Invite() {
 
   return (
     <div className='pt-10'>
-      <Header
-        title='Invite'
-        primaryIcon={<CloseIcon />}
-        backPath='/dashboard/org/members'
-      />
+      <Header title='Invite' primaryIcon={<CloseIcon />} />
 
       <p className='text-sm p-4 text-gray-700 text-center font-light'>
         Add members to your organization via email. These members must be a

@@ -1,4 +1,5 @@
 import React from 'react';
+import { LOGIN_PATH, REGISTER_PATH, CREATE_ORG_PATH } from '../constants/paths';
 
 import { ButtonLink } from '../lib/Button';
 
@@ -28,12 +29,16 @@ export default function Index() {
           </p>
         </section>
         <section className='h-32 w-5/6 mx-auto flex flex-col justify-center'>
-          <ButtonLink to='/org/create' textTransform='uppercase' extras='my-4'>
+          <ButtonLink
+            to={CREATE_ORG_PATH}
+            textTransform='uppercase'
+            extras='my-4'
+          >
             Create an organization
           </ButtonLink>
           <div className='flex justify-between'>
             <ButtonLink
-              to='/register'
+              to={REGISTER_PATH}
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'
@@ -42,7 +47,7 @@ export default function Index() {
               I'm a Guest
             </ButtonLink>
             <ButtonLink
-              to='/login'
+              to={LOGIN_PATH}
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'

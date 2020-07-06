@@ -21,7 +21,6 @@ export default function Details() {
             Done
           </span>
         }
-        backPath='/dashboard/org/settings'
       />
 
       <form className='text-sm'>

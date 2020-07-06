@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -11,6 +10,8 @@ import {
 } from '../components/stepForm/StepButton';
 import { Step1, Step2, Step3, Step4 } from '../components/createOrg/Steps';
 import Info from '../components/createOrg/Info';
+
+import BackButton from '../lib/BackButton';
 
 export default function CreateOrg() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -41,9 +42,9 @@ export default function CreateOrg() {
     <div className='h-screen flex flex-col p-4 relative'>
       <ProgressIndicator currentStep={currentStep} />
       <section className='mb-2'>
-        <Link to='/'>
+        <BackButton>
           <CloseIcon />
-        </Link>
+        </BackButton>
       </section>
       <Info currentStep={currentStep} />
       <form

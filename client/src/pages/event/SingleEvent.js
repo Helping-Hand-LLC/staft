@@ -1,5 +1,10 @@
 import React from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import {
+  editEventPath,
+  // inviteParticipantPath,
+  participantListPath
+} from '../../constants/paths';
 
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
@@ -29,7 +34,7 @@ export default function SingleEvent() {
   return (
     <div className='pt-10 pb-3 bg-gray-200'>
       {/* FIXME: backPath for team should be different */}
-      <Header title={title} backPath='/dashboard/org/events' />
+      <Header title={title} />
 
       <div className='w-full px-2 pt-4 pb-16'>
         <div className='rounded overflow-hidden border border-gray-300 shadow bg-gray-200'>
@@ -78,7 +83,7 @@ export default function SingleEvent() {
               Workers, Chat, & Photos
             </h4>
             <Link
-              to={`/org/events/single/${id}/participants`}
+              to={participantListPath(id)}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -136,7 +141,7 @@ export default function SingleEvent() {
             </h4>
             <div className='flex items-center text-xs text-center font-light'>
               <Link
-                to={`/org/events/single/${id}/edit`}
+                to={editEventPath(id)}
                 className='inline-block p-4 text-teal-500 flex-1 hover:bg-teal-500 hover:text-white border-r border-gray-200'
               >
                 <EditIcon className='mb-1' />
@@ -157,7 +162,7 @@ export default function SingleEvent() {
       </div>
       <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
         <Button
-          // {`/org/events/single/${id}/invite`}
+          // TODO: {`/org/events/single/${id}/invite`}
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'

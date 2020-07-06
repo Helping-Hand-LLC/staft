@@ -1,25 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-export default function Header({
-  title,
-  primaryIcon,
-  secondaryIcon,
-  backPath
-}) {
+import BackButton from '../lib/BackButton';
+
+export default function Header({ title, primaryIcon, secondaryIcon, backN }) {
   return (
     <div className='bg-white w-full fixed top-0 p-3 flex shadow-sm'>
       <div className='flex-1 flex justify-center'>
-        <Link
-          className='inline-block mr-auto'
-          to={backPath}
-          style={{ outline: 'none' }}
-        >
+        <BackButton className='inline-block mr-auto' n={backN}>
           {primaryIcon || <ArrowBackIosIcon fontSize='small' />}
-        </Link>
+        </BackButton>
       </div>
       <div className='flex-1 flex justify-center items-center'>
         <h4>{title}</h4>
@@ -37,5 +29,9 @@ Header.propTypes = {
   title: PropTypes.string.isRequired,
   primaryIcon: PropTypes.element,
   secondaryIcon: PropTypes.element,
-  backPath: PropTypes.string.isRequired
+  backN: PropTypes.number
+};
+
+Header.defaultProps = {
+  backN: -1
 };

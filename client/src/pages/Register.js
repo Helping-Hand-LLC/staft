@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { LOGIN_PATH } from '../constants/paths';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -8,6 +9,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
+import BackButton from '../lib/BackButton';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -28,9 +30,9 @@ export default function Register() {
   return (
     <div className='h-screen flex flex-col p-4'>
       <section className='mb-2'>
-        <Link to='/'>
+        <BackButton>
           <CloseIcon />
-        </Link>
+        </BackButton>
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2'>
@@ -114,17 +116,17 @@ export default function Register() {
             />
           </label>
           <p className='mt-6 block text-center text-xs text-teal-500 hover:text-teal-300'>
-            <Link to='/login'>Already have an account? Sign in.</Link>
+            <Link to={LOGIN_PATH}>Already have an account? Sign in.</Link>
           </p>
         </section>
         <section>
           <small className='block mb-4 font-light'>
             By using Staft, you agree to our{' '}
-            <Link to='#' className='text-teal-500 hover:text-teal-300'>
+            <Link to='!#' className='text-teal-500 hover:text-teal-300'>
               Privacy Policy
             </Link>{' '}
             and{' '}
-            <Link to='#' className='text-teal-500 hover:text-teal-300'>
+            <Link to='!#' className='text-teal-500 hover:text-teal-300'>
               Terms
             </Link>
           </small>
