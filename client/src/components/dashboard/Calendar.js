@@ -14,7 +14,6 @@ export default function Calendar({ isOpen, handleClick }) {
       <div className='h-64 flex justify-center items-center text-gray-600'>
         Calendar: Coming Soon...
       </div>
-      {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
         to={CREATE_EVENT_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}

@@ -33,7 +33,6 @@ export default function SingleEvent() {
 
   return (
     <div className='pt-10 pb-3 bg-gray-200'>
-      {/* FIXME: backPath for team should be different */}
       <Header title={title} />
 
       <div className='w-full px-2 pt-4 pb-16'>

@@ -39,7 +39,6 @@ export default function OrgEvents({ isOpen, handleClick }) {
           />
         ))}
       </div>
-      {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
         to={CREATE_EVENT_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}

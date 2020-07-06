@@ -116,7 +116,6 @@ export default function Schedule({ isOpen, handleClick }) {
           </Route>
         </Switch>
       </div>
-      {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
         to={CREATE_EVENT_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}
