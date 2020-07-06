@@ -8,7 +8,10 @@ import {
   useRouteMatch,
   useParams
 } from 'react-router-dom';
-import { CREATE_ORG_PATH, SCHEDULE_ARCHIVE_PATH } from '../../constants/paths';
+import {
+  CREATE_EVENT_PATH,
+  SCHEDULE_ARCHIVE_PATH
+} from '../../constants/paths';
 
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import AddIcon from '@material-ui/icons/Add';
@@ -115,7 +118,7 @@ export default function Schedule({ isOpen, handleClick }) {
       </div>
       {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
-        to={CREATE_ORG_PATH}
+        to={CREATE_EVENT_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}
       >
         <AddIcon />

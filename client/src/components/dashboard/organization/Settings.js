@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {
+  ORG_EDIT_CHANNELS_PATH,
+  ORG_DETAILS_PATH,
+  ORG_NOTIFICATIONS_PATH
+} from '../../../constants/paths';
 
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -25,21 +30,21 @@ export default function OrgSettings({ handleClick }) {
         </section>
         <section className='py-4'>
           <Link
-            to='/org/channels/edit'
+            to={ORG_EDIT_CHANNELS_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
           >
             Add or Edit Channels
             <KeyboardArrowRightIcon />
           </Link>
           <Link
-            to='/org/details'
+            to={ORG_DETAILS_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Details
             <KeyboardArrowRightIcon />
           </Link>
           <Link
-            to='/org/notifications'
+            to={ORG_NOTIFICATIONS_PATH}
             className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
           >
             Notifications

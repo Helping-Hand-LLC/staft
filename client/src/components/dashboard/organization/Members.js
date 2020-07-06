@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ORG_INVITE_PATH } from '../../../constants/paths';
+
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import { ButtonLink } from '../../../lib/Button';
@@ -53,7 +55,7 @@ export default function OrgMembers({ handleClick }) {
       </section>
       <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
         <ButtonLink
-          to='/org/invite'
+          to={ORG_INVITE_PATH}
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'

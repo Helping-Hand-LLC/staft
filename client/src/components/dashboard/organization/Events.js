@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CREATE_EVENT_PATH } from '../../../constants/paths';
+
 import AddIcon from '@material-ui/icons/Add';
 
 import DashboardHeader from '../DashboardHeader';
@@ -39,7 +41,7 @@ export default function OrgEvents({ isOpen, handleClick }) {
       </div>
       {/* TODO: fade-in when isOpen is false */}
       <FloatingActionLink
-        to='/org/events/create'
+        to={CREATE_EVENT_PATH}
         style={{ display: isOpen ? 'none' : 'inline-block' }}
       >
         <AddIcon />

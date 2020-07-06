@@ -14,14 +14,14 @@ export const ORG_NOTIFICATIONS_PATH = '/org/notifications';
 export const ORG_INVITE_PATH = '/org/invite';
 export const ORG_JOIN_PATH = '/org/join';
 export const CREATE_EVENT_PATH = '/org/events/create';
-export const SINGLE_EVENT_PATH = '/org/events/single/:id';
 export const EDIT_EVENT_PATH = '/org/events/single/:id/edit';
+export const SINGLE_EVENT_PATH = '/org/events/single/:id';
 export const INVITE_PARTICIPANT_PATH = '/org/events/single/:id/invite';
 export const PARTICIPANT_LIST_PATH = '/org/events/single/:id/participants';
 
 // function paths
-export const singleEventPath = id => `/org/events/single/${id}`;
 export const editEventPath = id => `/org/events/single/${id}/edit`;
+export const singleEventPath = id => `/org/events/single/${id}`;
 export const inviteParticipantPath = id => `/org/events/single/${id}/invite`;
 export const participantListPath = id =>
   `/org/events/single/${id}/participants`;

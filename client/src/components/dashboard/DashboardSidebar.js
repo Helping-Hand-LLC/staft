@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useRouteMatch } from 'react-router-dom';
+import { CREATE_EVENT_PATH } from '../../constants/paths';
 
 // import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import ViewCarouselOutlinedIcon from '@material-ui/icons/ViewCarouselOutlined';
@@ -10,6 +11,8 @@ import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AddIcon from '@material-ui/icons/Add';
+
+import { ButtonLink } from '../../lib/Button';
 
 export default function DashboardSidebar({ isOpen, handleClick }) {
   let { url } = useRouteMatch();
@@ -170,13 +173,14 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
             <small className='text-2xs font-light'>Team Member</small>
           </div>
         </NavLink>
-        {/* FIXME: should be link to CreateEvent */}
-        <button
-          className='bg-teal-500 text-white rounded-full flex justify-center items-center p-1'
-          style={{ outline: 'none' }}
+        <ButtonLink
+          to={CREATE_EVENT_PATH}
+          borderRadius='rounded-full'
+          extras='flex justify-center items-center'
+          padding='p-1'
         >
           <AddIcon />
-        </button>
+        </ButtonLink>
       </div>
     </section>
   );

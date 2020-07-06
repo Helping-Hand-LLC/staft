@@ -10,6 +10,7 @@ export default function BackButton(props) {
       type='button'
       onClick={() => history.go(props.n)}
       style={{ outline: 'none' }}
+      className={props.className}
     >
       {props.children}
     </button>
