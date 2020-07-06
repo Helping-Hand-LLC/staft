@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 // import OrgPosts from './Posts';
 import OrgEvents from './Events';
 import OrgChannels from './Channels';
-import OrgMembers from './Members';
+import OrgWorkers from './Workers';
 import OrgSettings from './Settings';
 
 export default function DashboardOrgItem({ isOpen, handleClick }) {
@@ -18,8 +18,8 @@ export default function DashboardOrgItem({ isOpen, handleClick }) {
       return <OrgEvents isOpen={isOpen} handleClick={handleClick} />;
     case 'channels':
       return <OrgChannels handleClick={handleClick} />;
-    case 'members':
-      return <OrgMembers handleClick={handleClick} />;
+    case 'workers':
+      return <OrgWorkers handleClick={handleClick} />;
     case 'settings':
       return <OrgSettings handleClick={handleClick} />;
     default:

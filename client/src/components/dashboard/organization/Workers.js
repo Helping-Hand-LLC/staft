@@ -8,9 +8,9 @@ import { ButtonLink } from '../../../lib/Button';
 
 import DashboardHeader from '../DashboardHeader';
 
-import _members from '../../../constants/members.json';
+import _workers from '../../../constants/workers.json';
 
-function Member({ name }) {
+function Worker({ name }) {
   return (
     <p className='p-2 flex items-center border-b border-gray-400 font-light text-sm'>
       <AccountCircleIcon className='mr-4' />
@@ -19,37 +19,37 @@ function Member({ name }) {
   );
 }
 
-export default function OrgMembers({ handleClick }) {
+export default function OrgWorker({ handleClick }) {
   return (
     <div className='pt-16'>
       <DashboardHeader
-        title='Members'
+        title='Workers'
         subtitle='helpinghandllc'
         handleClick={handleClick}
       />
       <section>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Admins</h3>
-          {_members
+          {_workers
             .filter(m => m.isAdmin)
             .map((m, i) => (
-              <Member name={m.name} key={i} />
+              <Worker name={m.name} key={i} />
             ))}
         </div>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Managers</h3>
-          {_members
+          {_workers
             .filter(m => !m.isAdmin && m.isManager)
             .map((m, i) => (
-              <Member name={m.name} key={i} />
+              <Worker name={m.name} key={i} />
             ))}
         </div>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Workers</h3>
-          {_members
+          {_workers
             .filter(m => !m.isAdmin && !m.isManager)
             .map((m, i) => (
-              <Member name={m.name} key={i} />
+              <Worker name={m.name} key={i} />
             ))}
         </div>
       </section>
@@ -61,17 +61,17 @@ export default function OrgMembers({ handleClick }) {
           fontWeight='font-semibold'
           extras='block w-full text-center'
         >
-          Invite Members
+          Invite Workers
         </ButtonLink>
       </section>
     </div>
   );
 }
 
-Member.propTypes = {
+Worker.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-OrgMembers.propTypes = {
+OrgWorker.propTypes = {
   handleClick: PropTypes.func.isRequired
 };

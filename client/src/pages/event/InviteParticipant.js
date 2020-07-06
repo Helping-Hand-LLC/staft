@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
-import _members from '../../constants/members.json';
+import _workers from '../../constants/workers.json';
 
 function WorkerCheckbox({ label, isSelected, handleChange }) {
   return (
@@ -29,10 +29,10 @@ function WorkerCheckbox({ label, isSelected, handleChange }) {
 
 export default function InviteParticipant() {
   const [participants, setParticipants] = useState(
-    _members.reduce(
-      (members, member) => ({
-        ...members,
-        [member.name]: false
+    _workers.reduce(
+      (workers, worker) => ({
+        ...workers,
+        [worker.name]: false
       }),
       {}
     )
@@ -77,16 +77,16 @@ export default function InviteParticipant() {
           <span className='h-px bg-gray-400 flex-1 ml-2'></span>
         </h4>
 
-        {_members
+        {_workers
           .filter(
-            member =>
-              member.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1
+            worker =>
+              worker.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1
           )
-          .map((m, i) => (
+          .map((w, i) => (
             <WorkerCheckbox
               key={i}
-              label={m.name}
-              isSelected={participants[m.name]}
+              label={w.name}
+              isSelected={participants[w.name]}
               handleChange={handleCheckboxChange}
             />
           ))}

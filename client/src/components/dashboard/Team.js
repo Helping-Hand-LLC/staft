@@ -4,7 +4,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import DashboardHeader from './DashboardHeader';
 
-import _members from '../../constants/members.json';
+import _workers from '../../constants/workers.json';
 
 function Member({ name }) {
   return (
@@ -26,7 +26,7 @@ export default function Team({ handleClick }) {
       <section>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Admins</h3>
-          {_members
+          {_workers
             .filter(m => m.isAdmin)
             .map((m, i) => (
               <Member name={m.name} key={i} />
@@ -34,7 +34,7 @@ export default function Team({ handleClick }) {
         </div>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Managers</h3>
-          {_members
+          {_workers
             .filter(m => !m.isAdmin && m.isManager)
             .map((m, i) => (
               <Member name={m.name} key={i} />
@@ -42,7 +42,7 @@ export default function Team({ handleClick }) {
         </div>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Workers</h3>
-          {_members
+          {_workers
             .filter(m => !m.isAdmin && !m.isManager)
             .map((m, i) => (
               <Member name={m.name} key={i} />

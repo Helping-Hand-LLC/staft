@@ -6,7 +6,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
-import _members from '../../constants/members.json';
+import _workers from '../../constants/workers.json';
 
 function Worker({ name, handleClick }) {
   return (
@@ -23,7 +23,7 @@ function Worker({ name, handleClick }) {
 }
 
 export default function ParticipantList() {
-  const [participants, setParticipants] = useState(_members.map(m => m.name));
+  const [participants, setParticipants] = useState(_workers.map(w => w.name));
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchTermChange = e => setSearchTerm(e.target.value);
