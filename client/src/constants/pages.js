@@ -7,7 +7,7 @@ import CreateOrg from '../pages/CreateOrg';
 // schedule
 import Archive from '../pages/schedule/Archive';
 // profile
-import ProfileForm from '../pages/profile/ProfileForm';
+import EditProfile from '../pages/profile/EditProfile';
 import Settings from '../pages/profile/Settings';
 import Help from '../pages/profile/Help';
 import About from '../pages/profile/About';
@@ -31,7 +31,7 @@ export default {
   Dashboard,
   CreateOrg,
   Archive,
-  ProfileForm,
+  EditProfile,
   Settings,
   Help,
   About,

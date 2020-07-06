@@ -23,7 +23,7 @@ function reducer(state, { field, value }) {
   };
 }
 
-export default function ProfileForm() {
+export default function EditProfile() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleChange = e =>

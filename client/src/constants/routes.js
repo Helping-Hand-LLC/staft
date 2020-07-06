@@ -11,7 +11,7 @@ export const routes = [
   { path: paths.DASHBOARD_PATH, component: pages.Dashboard },
   { path: paths.CREATE_ORG_PATH, component: pages.CreateOrg },
   { path: paths.SCHEDULE_ARCHIVE_PATH, component: pages.Archive },
-  { path: paths.EDIT_PROFILE_PATH, component: pages.ProfileForm },
+  { path: paths.EDIT_PROFILE_PATH, component: pages.EditProfile },
   { path: paths.PROFILE_SETTINGS_PATH, component: pages.Settings },
   { path: paths.PROFILE_HELP_PATH, component: pages.Help },
   { path: paths.PROFILE_ABOUT_PATH, component: pages.About },

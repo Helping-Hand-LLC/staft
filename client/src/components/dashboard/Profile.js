@@ -6,7 +6,8 @@ import {
   ORG_JOIN_PATH,
   PROFILE_SETTINGS_PATH,
   PROFILE_HELP_PATH,
-  PROFILE_ABOUT_PATH
+  PROFILE_ABOUT_PATH,
+  CREATE_ORG_PATH
 } from '../../constants/paths';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -39,7 +40,7 @@ export default function Profile({ handleClick }) {
           </small>
         </section>
         {/* join an org banner */}
-        <section className='w-full h-40 flex flex-col justify-around items-center p-3 my-2 border-t border-b border-gray-400'>
+        <section className='w-full h-56 flex flex-col justify-around items-center p-3 my-2 border-t border-b border-gray-400'>
           <div className='w-full text-sm relative'>
             <h3 className='font-medium mb-2'>Join a Team!</h3>
             <p className='text-xs font-light'>
@@ -60,6 +61,19 @@ export default function Profile({ handleClick }) {
             fontWeight='font-medium'
           >
             Join an Organization
+          </ButtonLink>
+          <h4 className='uppercase text-gray-500 p-2 flex justify-between items-center w-full'>
+            <span className='h-px bg-gray-400 flex-1 mr-2'></span>
+            OR
+            <span className='h-px bg-gray-400 flex-1 ml-2'></span>
+          </h4>
+          <ButtonLink
+            to={CREATE_ORG_PATH}
+            bgColor='bg-blue-500 hover:bg-blue-300'
+            textTransform='uppercase'
+            fontWeight='font-medium'
+          >
+            Create an Organization
           </ButtonLink>
         </section>
         {/* profile info */}
