@@ -31,7 +31,7 @@ export default function Profile({ handleClick }) {
         secondaryPath={EDIT_PROFILE_PATH}
         handleClick={handleClick}
       />
-      <div>
+      <div className='z-0'>
         <section className='h-24 flex flex-col justify-center items-center'>
           <AccountCircleOutlinedIcon fontSize='large' className='my-2' />
           <h3>Skye Brown</h3>

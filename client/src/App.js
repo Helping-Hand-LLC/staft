@@ -7,6 +7,7 @@ import './App.css';
 // routes
 import { routes } from './constants/routes';
 import { INDEX_PATH } from './constants/paths';
+import NotFound from './pages/404_NotFound';
 
 export default function App() {
   return (
@@ -23,8 +24,7 @@ export default function App() {
         ))}
 
         <Route path='*'>
-          {/* TODO: custom 404 page */}
-          <h1>404: Not Found</h1>
+          <NotFound />
         </Route>
       </Switch>
     </>
