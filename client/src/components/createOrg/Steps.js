@@ -11,9 +11,9 @@ export function Step1({ currentStep, uid, handleChange }) {
         placeholder="What's your organization name?"
         value={uid}
         onChange={handleChange}
-        className='w-full text-center outline-none text-teal-500 mb-1'
+        className='w-full text-center outline-none text-teal-500 mb-1 md:text-lg md:mb-2'
       />
-      <small className='text-2xs font-light'>
+      <small className='text-2xs font-light md:text-xs'>
         Must be at least 4 characters.
       </small>
     </label>
@@ -55,7 +55,9 @@ export function Step2({ currentStep, accessType, handleChange }) {
         <span className='flex-1 text-left'>Private (invite only)</span>
       </label>
       <br />
-      <small className='text-2xs font-light'>You can change this later.</small>
+      <small className='text-2xs font-light md:text-xs md:block md:mt-2'>
+        You can change this later.
+      </small>
     </>
   );
 }
@@ -70,10 +72,10 @@ export function Step3({ currentStep, adminEmail, handleChange }) {
         placeholder='Administrator Email Address'
         value={adminEmail}
         onChange={handleChange}
-        className='w-full text-center outline-none text-teal-500 mb-1'
+        className='w-full text-center outline-none text-teal-500 mb-1 md:text-lg md:mb-2'
       />
       <br />
-      <small className='text-2xs font-light'>
+      <small className='text-2xs font-light md:text-xs md:block md:mt-2'>
         You can add more administrators later.
       </small>
     </label>
@@ -82,20 +84,20 @@ export function Step3({ currentStep, adminEmail, handleChange }) {
 
 export function Step4({ currentStep, uid, accessType, adminEmail }) {
   return currentStep !== 4 ? null : (
-    <div className='text-sm text-left'>
+    <div className='text-sm text-left md:text-base'>
       <p className='flex justify-between mb-2'>
-        <span className='w-2/5 font-light'>UID:</span>
+        <span className='w-2/5 md:w-1/4 font-light'>UID:</span>
         <span className='text-teal-500 flex-1'>
           {/* TODO: needs extra validation */}
           {uid.toLowerCase().split(' ').join('')}
         </span>
       </p>
       <p className='flex justify-between mb-2'>
-        <span className='w-2/5 font-light'>Access:</span>
+        <span className='w-2/5 md:w-1/4 font-light'>Access:</span>
         <span className='text-teal-500 flex-1'>{accessType}</span>
       </p>
       <p className='flex justify-between'>
-        <span className='w-2/5 font-light'>Administrator:</span>
+        <span className='w-2/5 md:w-1/4 font-light'>Administrator:</span>
         <span className='text-teal-500 flex-1'>{adminEmail}</span>
       </p>
     </div>
