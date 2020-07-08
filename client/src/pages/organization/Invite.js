@@ -10,7 +10,7 @@ import { Button } from '../../lib/Button';
 
 function Member({ name, handleClick }) {
   return (
-    <li className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm'>
+    <li className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm md:w-5/6 md:mx-auto md:mb-2 md:text-base'>
       <AccountCircleIcon />
       {name}
       <button type='button' onClick={handleClick}>
@@ -48,13 +48,13 @@ export default function Invite() {
     <div className='pt-10'>
       <Header title='Invite' primaryIcon={<CloseIcon />} />
 
-      <p className='text-sm p-4 text-gray-700 text-center font-light'>
+      <p className='text-sm p-4 text-gray-700 text-center font-light md:w-5/6 md:mx-auto md:my-2'>
         Add members to your organization via email. These members must be a
         registered Staft user who has completed their profile and is not already
         assigned to another organization.
       </p>
 
-      <form className='text-sm' onSubmit={handleSubmit}>
+      <form className='text-sm md:text-base' onSubmit={handleSubmit}>
         <div className='w-full flex justify-between items-center bg-gray-300'>
           <AlternateEmailIcon fontSize='small' className='text-gray-500 mx-2' />
           <input

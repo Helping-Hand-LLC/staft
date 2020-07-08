@@ -10,7 +10,7 @@ import _workers from '../../constants/workers.json';
 
 function Worker({ name, handleClick }) {
   return (
-    <p className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm'>
+    <p className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm md:w-5/6 md:mx-auto'>
       {name}
       <button type='button' onClick={handleClick}>
         <CloseIcon
@@ -40,7 +40,7 @@ export default function ParticipantList() {
     <div style={{ paddingTop: '3.1rem' }}>
       <Header title='Worker List' primaryIcon={<CloseIcon />} />
 
-      <form className='text-sm' onSubmit={handleSubmit}>
+      <form className='text-sm md:text-base' onSubmit={handleSubmit}>
         {/* search bar */}
         <div className='w-full flex justify-between items-center bg-gray-300'>
           <SearchIcon fontSize='small' className='text-gray-500 mx-2' />
@@ -55,7 +55,7 @@ export default function ParticipantList() {
           />
         </div>
         {/* event participants list */}
-        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center'>
+        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center md:w-5/6 md:mx-auto md:mb-2'>
           Event Participants
           <span className='h-px bg-gray-400 flex-1 ml-2'></span>
         </h4>

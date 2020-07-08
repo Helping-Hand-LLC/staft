@@ -37,7 +37,7 @@ export function Step1({ currentStep, eventTitle, handleChange }) {
         placeholder='Optional: Event Title'
         value={eventTitle}
         onChange={handleChange}
-        className='w-full text-center outline-none text-teal-500 mb-1'
+        className='w-full text-center outline-none text-teal-500 mb-1 md:text-lg md:mb-2'
       />
     </label>
   );
@@ -146,18 +146,18 @@ export function Step4({ currentStep, eventTitle, location, links }) {
   return currentStep !== 4 ? null : (
     <div className='text-sm text-left'>
       <p className='flex justify-between mb-2'>
-        <span className='w-1/3 font-light'>Event Title:</span>
+        <span className='w-1/3 md:w-1/6 font-light'>Event Title:</span>
         <span className='text-teal-500 flex-1'>{eventTitle}</span>
       </p>
       <p className='flex justify-between mb-2'>
-        <span className='w-1/3 font-light'>Location:</span>
+        <span className='w-1/3 md:w-1/6 font-light'>Location:</span>
         <span className='text-teal-500 flex-1'>
           <span>{location.name}</span>
           <br />
           <span>({location.formatted_address})</span>
         </span>
       </p>
-      <p className='w-1/3 font-light'>Links:</p>
+      <p className='w-1/3 md:w-1/6 font-light'>Links:</p>
       <ul className='text-teal-500 flex-1 list-disc py-2 pl-6'>
         {links.map((link, i) => (
           <li key={i}>

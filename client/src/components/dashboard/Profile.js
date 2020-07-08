@@ -40,10 +40,10 @@ export default function Profile({ handleClick }) {
           </small>
         </section>
         {/* join an org banner */}
-        <section className='w-full h-56 flex flex-col justify-around items-center p-3 my-2 border-t border-b border-gray-400'>
+        <section className='w-full h-56 flex flex-col justify-around items-center p-3 my-2 border-t border-b border-gray-400 md:my-0 md:h-64'>
           <div className='w-full text-sm relative'>
             <h3 className='font-medium mb-2'>Join a Team!</h3>
-            <p className='text-xs font-light'>
+            <p className='text-xs font-light mb-2'>
               Organizations allow you to participate in its events and
               communicate with their team.
             </p>
@@ -62,7 +62,7 @@ export default function Profile({ handleClick }) {
           >
             Join an Organization
           </ButtonLink>
-          <h4 className='uppercase text-gray-500 p-2 flex justify-between items-center w-full'>
+          <h4 className='uppercase text-gray-500 p-2 flex justify-between items-center w-full md:p-0'>
             <span className='h-px bg-gray-400 flex-1 mr-2'></span>
             OR
             <span className='h-px bg-gray-400 flex-1 ml-2'></span>
@@ -102,7 +102,7 @@ export default function Profile({ handleClick }) {
           </div>
           <div className='inline-block w-1/2 p-2 pr-4'>
             <h6 className='font-medium mb-1'>SSN</h6>
-            <p className='font-light text-gray-600 flex justify-between items-center'>
+            <p className='font-light text-gray-600 flex justify-between items-center md:justify-start'>
               {showSsn ? '123-45-6789' : '***-**-****'}
               <button
                 className='text-xs hover:underline ml-4'

@@ -83,7 +83,7 @@ export default function EditEvent() {
         }
       />
 
-      <form onSubmit={handleSubmit}>
+      <form className='md:px-6' onSubmit={handleSubmit}>
         {/* event title */}
         <section className='mb-4'>
           <h4 className='uppercase text-gray-500 p-2 mb-2 flex justify-between items-center'>

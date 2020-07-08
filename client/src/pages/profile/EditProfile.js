@@ -46,7 +46,7 @@ export default function EditProfile() {
         }
       />
 
-      <form className='text-sm py-4'>
+      <form className='text-sm py-4 md:py-6 md:px-8 md:text-base'>
         <label className='block p-4' htmlFor='name'>
           <p className='mb-2'>Name</p>
           <input
