@@ -21,14 +21,14 @@ export default function Index() {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
       >
         <section>
-          <h1 className='uppercase text-3xl font-normal my-2 text-white'>
+          <h1 className='uppercase text-3xl font-normal my-2 text-white md:text-4xl'>
             Staft
           </h1>
-          <p className='font-light text-white text-lg italic'>
+          <p className='font-light text-white text-lg italic md:text-xl'>
             Bringing people together, better.
           </p>
         </section>
-        <section className='h-32 w-5/6 mx-auto flex flex-col justify-center'>
+        <section className='h-32 w-5/6 mx-auto flex flex-col justify-center md:w-2/3 lg:w-1/2'>
           <ButtonLink
             to={CREATE_ORG_PATH}
             textTransform='uppercase'
@@ -42,7 +42,7 @@ export default function Index() {
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'
-              extras='flex-1 mr-1'
+              extras='flex-1 mr-1 md:mr-2'
             >
               I'm a Guest
             </ButtonLink>
@@ -51,7 +51,7 @@ export default function Index() {
               bgColor='bg-white'
               textColor='text-blue-900'
               textTransform='uppercase'
-              extras='flex-1 mr-1'
+              extras='flex-1'
             >
               Log In
             </ButtonLink>

@@ -8,10 +8,10 @@ const DEFAULT_PROPS = {
   bgColor: 'bg-teal-500 hover:bg-teal-300',
   textColor: 'text-white',
   borderRadius: 'rounded',
-  fontSize: 'text-sm',
+  fontSize: 'text-sm md:text-base',
   fontWeight: 'font-normal',
   textTransform: 'normal-case',
-  padding: 'py-2 px-4',
+  padding: 'py-2 px-4 md:py-3 md:px-4',
   extras: ''
 };
 
