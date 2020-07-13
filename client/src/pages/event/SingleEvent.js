@@ -56,7 +56,7 @@ export default function SingleEvent() {
     <div className='pt-10 pb-3 bg-gray-200'>
       <Header title={title || 'Event'} />
 
-      <div className='w-full px-2 pt-4 pb-16'>
+      <div className='w-full px-2 pt-4 pb-16 lg:w-2/3 lg:mx-auto'>
         <div className='rounded overflow-hidden border border-gray-300 shadow bg-gray-200'>
           <section className='px-6 py-2 bg-white'>
             <div className='w-full flex justify-between items-center'>
@@ -242,7 +242,7 @@ export default function SingleEvent() {
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'
-          extras='block w-full text-center'
+          extras='block w-full text-center lg:w-5/6 lg:mx-auto'
         >
           Invite Workers
         </ButtonLink>

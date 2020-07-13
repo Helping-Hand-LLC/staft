@@ -11,7 +11,7 @@ import {
 import { Step1, Step2, Step3, Step4 } from '../../components/createEvent/Steps';
 import Info from '../../components/createEvent/Info';
 
-import BackButton from '../../lib/BackButton';
+import { BackButton } from '../../lib/BackButton';
 
 export default function CreateEvent() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -49,7 +49,7 @@ export default function CreateEvent() {
   };
 
   return (
-    <div className='h-screen flex flex-col p-4 relative'>
+    <div className='h-screen flex flex-col p-4 relative md:p-6 lg:p-8'>
       <ProgressIndicator currentStep={currentStep} />
       <section className='mb-2'>
         <BackButton>
@@ -61,7 +61,7 @@ export default function CreateEvent() {
         className='text-center flex-1 flex flex-col justify-between pt-12'
         onSubmit={handleSubmit}
       >
-        <section>
+        <section className='md:w-2/3 md:mx-auto lg:w-1/2'>
           <Step1
             currentStep={currentStep}
             eventTitle={eventTitle}
@@ -88,7 +88,11 @@ export default function CreateEvent() {
           />
         </section>
         <section
-          className={`${currentStep === 4 ? '' : 'flex justify-between'}`}
+          className={`${
+            currentStep === 4
+              ? ''
+              : 'flex justify-between md:w-3/4 md:mx-auto lg:w-2/3'
+          }`}
         >
           <PrevButton currentStep={currentStep} prev={prev} />
           <NextButton currentStep={currentStep} next={next} />

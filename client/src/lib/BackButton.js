@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function BackButton(props) {
+export function BackButton(props) {
   const history = useHistory();
 
   return (
@@ -17,10 +17,27 @@ export default function BackButton(props) {
   );
 }
 
+export function BackButtonPush(props) {
+  const history = useHistory();
+
+  return (
+    <button
+      type='button'
+      onClick={() => history.push(props.path)}
+      style={{ outline: 'none' }}
+      className={props.className}
+    >
+      {props.children}
+    </button>
+  );
+}
+
 BackButton.propTypes = {
   n: PropTypes.number
 };
-
 BackButton.defaultProps = {
   n: -1
+};
+BackButtonPush.propTypes = {
+  path: PropTypes.string.isRequired
 };

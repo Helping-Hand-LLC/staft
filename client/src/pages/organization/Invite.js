@@ -10,7 +10,7 @@ import { Button } from '../../lib/Button';
 
 function Member({ name, handleClick }) {
   return (
-    <li className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm'>
+    <li className='p-2 flex justify-between items-center border-b border-gray-400 font-light text-sm md:w-5/6 md:mx-auto md:mb-2 md:text-base lg:w-2/3'>
       <AccountCircleIcon />
       {name}
       <button type='button' onClick={handleClick}>
@@ -48,14 +48,14 @@ export default function Invite() {
     <div className='pt-10'>
       <Header title='Invite' primaryIcon={<CloseIcon />} />
 
-      <p className='text-sm p-4 text-gray-700 text-center font-light'>
+      <p className='text-sm p-4 text-gray-700 text-center font-light md:w-5/6 md:mx-auto md:my-2'>
         Add members to your organization via email. These members must be a
         registered Staft user who has completed their profile and is not already
         assigned to another organization.
       </p>
 
-      <form className='text-sm' onSubmit={handleSubmit}>
-        <div className='w-full flex justify-between items-center bg-gray-300'>
+      <form className='text-sm md:text-base' onSubmit={handleSubmit}>
+        <div className='w-full flex justify-between items-center bg-gray-300 lg:w-2/3 lg:mx-auto'>
           <AlternateEmailIcon fontSize='small' className='text-gray-500 mx-2' />
           <input
             className='p-2 w-full outline-none text-teal-500 bg-gray-300'
@@ -68,7 +68,7 @@ export default function Invite() {
           />
           <Button onClick={addInvitee}>Add</Button>
         </div>
-        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center'>
+        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center lg:w-2/3 lg:mx-auto'>
           <span className='h-px bg-gray-400 flex-1 mr-2'></span>
           Members
           <span className='h-px bg-gray-400 flex-1 ml-2'></span>
@@ -87,7 +87,7 @@ export default function Invite() {
           bgColor='bg-teal-300 hover:bg-teal-100'
           borderRadius='rounded-none'
           textTransform='uppercase'
-          extras='w-full text-center my-4'
+          extras='block w-full text-center my-4 lg:w-2/3 lg:mx-auto lg:rounded'
         >
           Send
         </Button>

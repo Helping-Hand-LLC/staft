@@ -23,9 +23,11 @@ export function PrevButton({ currentStep, prev }) {
       bgColor='bg-blue-300 hover:bg-blue-100'
       fontWeight='font-semibold'
       textTransform='uppercase'
-      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1 flex'} ${
-        currentStep === 4 ? 'mr-0 mb-1' : 'mr-1'
-      }`}
+      extras={`relative ${
+        currentStep === 4
+          ? 'w-full md:w-3/4 md:mx-auto lg:w-1/2'
+          : 'flex-1 flex'
+      } ${currentStep === 4 ? 'mr-0 mb-1' : 'mr-1 md:mr-2'}`}
       onClick={prev}
     >
       <span className='flex-1 order-2'>Prev</span>
@@ -50,7 +52,11 @@ export function NextButton({ currentStep, next }) {
       display='block'
       fontWeight='font-semibold'
       textTransform='uppercase'
-      extras={`relative ${currentStep === 1 ? 'w-full' : 'flex-1 flex'}`}
+      extras={`relative ${
+        currentStep === 1
+          ? 'w-full md:w-3/4 md:mx-auto lg:w-1/2'
+          : 'flex-1 flex'
+      }`}
       onClick={next}
     >
       <span className='flex-1'>Next</span>
@@ -66,7 +72,9 @@ export function FinishButton({ currentStep }) {
       display='block'
       fontWeight='font-semibold'
       textTransform='uppercase'
-      extras={`relative ${currentStep === 4 ? 'w-full' : 'flex-1'}`}
+      extras={`relative ${
+        currentStep === 4 ? 'w-full md:w-3/4 md:mx-auto lg:w-1/2' : 'flex-1'
+      }`}
     >
       Finish
       <KeyboardArrowRightIcon

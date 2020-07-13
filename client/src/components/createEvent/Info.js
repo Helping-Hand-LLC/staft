@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 function InfoContent({ title, body }) {
   return (
     <section>
-      <h2 className='text-center text-lg font-bold mb-2'>{title}</h2>
-      <p className='text-center font-light text-xs'>{body}</p>
+      <h2 className='text-center text-lg font-bold mb-2 md:text-xl'>{title}</h2>
+      <p className='text-center font-light text-xs md:text-sm'>{body}</p>
     </section>
   );
 }
