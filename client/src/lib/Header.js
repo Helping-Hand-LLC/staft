@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
-import BackButton from '../lib/BackButton';
+import { BackButton } from '../lib/BackButton';
 
 export default function Header({ title, primaryIcon, secondaryIcon, backN }) {
   return (

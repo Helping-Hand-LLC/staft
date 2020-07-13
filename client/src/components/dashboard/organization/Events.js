@@ -20,7 +20,7 @@ export default function OrgEvents({ isOpen, handleClick }) {
         subtitle='helpinghandllc'
         handleClick={handleClick}
       />
-      <div className='px-3 py-4'>
+      <div className='px-3 py-4 lg:w-4/5 lg:mx-auto'>
         {_events.map(event => (
           <EventCard
             key={event.id}

@@ -11,7 +11,7 @@ import {
 import { Step1, Step2, Step3, Step4 } from '../components/createOrg/Steps';
 import Info from '../components/createOrg/Info';
 
-import BackButton from '../lib/BackButton';
+import { BackButton } from '../lib/BackButton';
 
 export default function CreateOrg() {
   const [currentStep, setCurrentStep] = useState(1);

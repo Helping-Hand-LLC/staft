@@ -8,7 +8,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
-import BackButton from '../lib/BackButton';
+import { BackButtonPush } from '../lib/BackButton';
 
 export default function Login() {
   const history = useHistory();
@@ -27,9 +27,9 @@ export default function Login() {
   return (
     <div className='h-screen flex flex-col p-4 md:p-6 lg:p-8'>
       <section className='mb-2'>
-        <BackButton>
+        <BackButtonPush path='/'>
           <CloseIcon />
-        </BackButton>
+        </BackButtonPush>
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2 md:text-2xl'>
@@ -46,13 +46,13 @@ export default function Login() {
         <section className='px-6'>
           <label
             htmlFor='email'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <AlternateEmailIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='email'
               name='email'
               id='email'
@@ -64,13 +64,13 @@ export default function Login() {
           <br />
           <label
             htmlFor='password'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='password'
               name='password'
               id='password'

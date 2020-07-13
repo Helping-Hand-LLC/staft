@@ -8,7 +8,7 @@ import _workers from '../../constants/workers.json';
 
 function Member({ name }) {
   return (
-    <p className='p-2 flex items-center border-b border-gray-400 font-light text-sm'>
+    <p className='p-2 flex items-center border-b border-gray-400 font-light text-sm lg:text-base'>
       <AccountCircleIcon className='mr-4' />
       {name}
     </p>
@@ -23,9 +23,9 @@ export default function Team({ handleClick }) {
         subtitle='helpinghandllc'
         handleClick={handleClick}
       />
-      <section>
+      <section className='lg:w-4/5 lg:mx-auto'>
         <div>
-          <h3 className='font-semibold p-2 text-sm'>Admins</h3>
+          <h3 className='font-semibold p-2 text-sm lg:text-base'>Admins</h3>
           {_workers
             .filter(m => m.isAdmin)
             .map((m, i) => (
@@ -33,7 +33,7 @@ export default function Team({ handleClick }) {
             ))}
         </div>
         <div>
-          <h3 className='font-semibold p-2 text-sm'>Managers</h3>
+          <h3 className='font-semibold p-2 text-sm lg:text-base'>Managers</h3>
           {_workers
             .filter(m => !m.isAdmin && m.isManager)
             .map((m, i) => (
@@ -41,7 +41,7 @@ export default function Team({ handleClick }) {
             ))}
         </div>
         <div>
-          <h3 className='font-semibold p-2 text-sm'>Workers</h3>
+          <h3 className='font-semibold p-2 text-sm lg:text-base'>Workers</h3>
           {_workers
             .filter(m => !m.isAdmin && !m.isManager)
             .map((m, i) => (

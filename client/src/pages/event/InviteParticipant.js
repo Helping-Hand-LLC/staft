@@ -11,7 +11,7 @@ import _workers from '../../constants/workers.json';
 function WorkerCheckbox({ label, isSelected, handleChange }) {
   return (
     <label
-      className='p-2 flex items-center border-b border-gray-400 font-light text-sm md:w-5/6 md:mx-auto'
+      className='p-2 flex items-center border-b border-gray-400 font-light text-sm md:w-5/6 md:mx-auto lg:w-2/3 lg:text-base'
       htmlFor={label}
     >
       <input
@@ -72,7 +72,7 @@ export default function InviteParticipant() {
           />
         </div>
         {/* organization workers list */}
-        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center md:w-5/6 md:mx-auto md:mb-2'>
+        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center md:w-5/6 md:mx-auto md:mb-2 lg:w-2/3'>
           Organization Workers
           <span className='h-px bg-gray-400 flex-1 ml-2'></span>
         </h4>
@@ -98,7 +98,7 @@ export default function InviteParticipant() {
             bgColor='bg-teal-300 hover:bg-teal-100'
             textTransform='uppercase'
             fontWeight='font-semibold'
-            extras='w-full'
+            extras='block w-full lg:w-5/6 lg:mx-auto'
           >
             Save Participants
           </Button>

@@ -27,7 +27,7 @@ export default function OrgWorker({ handleClick }) {
         subtitle='helpinghandllc'
         handleClick={handleClick}
       />
-      <section>
+      <section className='lg:w-4/5 lg:mx-auto'>
         <div>
           <h3 className='font-semibold p-2 text-sm'>Admins</h3>
           {_workers
@@ -59,7 +59,7 @@ export default function OrgWorker({ handleClick }) {
           bgColor='bg-teal-300 hover:bg-teal-100'
           textTransform='uppercase'
           fontWeight='font-semibold'
-          extras='block w-full text-center'
+          extras='block w-full text-center lg:w-5/6 lg:mx-auto'
         >
           Invite Workers
         </ButtonLink>

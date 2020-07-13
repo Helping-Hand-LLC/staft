@@ -89,7 +89,7 @@ export default function Schedule({ isOpen, handleClick }) {
         secondaryPath={SCHEDULE_ARCHIVE_PATH}
       />
       {/* tabs */}
-      <div className='w-full py-2 px-4'>
+      <div className='w-full py-2 px-4 lg:w-4/5 lg:mx-auto'>
         <ul className='flex bg-gray-300 rounded p-1'>
           <li className='flex-1 mr-2'>
             <NavLink
@@ -112,7 +112,7 @@ export default function Schedule({ isOpen, handleClick }) {
         </ul>
       </div>
       {/* main */}
-      <div className='px-3 py-4'>
+      <div className='px-3 py-4 lg:w-4/5 lg:mx-auto'>
         <Switch>
           <Route path={dashboardScheduleFilterPath(path)}>
             <DFilter url={url} handleClick={handleClick} />

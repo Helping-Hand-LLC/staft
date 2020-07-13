@@ -9,7 +9,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
-import BackButton from '../lib/BackButton';
+import { BackButtonPush } from '../lib/BackButton';
 
 export default function Register() {
   const history = useHistory();
@@ -32,9 +32,9 @@ export default function Register() {
   return (
     <div className='h-screen flex flex-col p-4 md:p-6 lg:p-8'>
       <section className='mb-2'>
-        <BackButton>
+        <BackButtonPush path='/'>
           <CloseIcon />
-        </BackButton>
+        </BackButtonPush>
       </section>
       <section>
         <h2 className='text-center font-bold text-xl mb-2 md:text-2xl'>
@@ -51,13 +51,13 @@ export default function Register() {
         <section className='px-6'>
           <label
             htmlFor='email'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <AlternateEmailIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='email'
               name='email'
               id='email'
@@ -69,13 +69,13 @@ export default function Register() {
           <br />
           <label
             htmlFor='phone'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <PhoneIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='tel'
               name='phone'
               id='phone'
@@ -87,13 +87,13 @@ export default function Register() {
           <br />
           <label
             htmlFor='password'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='password'
               name='password'
               id='password'
@@ -105,13 +105,13 @@ export default function Register() {
           <br />
           <label
             htmlFor='passwordConfirm'
-            className='border-b border-gray-400 inline-block py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
+            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
           >
             <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
               <LockIcon fontSize='small' />
             </div>
             <input
-              className='placeholder-gray-400 p-2 outline-none'
+              className='placeholder-gray-400 p-2 outline-none flex-1'
               type='password'
               name='passwordConfirm'
               id='passwordConfirm'
@@ -120,7 +120,7 @@ export default function Register() {
               onChange={handlePasswordConfirmChange}
             />
           </label>
-          <p className='mt-6 block text-center text-xs text-teal-500 hover:text-teal-300 md:text-sm'>
+          <p className='mt-6 block text-center text-xs font-light text-teal-500 hover:text-teal-300 md:text-sm'>
             <Link to={LOGIN_PATH}>Already have an account? Sign in.</Link>
           </p>
         </section>

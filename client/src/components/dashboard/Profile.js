@@ -31,11 +31,11 @@ export default function Profile({ handleClick }) {
         secondaryPath={EDIT_PROFILE_PATH}
         handleClick={handleClick}
       />
-      <div className='z-0'>
-        <section className='h-24 flex flex-col justify-center items-center'>
+      <div className='z-0 lg:w-4/5 lg:mx-auto'>
+        <section className='h-24 flex flex-col justify-center items-center lg:mb-4'>
           <AccountCircleOutlinedIcon fontSize='large' className='my-2' />
           <h3>Skye Brown</h3>
-          <small className='text-2xs font-light text-gray-600'>
+          <small className='text-2xs font-light text-gray-600 lg:text-xs'>
             Joined Staft on February 2020
           </small>
         </section>
@@ -126,7 +126,7 @@ export default function Profile({ handleClick }) {
             </p>
           </div>
 
-          <div className='border border-gray-400 p-2'>
+          <div className='border border-gray-400 p-2 lg:rounded'>
             <div className='mb-2'>
               <h6 className='font-medium'>Organization</h6>
               <p className='font-light text-gray-600'>Helping Hand LLC</p>
@@ -144,27 +144,27 @@ export default function Profile({ handleClick }) {
         <section className='py-4'>
           <Link
             to={PROFILE_SETTINGS_PATH}
-            className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-t border-b border-gray-400 lg:border lg:border-b-0 lg:rounded'
           >
             Settings
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to={PROFILE_HELP_PATH}
-            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400 lg:border lg:border-b-0 lg:rounded'
           >
             Help
             <KeyboardArrowRightIcon />
           </Link>
           <Link
             to={PROFILE_ABOUT_PATH}
-            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400'
+            className='flex justify-between w-full bg-white p-2 text-sm font-light border-b border-gray-400 lg:border lg:rounded'
           >
             About Staft
             <KeyboardArrowRightIcon />
           </Link>
           <button
-            className='w-full bg-white text-gray-500 text-sm border-t border-b border-gray-400 mt-1 mb-8 text-left p-2'
+            className='w-full bg-white text-gray-500 text-sm border-t border-b border-gray-400 mt-1 mb-8 text-left p-2 lg:border lg:rounded'
             style={{ outline: 'none' }}
           >
             Log Out

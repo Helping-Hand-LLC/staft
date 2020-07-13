@@ -144,7 +144,7 @@ export function Step3({
 
 export function Step4({ currentStep, eventTitle, location, links }) {
   return currentStep !== 4 ? null : (
-    <div className='text-sm text-left'>
+    <div className='text-sm text-left md:text-base'>
       <p className='flex justify-between mb-2'>
         <span className='w-1/3 md:w-1/6 font-light'>Event Title:</span>
         <span className='text-teal-500 flex-1'>{eventTitle}</span>

@@ -11,7 +11,7 @@ import {
 import { Step1, Step2, Step3, Step4 } from '../../components/createEvent/Steps';
 import Info from '../../components/createEvent/Info';
 
-import BackButton from '../../lib/BackButton';
+import { BackButton } from '../../lib/BackButton';
 
 export default function CreateEvent() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -91,7 +91,7 @@ export default function CreateEvent() {
           className={`${
             currentStep === 4
               ? ''
-              : 'flex justify-between md:w-3/4 md:mx-auto lg:w-2/'
+              : 'flex justify-between md:w-3/4 md:mx-auto lg:w-2/3'
           }`}
         >
           <PrevButton currentStep={currentStep} prev={prev} />
