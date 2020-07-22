@@ -7,7 +7,7 @@ export default (state = [], action) => {
     case ADD_ALERT:
       return [...state, payload];
     case REMOVE_ALERT:
-      return state.filter(a => a.id != payload.id);
+      return state.filter(a => a.id !== payload.id);
     default:
       return state;
   }
