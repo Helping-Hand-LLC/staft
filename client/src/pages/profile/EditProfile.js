@@ -44,6 +44,10 @@ export default function EditProfile() {
             Done
           </span>
         }
+        handleClick={() => {
+          // TODO: update profile
+          console.log('Edit Profile submitted:', state);
+        }}
       />
 
       <form className='text-sm py-4 md:py-6 md:px-8 md:text-base'>
