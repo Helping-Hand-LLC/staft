@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { REGISTER_PATH } from '../constants/paths';
+import PropTypes from 'prop-types';
+import { Redirect, Link, useHistory } from 'react-router-dom';
+import { REGISTER_PATH, DASHBOARD_PATH } from '../constants/paths';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions/auth';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -10,7 +13,7 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { Button } from '../lib/Button';
 import { BackButtonPush } from '../lib/BackButton';
 
-export default function Login() {
+function Login({ auth, loginUser }) {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -21,10 +24,14 @@ export default function Login() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('form submitted');
+    loginUser(email, password);
   };
 
-  return (
+  // TODO: auth.isLoading show Spinner
+
+  return auth.token ? (
+    <Redirect to={DASHBOARD_PATH} />
+  ) : (
     <div className='h-screen flex flex-col p-4 md:p-6 lg:p-8'>
       <section className='mb-2'>
         <BackButtonPush path='/'>
@@ -136,3 +143,18 @@ export default function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  auth: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = {
+  loginUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

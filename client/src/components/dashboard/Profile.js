@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import {
+  LOGIN_PATH,
   EDIT_PROFILE_PATH,
   ORG_JOIN_PATH,
   PROFILE_SETTINGS_PATH,
@@ -9,19 +10,22 @@ import {
   PROFILE_ABOUT_PATH,
   CREATE_ORG_PATH
 } from '../../constants/paths';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/auth';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
+import DashboardHeader from './DashboardHeader';
 import { ButtonLink, Outlined } from '../../lib/Button';
 
-import DashboardHeader from './DashboardHeader';
-
-export default function Profile({ handleClick }) {
+function Profile({ handleClick, auth, logoutUser }) {
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
+
+  // TODO: auth.isLoading show Spinner
 
   return (
     <div className='pt-16'>
@@ -166,6 +170,7 @@ export default function Profile({ handleClick }) {
           <button
             className='w-full bg-white text-gray-500 text-sm border-t border-b border-gray-400 mt-1 mb-8 text-left p-2 lg:border lg:rounded'
             style={{ outline: 'none' }}
+            onClick={() => logoutUser()}
           >
             Log Out
           </button>
@@ -185,5 +190,17 @@ export default function Profile({ handleClick }) {
 }
 
 Profile.propTypes = {
-  handleClick: PropTypes.func.isRequired
+  handleClick: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = {
+  logoutUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Redirect, Link, useHistory } from 'react-router-dom';
 import { LOGIN_PATH } from '../constants/paths';
+import { connect } from 'react-redux';
+import { registerUser } from '../actions/auth';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
-import PhoneIcon from '@material-ui/icons/Phone';
 import LockIcon from '@material-ui/icons/Lock';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import { Button } from '../lib/Button';
 import { BackButtonPush } from '../lib/BackButton';
 
-export default function Register() {
+function Register({ auth, registerUser }) {
   const history = useHistory();
 
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const handleEmailChange = e => setEmail(e.target.value);
-  const handlePhoneChange = e => setPhone(e.target.value);
   const handlePasswordChange = e => setPassword(e.target.value);
   const handlePasswordConfirmChange = e => setPasswordConfirm(e.target.value);
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('form submitted');
+    registerUser(email, password, passwordConfirm);
   };
+
+  // TODO: auth.isLoading show Spinner
+
+  // TODO: how to redirect to EditProfile?
 
   return (
     <div className='h-screen flex flex-col p-4 md:p-6 lg:p-8'>
@@ -64,24 +68,6 @@ export default function Register() {
               placeholder='Email'
               value={email}
               onChange={handleEmailChange}
-            />
-          </label>
-          <br />
-          <label
-            htmlFor='phone'
-            className='border-b border-gray-400 py-2 flex items-center md:w-1/2 mx-auto lg:w-2/5'
-          >
-            <div className='inline-block border-r border-gray-400 text-gray-500 px-2 py-0'>
-              <PhoneIcon fontSize='small' />
-            </div>
-            <input
-              className='placeholder-gray-400 p-2 outline-none flex-1'
-              type='tel'
-              name='phone'
-              id='phone'
-              placeholder='Phone Number'
-              value={phone}
-              onChange={handlePhoneChange}
             />
           </label>
           <br />
@@ -163,3 +149,18 @@ export default function Register() {
     </div>
   );
 }
+
+Register.propTypes = {
+  auth: PropTypes.object.isRequired,
+  registerUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+const mapDispatchToProps = {
+  registerUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

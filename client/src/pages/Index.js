@@ -1,12 +1,22 @@
 import React from 'react';
-import { LOGIN_PATH, REGISTER_PATH, CREATE_ORG_PATH } from '../constants/paths';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import {
+  LOGIN_PATH,
+  REGISTER_PATH,
+  CREATE_ORG_PATH,
+  DASHBOARD_PATH
+} from '../constants/paths';
+import { connect } from 'react-redux';
 
 import { ButtonLink } from '../lib/Button';
 
 import ManInSuitImg from '../images/hunters-race-MYbhN8KaaEc-unsplash.jpg';
 
-export default function Index() {
-  return (
+function Index({ auth }) {
+  return auth.token ? (
+    <Redirect to={DASHBOARD_PATH} />
+  ) : (
     <div
       className='h-screen'
       style={{
@@ -61,3 +71,13 @@ export default function Index() {
     </div>
   );
 }
+
+Index.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Index);

@@ -1,12 +1,3 @@
-const convertApiPath = (path, orgId = '', eventId = '') => {
-  // replace org_id placeholder
-  if (path.includes(':org_id')) path = path.replace(':org_id', orgId);
-  // replace event_id placeholder
-  if (path.includes(':event_id')) path = path.replace(':event_id', eventId);
-
-  return path;
-};
-
 // auth
 const authRoute = path => `/auth/${path}`;
 // user
@@ -55,3 +46,13 @@ export const DELETE_EVENT = eventRoute(':event_id');
 export const GET_STORED_LOCATIONS = locationRoute('stored');
 export const QUERY_GOOGLE_LOCATIONS = locationRoute('query');
 export const CREATE_LOCATION = locationRoute('');
+
+// convert path placeholders with ObjectIds
+export const convertApiPath = (path, orgId = '', eventId = '') => {
+  // replace org_id placeholder
+  if (path.includes(':org_id')) path = path.replace(':org_id', orgId);
+  // replace event_id placeholder
+  if (path.includes(':event_id')) path = path.replace(':event_id', eventId);
+
+  return path;
+};

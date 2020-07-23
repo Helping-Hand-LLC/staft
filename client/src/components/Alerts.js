@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { AlertType } from '../actions/alerts';
 
-export const Alerts = ({ alerts }) => {
+const Alerts = ({ alerts }) => {
   const alertTypeToColorScheme = alertType => {
     switch (alertType) {
       case AlertType.SUCCESS:
@@ -33,8 +33,8 @@ export const Alerts = ({ alerts }) => {
             )} flex justify-between items-center p-2 rounded my-1`}
           >
             <div className='flex items-center'>
-              <h4 className='text-lg font-medium mr-2'>{alertType}:</h4>
-              <p className='text-sm font-light'>{msg}</p>
+              <h4 className='md:text-lg md:font-medium mr-2'>{alertType}:</h4>
+              <p className='text-xs md:text-sm font-light'>{msg}</p>
             </div>
             {/* <button
               type='button'
