@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
-  LOGIN_PATH,
   EDIT_PROFILE_PATH,
   ORG_JOIN_PATH,
   PROFILE_SETTINGS_PATH,
@@ -25,8 +24,6 @@ function Profile({ handleClick, auth, logoutUser }) {
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
-
-  // TODO: auth.isLoading show Spinner
 
   return (
     <>

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link, useHistory } from 'react-router-dom';
-import { LOGIN_PATH } from '../constants/paths';
+import { Link, useHistory } from 'react-router-dom';
+import {
+  LOGIN_PATH,
+  DASHBOARD_PATH,
+  EDIT_PROFILE_PATH,
+  dashboardProfilePath
+} from '../constants/paths';
 import { connect } from 'react-redux';
 import { registerUser } from '../actions/auth';
 
@@ -28,9 +33,10 @@ function Register({ auth, registerUser }) {
   const handleSubmit = e => {
     e.preventDefault();
     registerUser(email, password, passwordConfirm);
+    // different way of redirecting from Profile to EditProfile
+    history.push(dashboardProfilePath(DASHBOARD_PATH));
+    history.push(EDIT_PROFILE_PATH);
   };
-
-  // TODO: how to redirect to EditProfile?
 
   return (
     <>
