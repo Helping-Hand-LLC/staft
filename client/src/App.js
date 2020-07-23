@@ -17,7 +17,7 @@ import NotFound from './pages/404_NotFound';
 import Alerts from './components/Alerts';
 
 import { loginUser } from './actions/auth';
-store.dispatch(loginUser('hello', '1234567'));
+store.dispatch(loginUser('hello@gmail.com', '1234567'));
 
 export default function App() {
   return (

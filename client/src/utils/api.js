@@ -1,5 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
+import store from '../store';
+import { setAlert } from '../actions/alerts';
 
 const api = axios.create({
   // TODO: baseURL: '',
@@ -17,16 +19,15 @@ api.interceptors.response.use(
         let errorMsg = e.msg;
         // show what parameter was the issue for a generic error response message
         if (errorMsg === 'Invalid value') errorMsg = `${e.param}: ${errorMsg}`;
-        // TODO: set a new alert for each error
-        console.log('route error:', errorMsg);
+        // set a new alert for each error
+        store.dispatch(setAlert(errorMsg));
       });
     }
     // default Express error
     else {
-      console.log(
-        `default express error: ${err.response.status}: Something went wrong`
-      );
+      store.dispatch(setAlert(`${err.response.status}: Something went wrong`));
     }
+    return Promise.reject(err);
   }
 );
 
