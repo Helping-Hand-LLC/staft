@@ -41,10 +41,8 @@ export const loginUser = (email, password) => async dispatch => {
 
   try {
     const res = await api.post('/auth/login', body);
-
     dispatch(loginSuccess(res.data.token));
   } catch (err) {
-    console.log('loginUser catch error:', err);
     dispatch(loginFailure());
   }
 };
