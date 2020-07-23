@@ -1,4 +1,5 @@
 import api from '../utils/api';
+import { setAlert } from './alerts';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -42,11 +43,44 @@ export const loginUser = (email, password) => async dispatch => {
   try {
     const res = await api.post('/auth/login', body);
     dispatch(loginSuccess(res.data.token));
+    // set custom axios instance authorization to make subsequent authenticated requests
+    api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
   } catch (err) {
     dispatch(loginFailure());
   }
 };
 
-export const registerUser = () => dispatch => {};
+export const registerUser = (
+  email,
+  password,
+  passwordConfirm
+) => async dispatch => {
+  const body = JSON.stringify({ email, password, passwordConfirm });
 
-export const logoutUser = () => dispatch => {};
+  try {
+    const res = await api.post('/auth/register', body);
+    dispatch(registerSuccess(res.data.token));
+    // set custom axios instance authorization to make subsequent authenticated requests
+    api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+  } catch (err) {
+    dispatch(registerFailure());
+  }
+};
+
+export const logoutUser = () => async (dispatch, getState) => {
+  const token = getState().auth.token;
+  // do not attempt to log out an unauthenticated user
+  if (!token || !api.defaults.headers.common['Authorization']) {
+    dispatch(logoutFailure());
+    dispatch(setAlert('Could not log out unauthenticated user'));
+    return;
+  }
+  // remove token from store and axios authorization header
+  try {
+    await api.get('/auth/logout');
+    dispatch(logoutSuccess());
+    delete api.defaults.headers.common['Authorization'];
+  } catch (err) {
+    dispatch(logoutFailure());
+  }
+};
