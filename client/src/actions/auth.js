@@ -1,5 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alerts';
+import * as ApiRoutes from '../constants/ApiRoutes';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -41,7 +42,7 @@ export const loginUser = (email, password) => async dispatch => {
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await api.post('/auth/login', body);
+    const res = await api.post(ApiRoutes.LOGIN, body);
     dispatch(loginSuccess(res.data.token));
     // set custom axios instance authorization to make subsequent authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
@@ -58,7 +59,7 @@ export const registerUser = (
   const body = JSON.stringify({ email, password, passwordConfirm });
 
   try {
-    const res = await api.post('/auth/register', body);
+    const res = await api.post(ApiRoutes.REGISTER, body);
     dispatch(registerSuccess(res.data.token));
     // set custom axios instance authorization to make subsequent authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
@@ -77,7 +78,7 @@ export const logoutUser = () => async (dispatch, getState) => {
   }
   // remove token from store and axios authorization header
   try {
-    await api.get('/auth/logout');
+    await api.get(ApiRoutes.LOGOUT);
     dispatch(logoutSuccess());
     delete api.defaults.headers.common['Authorization'];
   } catch (err) {
