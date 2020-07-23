@@ -18,7 +18,7 @@ import Header from '../../lib/Header';
 import { ButtonLink } from '../../lib/Button';
 import Badge from '../../lib/Badge';
 
-import StaftIcon from '../../images/A_WebVersion.png';
+import StaftIcon from '../../assets/A_WebVersion.png';
 
 function EventLink({ url }) {
   return (

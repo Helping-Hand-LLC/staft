@@ -2,16 +2,23 @@ import api from '../utils/api';
 import { setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
 
+export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+export const LOGOUT_START = 'LOGOUT_START';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 // TODO: delete user (dispatched from delete profile)
+
+export const loginStart = () => ({
+  type: LOGIN_START
+});
 
 export const loginSuccess = token => ({
   type: LOGIN_SUCCESS,
@@ -22,6 +29,10 @@ export const loginFailure = () => ({
   type: LOGIN_FAILURE
 });
 
+export const registerStart = () => ({
+  type: REGISTER_START
+});
+
 export const registerSuccess = token => ({
   type: REGISTER_SUCCESS,
   payload: { token }
@@ -29,6 +40,10 @@ export const registerSuccess = token => ({
 
 export const registerFailure = () => ({
   type: REGISTER_FAILURE
+});
+
+export const logoutStart = () => ({
+  type: LOGOUT_START
 });
 
 export const logoutSuccess = () => ({
@@ -41,6 +56,7 @@ export const logoutFailure = () => ({
 
 // auth api calls
 export const loginUser = (email, password) => async dispatch => {
+  dispatch(loginStart());
   const body = JSON.stringify({ email, password });
 
   try {
@@ -58,6 +74,7 @@ export const registerUser = (
   password,
   passwordConfirm
 ) => async dispatch => {
+  dispatch(registerStart());
   const body = JSON.stringify({ email, password, passwordConfirm });
 
   try {
@@ -71,6 +88,7 @@ export const registerUser = (
 };
 
 export const logoutUser = () => async (dispatch, getState) => {
+  dispatch(logoutStart());
   const token = getState().auth.token;
   // do not attempt to log out an unauthenticated user
   if (!token || !api.defaults.headers.common['Authorization']) {

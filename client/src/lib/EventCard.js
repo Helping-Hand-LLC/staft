@@ -5,7 +5,7 @@ import { singleEventPath } from '../constants/paths';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import StaftIcon from '../images/A_WebVersion.png';
+import StaftIcon from '../assets/A_WebVersion.png';
 
 function EventCard({
   id,
