@@ -11,6 +11,8 @@ export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
+// TODO: delete user (dispatched from delete profile)
+
 export const loginSuccess = token => ({
   type: LOGIN_SUCCESS,
   payload: { token }

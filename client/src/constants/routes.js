@@ -8,8 +8,11 @@ export const routes = [
   { path: paths.INDEX_PATH, component: pages.Index },
   { path: paths.LOGIN_PATH, component: pages.Login },
   { path: paths.REGISTER_PATH, component: pages.Register },
+  { path: paths.CREATE_ORG_PATH, component: pages.CreateOrg }
+];
+
+export const protectedRoutes = [
   { path: paths.DASHBOARD_PATH, component: pages.Dashboard },
-  { path: paths.CREATE_ORG_PATH, component: pages.CreateOrg },
   { path: paths.SCHEDULE_ARCHIVE_PATH, component: pages.Archive },
   { path: paths.EDIT_PROFILE_PATH, component: pages.EditProfile },
   { path: paths.PROFILE_SETTINGS_PATH, component: pages.Settings },

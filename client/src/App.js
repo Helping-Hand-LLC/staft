@@ -9,8 +9,9 @@ import store from './store';
 import './App.css';
 
 // routes
-import { routes } from './constants/routes';
+import { routes, protectedRoutes } from './constants/routes';
 import { INDEX_PATH } from './constants/paths';
+import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './pages/404_NotFound';
 
 // components
@@ -22,14 +23,17 @@ export default function App() {
       <Provider store={store}>
         <Alerts />
         <Switch>
-          {routes.map(route => (
+          {routes.map(({ path, component }) => (
             <Route
-              key={route.path}
-              path={route.path}
-              exact={route.path === INDEX_PATH ? true : false}
-            >
-              <route.component />
-            </Route>
+              key={path}
+              path={path}
+              exact={path === INDEX_PATH}
+              component={component}
+            />
+          ))}
+
+          {protectedRoutes.map(({ path, component }) => (
+            <ProtectedRoute key={path} path={path} component={component} />
           ))}
 
           <Route path='*'>
