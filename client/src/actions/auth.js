@@ -14,7 +14,9 @@ export const LOGOUT_START = 'LOGOUT_START';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
-// TODO: delete user (dispatched from delete profile)
+export const DELETE_USER_START = 'DELETE_USER_START';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const loginStart = () => ({
   type: LOGIN_START
@@ -52,6 +54,18 @@ export const logoutSuccess = () => ({
 
 export const logoutFailure = () => ({
   type: LOGOUT_FAILURE
+});
+
+export const deleteUserStart = () => ({
+  type: DELETE_USER_START
+});
+
+export const deleteUserSuccess = () => ({
+  type: DELETE_USER_SUCCESS
+});
+
+export const deleteUserFailure = () => ({
+  type: DELETE_USER_FAILURE
 });
 
 // auth api calls
@@ -98,13 +112,6 @@ export const registerUser = (
 
 export const logoutUser = () => async (dispatch, getState) => {
   dispatch(logoutStart());
-  const token = getState().auth.token;
-  // do not attempt to log out an unauthenticated user
-  if (!token || !api.defaults.headers.common['Authorization']) {
-    dispatch(logoutFailure());
-    dispatch(setAlert('Could not log out unauthenticated user'));
-    return;
-  }
   // remove token from store and axios authorization header
   try {
     await api.get(ApiRoutes.LOGOUT);

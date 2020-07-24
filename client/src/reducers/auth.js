@@ -7,7 +7,10 @@ import {
   REGISTER_FAILURE,
   LOGOUT_START,
   LOGOUT_SUCCESS,
-  LOGOUT_FAILURE
+  LOGOUT_FAILURE,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAILURE
 } from '../actions/auth';
 
 export default (
@@ -23,6 +26,7 @@ export default (
     case LOGIN_START:
     case REGISTER_START:
     case LOGOUT_START:
+    case DELETE_USER_START:
       return { ...state, isLoading: true };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -30,8 +34,10 @@ export default (
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
     case LOGOUT_SUCCESS:
+    case DELETE_USER_SUCCESS:
       return { isLoading: false, token: null };
     case LOGOUT_FAILURE:
+    case DELETE_USER_FAILURE:
       return { ...state, isLoading: false };
     default:
       return state;

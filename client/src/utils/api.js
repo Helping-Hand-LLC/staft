@@ -19,6 +19,8 @@ api.interceptors.response.use(
         let errorMsg = e.msg;
         // show what parameter was the issue for a generic error response message
         if (errorMsg === 'Invalid value') errorMsg = `${e.param}: ${errorMsg}`;
+        else if (errorMsg === 'Invalid token')
+          errorMsg = 'Unauthenticated request';
         // set a new alert for each error
         store.dispatch(setAlert(errorMsg));
       });
