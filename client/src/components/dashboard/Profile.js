@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
   EDIT_PROFILE_PATH,
@@ -11,6 +12,12 @@ import {
 } from '../../constants/paths';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/auth';
+import {
+  getMe,
+  getProfile,
+  deleteUserAndProfile,
+  GenderType
+} from '../../actions/profile';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -20,10 +27,31 @@ import Spinner from '../../lib/Spinner';
 import DashboardHeader from './DashboardHeader';
 import { ButtonLink, Outlined } from '../../lib/Button';
 
-function Profile({ handleClick, auth, logoutUser }) {
+function Profile({
+  handleClick,
+  auth,
+  profile,
+  logoutUser,
+  getMe,
+  getProfile,
+  deleteUserAndProfile
+}) {
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
+
+  // profile data formatting
+  const formatPhone = phone =>
+    `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`;
+  const formatSsn = ssn =>
+    `${ssn.slice(0, 3)}-${ssn.slice(3, 6)}-${ssn.slice(6)}`;
+  const formatGender = gender => GenderType[gender];
+
+  // TODO: re-fetch profile data on refresh (worker added to org, worker becomes manager or admin, worker leaves organization)
+  useEffect(() => {
+    getMe();
+    getProfile();
+  }, [getMe, getProfile]);
 
   return (
     <>
@@ -38,9 +66,13 @@ function Profile({ handleClick, auth, logoutUser }) {
         <div className='z-0 lg:w-4/5 lg:mx-auto'>
           <section className='h-24 flex flex-col justify-center items-center lg:mb-4'>
             <AccountCircleOutlinedIcon fontSize='large' className='my-2' />
-            <h3>Skye Brown</h3>
+            <h3>{profile.data ? profile.data.name : 'Staft User'}</h3>
             <small className='text-2xs font-light text-gray-600 lg:text-xs'>
-              Joined Staft on February 2020
+              {profile.data
+                ? `Joined Staft on ${moment(profile.data.createdAt).format(
+                    'MMM YYYY'
+                  )}`
+                : ''}
             </small>
           </section>
           {/* join an org banner */}
@@ -55,6 +87,7 @@ function Profile({ handleClick, auth, logoutUser }) {
                 className='text-2xs font-medium'
                 style={{ position: 'absolute', top: 0, right: 0 }}
               >
+                {/* TODO: link redux org data */}
                 247 Public Orgs
               </small>
             </div>
@@ -81,70 +114,84 @@ function Profile({ handleClick, auth, logoutUser }) {
             </ButtonLink>
           </section>
           {/* profile info */}
-          <section className='py-4 text-sm'>
-            <div className='inline-block w-1/2 p-2'>
-              <h6 className='font-medium mb-1'>Name</h6>
-              <p className='font-light text-gray-600'>Skye Brown</p>
-            </div>
-            <div className='inline-block w-1/2 p-2'>
-              <h6 className='font-medium mb-1'>Email</h6>
-              <p className='font-light text-gray-600'>skye.brown@uky.edu</p>
-            </div>
-
-            <div className='inline-block w-1/2 p-2'>
-              <h6 className='font-medium mb-1'>Phone</h6>
-              <p className='font-light text-gray-600'>1 (123) 456-7890</p>
-            </div>
-            <div className='inline-block w-1/2 p-2'>
-              <h6 className='font-medium mb-1'>Birthday</h6>
-              <p className='font-light text-gray-600'>January 1, 2000</p>
-            </div>
-
-            <div className='inline-block w-1/2 p-2'>
-              <h6 className='font-medium mb-1'>Gender</h6>
-              <p className='font-light text-gray-600'>Female</p>
-            </div>
-            <div className='inline-block w-1/2 p-2 pr-4'>
-              <h6 className='font-medium mb-1'>SSN</h6>
-              <p className='font-light text-gray-600 flex justify-between items-center md:justify-start'>
-                {showSsn ? '123-45-6789' : '***-**-****'}
-                <button
-                  className='text-xs hover:underline ml-4'
-                  style={{ outline: 'none' }}
-                  onClick={toggleSsn}
-                >
-                  {showSsn ? 'Hide' : 'Show'}
-                </button>
-              </p>
-            </div>
-
-            <div className='block p-2'>
-              <h6 className='font-medium mb-1'>Address</h6>
-              <p className='font-light text-gray-600'>
-                <span>123 Main St</span>
-                <br />
-                <span>New York City</span>
-                {', '}
-                <span>NY</span>
-                <span>12345</span>
-              </p>
-            </div>
-
-            <div className='border border-gray-400 p-2 lg:rounded'>
-              <div className='mb-2'>
-                <h6 className='font-medium'>Organization</h6>
-                <p className='font-light text-gray-600'>Helping Hand LLC</p>
+          {!profile.data || !profile.user ? null : (
+            <section className='py-4 text-sm'>
+              <div className='inline-block w-1/2 p-2'>
+                <h6 className='font-medium mb-1'>Name</h6>
+                <p className='font-light text-gray-600'>{profile.data.name}</p>
               </div>
-              <div className='inline-block w-1/2'>
-                <h6 className='font-medium'>Manager</h6>
-                <p className='font-light text-gray-600'>No</p>
+              <div className='inline-block w-1/2 p-2'>
+                <h6 className='font-medium mb-1'>Email</h6>
+                <p className='font-light text-gray-600'>{profile.user.email}</p>
               </div>
-              <div className='inline-block w-1/2'>
-                <h6 className='font-medium'>Administrator</h6>
-                <p className='font-light text-gray-600'>No</p>
+
+              <div className='inline-block w-1/2 p-2'>
+                <h6 className='font-medium mb-1'>Phone</h6>
+                <p className='font-light text-gray-600'>
+                  {formatPhone(profile.data.phone)}
+                </p>
               </div>
-            </div>
-          </section>
+              <div className='inline-block w-1/2 p-2'>
+                <h6 className='font-medium mb-1'>Birthday</h6>
+                <p className='font-light text-gray-600'>
+                  {moment(profile.data.birthday).format('MMMM D, YYYY')}
+                </p>
+              </div>
+
+              <div className='inline-block w-1/2 p-2'>
+                <h6 className='font-medium mb-1'>Gender</h6>
+                <p className='font-light text-gray-600'>
+                  {formatGender(profile.data.gender)}
+                </p>
+              </div>
+              <div className='inline-block w-1/2 p-2 pr-4'>
+                <h6 className='font-medium mb-1'>SSN</h6>
+                <p className='font-light text-gray-600 flex justify-between items-center md:justify-start'>
+                  {showSsn ? formatSsn(profile.data.ssn) : '***-**-****'}
+                  <button
+                    className='text-xs hover:underline ml-4'
+                    style={{ outline: 'none' }}
+                    onClick={toggleSsn}
+                  >
+                    {showSsn ? 'Hide' : 'Show'}
+                  </button>
+                </p>
+              </div>
+
+              <div className='block p-2'>
+                <h6 className='font-medium mb-1'>Address</h6>
+                <p className='font-light text-gray-600'>
+                  <span>{profile.data.address.street}</span>
+                  <br />
+                  <span>{profile.data.address.city}</span>
+                  {', '}
+                  <span>{profile.data.address.state}</span>{' '}
+                  <span>{profile.data.address.zip}</span>
+                </p>
+              </div>
+
+              <div className='border border-gray-400 p-2 lg:rounded'>
+                <div className='mb-2'>
+                  <h6 className='font-medium'>Organization</h6>
+                  {/* TODO: org comes back as ObjectId */}
+                  <p className='font-light text-gray-600'>Helping Hand LLC</p>
+                </div>
+                <div className='inline-block w-1/2'>
+                  <h6 className='font-medium'>Manager</h6>
+                  <p className='font-light text-gray-600'>
+                    {profile.data.isManager ? 'Yes' : 'No'}
+                  </p>
+                </div>
+                <div className='inline-block w-1/2'>
+                  <h6 className='font-medium'>Administrator</h6>
+                  <p className='font-light text-gray-600'>
+                    {profile.data.isAdmin ? 'Yes' : 'No'}
+                  </p>
+                </div>
+              </div>
+            </section>
+          )}
+          {/* other links */}
           <section className='py-4'>
             <Link
               to={PROFILE_SETTINGS_PATH}
@@ -170,7 +217,7 @@ function Profile({ handleClick, auth, logoutUser }) {
             <button
               className='w-full bg-white text-gray-500 text-sm border-t border-b border-gray-400 mt-1 mb-8 text-left p-2 lg:border lg:rounded'
               style={{ outline: 'none' }}
-              onClick={() => logoutUser()}
+              onClick={logoutUser}
             >
               Log Out
             </button>
@@ -180,6 +227,7 @@ function Profile({ handleClick, auth, logoutUser }) {
               textTransform='uppercase'
               border='border border-red-500 hover:border-transparent'
               extras='w-full'
+              onClick={deleteUserAndProfile}
             >
               Delete Profile & Account
             </Outlined>
@@ -193,15 +241,23 @@ function Profile({ handleClick, auth, logoutUser }) {
 Profile.propTypes = {
   handleClick: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  profile: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  getMe: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
+  deleteUserAndProfile: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 const mapDispatchToProps = {
-  logoutUser
+  logoutUser,
+  getMe,
+  getProfile,
+  deleteUserAndProfile
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

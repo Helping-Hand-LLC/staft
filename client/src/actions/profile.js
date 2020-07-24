@@ -22,6 +22,11 @@ export const DELETE_PROFILE_START = 'DELETE_PROFILE_START';
 export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
 export const DELETE_PROFILE_FAILURE = 'DELETE_PROFILE_FAILURE';
 
+export const GenderType = {
+  0: 'Female',
+  1: 'Male'
+};
+
 export const getMeStart = () => ({
   type: GET_ME_START
 });

@@ -63,7 +63,7 @@ export const loginUser = (email, password) => async dispatch => {
     // set custom axios instance authorization to make subsequent authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     // show success message to user
-    dispatch(setAlert('Successfully logged in', AlertType.SUCCESS));
+    dispatch(setAlert('Successfully logged in', AlertType.SUCCESS, 2000));
   } catch (err) {
     dispatch(loginFailure());
   }
@@ -86,7 +86,8 @@ export const registerUser = (
     dispatch(
       setAlert(
         'Complete your profile to access all features of Staft',
-        AlertType.INFO
+        AlertType.INFO,
+        2000
       )
     );
   } catch (err) {
@@ -94,7 +95,7 @@ export const registerUser = (
   }
 };
 
-export const logoutUser = () => async (dispatch, getState) => {
+export const logoutUser = () => async dispatch => {
   dispatch(logoutStart());
   // remove token from store and axios authorization header
   try {
@@ -102,7 +103,7 @@ export const logoutUser = () => async (dispatch, getState) => {
     dispatch(logoutSuccess());
     delete api.defaults.headers.common['Authorization'];
     // show success message to user
-    dispatch(setAlert('Successfully logged out', AlertType.SUCCESS));
+    dispatch(setAlert('Successfully logged out', AlertType.SUCCESS, 2000));
   } catch (err) {
     dispatch(logoutFailure());
   }
