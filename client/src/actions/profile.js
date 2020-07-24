@@ -1,6 +1,5 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
-import { deleteUserStart, deleteUserSuccess, deleteUserFailure } from './auth';
 import * as ApiRoutes from '../constants/ApiRoutes';
 
 export const GET_ME_START = 'GET_ME_START';
@@ -14,6 +13,10 @@ export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
 export const CREATE_UPDATE_PROFILE_START = 'CREATE_UPDATE_PROFILE_START';
 export const CREATE_UPDATE_PROFILE_SUCCESS = 'CREATE_UPDATE_PROFILE_SUCCESS';
 export const CREATE_UPDATE_PROFILE_FAILURE = 'CREATE_UPDATE_PROFILE_FAILURE';
+
+export const DELETE_USER_START = 'DELETE_USER_START';
+export const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
+export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const DELETE_PROFILE_START = 'DELETE_PROFILE_START';
 export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
@@ -56,6 +59,18 @@ export const createUpdateProfileSuccess = profile => ({
 
 export const createUpdateProfileFailure = () => ({
   type: CREATE_UPDATE_PROFILE_FAILURE
+});
+
+export const deleteUserStart = () => ({
+  type: DELETE_USER_START
+});
+
+export const deleteUserSuccess = () => ({
+  type: DELETE_USER_SUCCESS
+});
+
+export const deleteUserFailure = () => ({
+  type: DELETE_USER_FAILURE
 });
 
 export const deleteProfileStart = () => ({
