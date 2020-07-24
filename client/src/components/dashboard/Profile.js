@@ -29,7 +29,6 @@ import { ButtonLink, Outlined } from '../../lib/Button';
 
 function Profile({
   handleClick,
-  auth,
   profile,
   logoutUser,
   getMe,
@@ -55,7 +54,7 @@ function Profile({
 
   return (
     <>
-      <Spinner show={auth.isLoading} />
+      <Spinner show={profile.isLoading} />
       <div className='pt-16'>
         <DashboardHeader
           title='Profile'
@@ -240,7 +239,6 @@ function Profile({
 
 Profile.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
   getMe: PropTypes.func.isRequired,
@@ -249,7 +247,6 @@ Profile.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
   profile: state.profile
 });
 
