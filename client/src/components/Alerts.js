@@ -32,10 +32,7 @@ const Alerts = ({ alerts }) => {
               alertType
             )} flex justify-between items-center p-2 rounded my-1`}
           >
-            <div className='flex items-center'>
-              <h4 className='md:text-lg md:font-medium mr-2'>{alertType}:</h4>
-              <p className='text-xs md:text-sm font-light'>{msg}</p>
-            </div>
+            <p className='text-xs md:text-sm font-light'>{msg}</p>
             {/* <button
               type='button'
               style={{ outline: 'none' }}

@@ -1,5 +1,5 @@
 import api from '../utils/api';
-import { setAlert } from './alerts';
+import { AlertType, setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
 
 export const LOGIN_START = 'LOGIN_START';
@@ -64,6 +64,8 @@ export const loginUser = (email, password) => async dispatch => {
     dispatch(loginSuccess(res.data.token));
     // set custom axios instance authorization to make subsequent authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    // show success message to user
+    dispatch(setAlert('Successfully logged in', AlertType.SUCCESS));
   } catch (err) {
     dispatch(loginFailure());
   }
@@ -82,6 +84,13 @@ export const registerUser = (
     dispatch(registerSuccess(res.data.token));
     // set custom axios instance authorization to make subsequent authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    // tell the user to complete their profile
+    dispatch(
+      setAlert(
+        'Complete your profile to access all features of Staft',
+        AlertType.INFO
+      )
+    );
   } catch (err) {
     dispatch(registerFailure());
   }
@@ -101,6 +110,8 @@ export const logoutUser = () => async (dispatch, getState) => {
     await api.get(ApiRoutes.LOGOUT);
     dispatch(logoutSuccess());
     delete api.defaults.headers.common['Authorization'];
+    // show success message to user
+    dispatch(setAlert('Successfully logged out', AlertType.SUCCESS));
   } catch (err) {
     dispatch(logoutFailure());
   }
