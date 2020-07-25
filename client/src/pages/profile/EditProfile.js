@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { createOrUpdateProfile } from '../../actions/profile';
+import { formatDateInput } from '../../utils/format';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -15,9 +15,12 @@ let initialState = {
   name: '',
   email: '',
   phone: '',
+  birthday: formatDateInput(),
+  gender: 1,
   ssn: '',
   street: '',
   city: '',
+  stateAbbr: _states[0].abbreviation,
   zipCode: ''
 };
 
@@ -35,12 +38,12 @@ function EditProfile({ profile, createOrUpdateProfile }) {
       name: profile.data.name,
       email: profile.user.email,
       phone: profile.data.phone,
-      // birthday: profile.data.birthday,
-      // gender: profile.data.gender,
+      birthday: formatDateInput(profile.data.birthday),
+      gender: profile.data.gender,
       ssn: profile.data.ssn,
       street: profile.data.address.street,
       city: profile.data.address.city,
-      // state: profile.data.address.state,
+      stateAbbr: profile.data.address.state,
       zipCode: profile.data.address.zip
     };
 
@@ -49,7 +52,18 @@ function EditProfile({ profile, createOrUpdateProfile }) {
   const handleChange = e =>
     dispatch({ field: e.target.name, value: e.target.value });
 
-  const { name, email, phone, ssn, street, city, zipCode } = state;
+  const {
+    name,
+    email,
+    phone,
+    birthday,
+    gender,
+    ssn,
+    street,
+    city,
+    stateAbbr,
+    zipCode
+  } = state;
 
   return (
     <>
@@ -116,27 +130,31 @@ function EditProfile({ profile, createOrUpdateProfile }) {
               type='date'
               name='birthday'
               id='birthday'
-              // TODO: controlled input?
-              value={
-                profile.data
-                  ? moment(profile.data.birthday).format('YYYY-MM-DD')
-                  : moment().format('YYYY-MM-DD')
+              value={birthday}
+              onChange={e =>
+                dispatch({
+                  field: e.target.name,
+                  value: formatDateInput(e.target.value)
+                })
               }
             />
           </label>
           <fieldset className='p-4'>
             <p className='mb-2'>Gender</p>
-            {/* TODO: controlled inputs? */}
             <label
               htmlFor='gender-male'
               className='inline-flex items-center mt-3 mr-4'
             >
               <input
+                className='text-teal-500'
                 type='radio'
                 name='genderType'
                 id='gender-male'
-                value='Male'
-                className='text-teal-500'
+                value={1}
+                checked={gender === 1}
+                onChange={e =>
+                  dispatch({ field: 'gender', value: Number(e.target.value) })
+                }
               />
               <span className='ml-2 text-gray-700'>Male</span>
             </label>
@@ -145,11 +163,15 @@ function EditProfile({ profile, createOrUpdateProfile }) {
               className='inline-flex items-center mt-3'
             >
               <input
+                className='text-teal-500'
                 type='radio'
                 name='genderType'
                 id='gender-female'
-                value='Female'
-                className='text-teal-500'
+                value={0}
+                checked={gender === 0}
+                onChange={e =>
+                  dispatch({ field: 'gender', value: Number(e.target.value) })
+                }
               />
               <span className='ml-2 text-gray-700'>Female</span>
             </label>
@@ -194,12 +216,19 @@ function EditProfile({ profile, createOrUpdateProfile }) {
             </label>
             <label className='block p-4' htmlFor='state'>
               <p className='mb-2'>State</p>
-              {/* TODO: controlled input? */}
-              <select name='state' id='state' className='p-1'>
+              <select
+                name='state'
+                id='state'
+                className='p-1'
+                value={stateAbbr}
+                onChange={e =>
+                  dispatch({ field: 'stateAbbr', value: e.target.value })
+                }
+              >
                 {_states.map(s => (
                   <option
-                    value={`${s.abbreviation}`}
-                    key={`${s.abbreviation}`}
+                    key={s.abbreviation}
+                    value={s.abbreviation}
                   >{`${s.abbreviation}: ${s.name}`}</option>
                 ))}
               </select>

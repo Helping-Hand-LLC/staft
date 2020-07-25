@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import {
   EDIT_PROFILE_PATH,
@@ -12,12 +11,14 @@ import {
 } from '../../constants/paths';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/auth';
+import { getMe, getProfile, deleteUserAndProfile } from '../../actions/profile';
 import {
-  getMe,
-  getProfile,
-  deleteUserAndProfile,
-  GenderType
-} from '../../actions/profile';
+  formatPhone,
+  formatSsn,
+  formatGender,
+  formatBirthday,
+  formatCreatedAt
+} from '../../utils/format';
 
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -38,13 +39,6 @@ function Profile({
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
-
-  // profile data formatting
-  const formatPhone = phone =>
-    `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`;
-  const formatSsn = ssn =>
-    `${ssn.slice(0, 3)}-${ssn.slice(3, 6)}-${ssn.slice(6)}`;
-  const formatGender = gender => GenderType[gender];
 
   // TODO: re-fetch profile data on refresh (worker added to org, worker becomes manager or admin, worker leaves organization)
   useEffect(() => {
@@ -68,9 +62,7 @@ function Profile({
             <h3>{profile.data ? profile.data.name : 'Staft User'}</h3>
             <small className='text-2xs font-light text-gray-600 lg:text-xs'>
               {profile.data
-                ? `Joined Staft on ${moment(profile.data.createdAt).format(
-                    'MMM YYYY'
-                  )}`
+                ? `Joined Staft on ${formatCreatedAt(profile.data.createdAt)}`
                 : ''}
             </small>
           </section>
@@ -133,7 +125,7 @@ function Profile({
               <div className='inline-block w-1/2 p-2'>
                 <h6 className='font-medium mb-1'>Birthday</h6>
                 <p className='font-light text-gray-600'>
-                  {moment(profile.data.birthday).format('MMMM D, YYYY')}
+                  {formatBirthday(profile.data.birthday)}
                 </p>
               </div>
 
