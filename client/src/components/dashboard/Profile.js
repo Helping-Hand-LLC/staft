@@ -11,7 +11,7 @@ import {
 } from '../../constants/paths';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/auth';
-import { getMe, getProfile, deleteUserAndProfile } from '../../actions/profile';
+import { getProfile, deleteUserAndProfile } from '../../actions/profile';
 import {
   formatPhone,
   formatSsn,
@@ -32,7 +32,6 @@ function Profile({
   handleClick,
   profile,
   logoutUser,
-  getMe,
   getProfile,
   deleteUserAndProfile
 }) {
@@ -41,10 +40,7 @@ function Profile({
   const toggleSsn = () => setShowSsn(!showSsn);
 
   // TODO: re-fetch profile data on refresh (worker added to org, worker becomes manager or admin, worker leaves organization)
-  useEffect(() => {
-    getMe();
-    getProfile();
-  }, [getMe, getProfile]);
+  useEffect(() => getProfile(), [getProfile]);
 
   return (
     <>
@@ -244,7 +240,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   logoutUser,
-  getMe,
   getProfile,
   deleteUserAndProfile
 };
