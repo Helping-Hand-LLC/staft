@@ -14,6 +14,6 @@ export const formatCreatedAt = createdAt =>
   moment(createdAt).format('MMM YYYY');
 
 export const formatSsn = ssn =>
-  `${ssn.slice(0, 3)}-${ssn.slice(3, 6)}-${ssn.slice(6)}`;
+  `${ssn.slice(0, 3)}-${ssn.slice(3, 5)}-${ssn.slice(5)}`;
 
 export const formatGender = gender => GenderType[gender];

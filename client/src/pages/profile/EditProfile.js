@@ -1,8 +1,10 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createOrUpdateProfile } from '../../actions/profile';
 import { formatDateInput } from '../../utils/format';
+import { DASHBOARD_PATH, dashboardProfilePath } from '../../constants/paths';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -13,7 +15,6 @@ import _states from '../../constants/states.json';
 
 let initialState = {
   name: '',
-  email: '',
   phone: '',
   birthday: formatDateInput(),
   gender: 1,
@@ -32,11 +33,12 @@ function reducer(state, { field, value }) {
 }
 
 function EditProfile({ profile, createOrUpdateProfile }) {
+  const history = useHistory();
+
   // set initialState values to profile store items
   if (profile.data)
     initialState = {
       name: profile.data.name,
-      email: profile.user.email,
       phone: profile.data.phone,
       birthday: formatDateInput(profile.data.birthday),
       gender: profile.data.gender,
@@ -54,7 +56,6 @@ function EditProfile({ profile, createOrUpdateProfile }) {
 
   const {
     name,
-    email,
     phone,
     birthday,
     gender,
@@ -64,6 +65,17 @@ function EditProfile({ profile, createOrUpdateProfile }) {
     stateAbbr,
     zipCode
   } = state;
+
+  const handleSubmit = () => {
+    const address = {
+      street,
+      city,
+      state: stateAbbr,
+      zip: zipCode
+    };
+    createOrUpdateProfile(name, address, birthday, phone, gender, ssn);
+    history.push(dashboardProfilePath(DASHBOARD_PATH));
+  };
 
   return (
     <>
@@ -80,10 +92,7 @@ function EditProfile({ profile, createOrUpdateProfile }) {
               Done
             </span>
           }
-          handleClick={() => {
-            // TODO: update profile
-            console.log('Edit Profile submitted:', state);
-          }}
+          handleClick={handleSubmit}
         />
 
         <form className='text-sm py-4 md:py-6 md:px-8 md:text-base'>
@@ -96,18 +105,6 @@ function EditProfile({ profile, createOrUpdateProfile }) {
               id='name'
               placeholder='Your Name'
               value={name}
-              onChange={handleChange}
-            />
-          </label>
-          <label className='block p-4' htmlFor='email'>
-            <p className='mb-2'>Email</p>
-            <input
-              className='placeholder-gray-400 text-teal-500 outline-none'
-              type='email'
-              name='email'
-              id='email'
-              placeholder='Email Address'
-              value={email}
               onChange={handleChange}
             />
           </label>
