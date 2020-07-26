@@ -40,7 +40,9 @@ function Profile({
   const toggleSsn = () => setShowSsn(!showSsn);
 
   // TODO: re-fetch profile data on refresh (worker added to org, worker becomes manager or admin, worker leaves organization)
-  useEffect(() => getProfile(), [getProfile]);
+  useEffect(() => {
+    getProfile();
+  }, [getProfile]);
 
   return (
     <>
@@ -229,7 +231,6 @@ Profile.propTypes = {
   handleClick: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  getMe: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
   deleteUserAndProfile: PropTypes.func.isRequired
 };
