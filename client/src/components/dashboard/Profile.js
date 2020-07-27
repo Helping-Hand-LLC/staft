@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
@@ -20,6 +20,7 @@ import {
   formatCreatedAt
 } from '../../utils/format';
 
+import RefreshIcon from '@material-ui/icons/Refresh';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -38,11 +39,8 @@ function Profile({
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
-
-  // TODO: re-fetch profile data on refresh (worker added to org, worker becomes manager or admin, worker leaves organization)
-  useEffect(() => {
-    getProfile();
-  }, [getProfile]);
+  // re-fetch profile data on refresh
+  const handleRefresh = () => getProfile();
 
   return (
     <>
@@ -56,7 +54,14 @@ function Profile({
         />
         <div className='z-0 lg:w-4/5 lg:mx-auto'>
           <section className='h-24 flex flex-col justify-center items-center lg:mb-4'>
-            <AccountCircleOutlinedIcon fontSize='large' className='my-2' />
+            <button
+              className='text-xs text-purple-700 self-start ml-2 flex items-center underline'
+              onClick={handleRefresh}
+              style={{ outline: 'none' }}
+            >
+              <RefreshIcon fontSize='small' className='mr-1' /> Refresh
+            </button>
+            <AccountCircleOutlinedIcon fontSize='large' className='mb-2' />
             <h3>{profile.data ? profile.data.name : 'Staft User'}</h3>
             <small className='text-2xs font-light text-gray-600 lg:text-xs'>
               {profile.data
