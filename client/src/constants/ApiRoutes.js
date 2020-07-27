@@ -19,7 +19,7 @@ export const LOGOUT = authRoute('logout');
 export const GET_ME = userRoute('me');
 export const GET_MY_PROFILE = userRoute('profile/me');
 export const CREATE_PROFILE = userRoute('profile');
-export const DELETE_USER = userRoute('profile');
+export const DELETE_USER = userRoute('profile/me');
 
 export const GET_PUBLIC_ORGS = orgRoute('');
 export const GET_MY_ORG = orgRoute(':org_id/me');

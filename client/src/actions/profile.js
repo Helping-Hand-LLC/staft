@@ -1,5 +1,6 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
+import { logoutUser } from './auth';
 import * as ApiRoutes from '../constants/ApiRoutes';
 
 export const GET_ME_START = 'GET_ME_START';
@@ -134,6 +135,9 @@ export const createOrUpdateProfile = (
 };
 
 export const deleteUserAndProfile = () => async dispatch => {
+  // logout user first so token is removed from redux store
+  dispatch(logoutUser());
+  // delete user and profile
   dispatch(deleteUserStart());
   dispatch(deleteProfileStart());
 
