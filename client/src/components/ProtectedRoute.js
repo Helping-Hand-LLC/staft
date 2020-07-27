@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { INDEX_PATH } from '../constants/paths';
+import { useSelector } from 'react-redux';
 
-const ProtectedRoute = ({ component: Component, auth, ...rest }) => {
+export default function ProtectedRoute({ component: Component, ...rest }) {
+  const auth = useSelector(state => state.auth);
+
   return (
     <Route
       {...rest}
@@ -17,14 +18,4 @@ const ProtectedRoute = ({ component: Component, auth, ...rest }) => {
       }
     />
   );
-};
-
-ProtectedRoute.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps)(ProtectedRoute);
+}

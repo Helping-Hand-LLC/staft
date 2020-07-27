@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import {
   LOGIN_PATH,
@@ -7,8 +6,8 @@ import {
   EDIT_PROFILE_PATH,
   dashboardProfilePath
 } from '../constants/paths';
-import { connect } from 'react-redux';
 import { registerUser } from '../actions/auth';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -19,7 +18,9 @@ import Spinner from '../lib/Spinner';
 import { Button } from '../lib/Button';
 import { BackButtonPush } from '../lib/BackButton';
 
-function Register({ auth, registerUser }) {
+export default function Register() {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ function Register({ auth, registerUser }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    registerUser(email, password, passwordConfirm);
+    dispatch(registerUser(email, password, passwordConfirm));
     // different way of redirecting from Profile to EditProfile
     history.push(dashboardProfilePath(DASHBOARD_PATH));
     history.push(EDIT_PROFILE_PATH);
@@ -157,18 +158,3 @@ function Register({ auth, registerUser }) {
     </>
   );
 }
-
-Register.propTypes = {
-  auth: PropTypes.object.isRequired,
-  registerUser: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-const mapDispatchToProps = {
-  registerUser
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register);

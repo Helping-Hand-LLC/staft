@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { REGISTER_PATH, DASHBOARD_PATH } from '../constants/paths';
-import { connect } from 'react-redux';
 import { loginUser } from '../actions/auth';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -14,7 +13,9 @@ import Spinner from '../lib/Spinner';
 import { Button } from '../lib/Button';
 import { BackButtonPush } from '../lib/BackButton';
 
-function Login({ auth, loginUser }) {
+export default function Login() {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ function Login({ auth, loginUser }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    loginUser(email, password);
+    dispatch(loginUser(email, password));
   };
 
   return auth.token ? (
@@ -145,18 +146,3 @@ function Login({ auth, loginUser }) {
     </>
   );
 }
-
-Login.propTypes = {
-  auth: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-const mapDispatchToProps = {
-  loginUser
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);

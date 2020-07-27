@@ -1,9 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { AlertType } from '../actions/alerts';
+// TODO: removeAlert via close icon
+import { useSelector } from 'react-redux';
 
-const Alerts = ({ alerts }) => {
+export default function Alerts() {
+  const alerts = useSelector(state => state.alerts);
+
   const alertTypeToColorScheme = alertType => {
     switch (alertType) {
       case AlertType.SUCCESS:
@@ -45,23 +47,4 @@ const Alerts = ({ alerts }) => {
       })}
     </ul>
   );
-};
-
-Alerts.propTypes = {
-  alerts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      msg: PropTypes.string.isRequired,
-      alertType: PropTypes.oneOf(Object.values(AlertType)).isRequired
-    })
-  ).isRequired
-};
-
-const mapStateToProps = state => ({
-  alerts: state.alerts
-});
-
-// TODO: removeAlert via close icon
-// const mapDispatchToProps = {}
-
-export default connect(mapStateToProps)(Alerts);
+}

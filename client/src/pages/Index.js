@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import {
   LOGIN_PATH,
@@ -7,14 +6,16 @@ import {
   CREATE_ORG_PATH,
   DASHBOARD_PATH
 } from '../constants/paths';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Spinner from '../lib/Spinner';
 import { ButtonLink } from '../lib/Button';
 
 import ManInSuitImg from '../assets/hunters-race-MYbhN8KaaEc-unsplash.jpg';
 
-function Index({ auth }) {
+export default function Index() {
+  const auth = useSelector(state => state.auth);
+
   return auth.token ? (
     <Redirect to={DASHBOARD_PATH} />
   ) : (
@@ -75,13 +76,3 @@ function Index({ auth }) {
     </>
   );
 }
-
-Index.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps)(Index);

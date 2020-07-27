@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   EDIT_PROFILE_PATH,
@@ -9,7 +8,6 @@ import {
   PROFILE_ABOUT_PATH,
   CREATE_ORG_PATH
 } from '../../constants/paths';
-import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/auth';
 import { getProfile, deleteUserAndProfile } from '../../actions/profile';
 import {
@@ -19,6 +17,7 @@ import {
   formatBirthday,
   formatCreatedAt
 } from '../../utils/format';
+import { useSelector, useDispatch } from 'react-redux';
 
 import RefreshIcon from '@material-ui/icons/Refresh';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -29,18 +28,15 @@ import Spinner from '../../lib/Spinner';
 import DashboardHeader from './DashboardHeader';
 import { ButtonLink, Outlined } from '../../lib/Button';
 
-function Profile({
-  handleClick,
-  profile,
-  logoutUser,
-  getProfile,
-  deleteUserAndProfile
-}) {
+export default function Profile({ handleClick }) {
+  const profile = useSelector(state => state.profile);
+  const dispatch = useDispatch();
+
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
   // re-fetch profile data on refresh
-  const handleRefresh = () => getProfile();
+  const handleRefresh = () => dispatch(getProfile());
 
   return (
     <>
@@ -211,7 +207,7 @@ function Profile({
             <button
               className='w-full bg-white text-gray-500 text-sm border-t border-b border-gray-400 mt-1 mb-8 text-left p-2 lg:border lg:rounded'
               style={{ outline: 'none' }}
-              onClick={logoutUser}
+              onClick={() => dispatch(logoutUser())}
             >
               Log Out
             </button>
@@ -221,7 +217,7 @@ function Profile({
               textTransform='uppercase'
               border='border border-red-500 hover:border-transparent'
               extras='w-full'
-              onClick={deleteUserAndProfile}
+              onClick={() => dispatch(deleteUserAndProfile())}
             >
               Delete Profile & Account
             </Outlined>
@@ -231,23 +227,3 @@ function Profile({
     </>
   );
 }
-
-Profile.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired,
-  deleteUserAndProfile: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  profile: state.profile
-});
-
-const mapDispatchToProps = {
-  logoutUser,
-  getProfile,
-  deleteUserAndProfile
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
