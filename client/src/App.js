@@ -18,8 +18,8 @@ import NotFound from './pages/404_NotFound';
 import Alerts from './components/Alerts';
 
 // connect to server web socket
-import io from 'socket.io-client';
-const socket = io();
+// import io from 'socket.io-client';
+// const socket = io();
 
 export default function App() {
   return (

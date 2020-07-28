@@ -103,6 +103,8 @@ export const leaveOrg: MiddlewareFn = async (req, res, next) => {
           );
     }
 
+    // TODO: remove worker as participant from any existing events
+
     res.locals.profile.organization = null;
     res.locals.profile.isAdmin = false;
     res.locals.profile.isManager = false;
