@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   EDIT_PROFILE_PATH,
@@ -19,7 +19,7 @@ import {
 } from '../../utils/format';
 import { useSelector, useDispatch } from 'react-redux';
 
-import RefreshIcon from '@material-ui/icons/Refresh';
+// import RefreshIcon from '@material-ui/icons/Refresh';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -35,8 +35,10 @@ export default function Profile({ handleClick }) {
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
-  // re-fetch profile data on refresh
-  const handleRefresh = () => dispatch(getProfile());
+  // re-fetch profile data
+  useEffect(() => {
+    dispatch(getProfile());
+  }, []);
 
   return (
     <>
@@ -50,13 +52,13 @@ export default function Profile({ handleClick }) {
         />
         <div className='z-0 lg:w-4/5 lg:mx-auto'>
           <section className='h-24 flex flex-col justify-center items-center lg:mb-4'>
-            <button
+            {/* <button
               className='text-xs text-purple-700 self-start ml-2 flex items-center underline'
               onClick={handleRefresh}
               style={{ outline: 'none' }}
             >
               <RefreshIcon fontSize='small' className='mr-1' /> Refresh
-            </button>
+            </button> */}
             <AccountCircleOutlinedIcon fontSize='large' className='mb-2' />
             <h3>{profile.data ? profile.data.name : 'Staft User'}</h3>
             <small className='text-2xs font-light text-gray-600 lg:text-xs'>
