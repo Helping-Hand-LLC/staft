@@ -1,7 +1,7 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
-import { getMe, getProfileFailure } from './profile';
+import { getMe, getProfile, getProfileFailure } from './profile';
 import { getMyOrgFailure } from './org';
 
 export const LOGIN_START = 'LOGIN_START';
@@ -68,6 +68,8 @@ export const loginUser = (email, password) => async dispatch => {
     localStorage.setItem('token', res.data.token);
     // get basic user data
     dispatch(getMe());
+    // get user profile
+    dispatch(getProfile());
     // show success message to user
     dispatch(setAlert('Successfully logged in', AlertType.SUCCESS, 2000));
   } catch (err) {

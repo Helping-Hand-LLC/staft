@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   EDIT_PROFILE_PATH,
@@ -9,7 +9,7 @@ import {
   CREATE_ORG_PATH
 } from '../../constants/paths';
 import { logoutUser } from '../../actions/auth';
-import { getProfile, deleteUserAndProfile } from '../../actions/profile';
+import { deleteUserAndProfile } from '../../actions/profile';
 import {
   formatPhone,
   formatSsn,
@@ -41,10 +41,6 @@ export default function Profile({ handleClick }) {
   const [showSsn, setShowSsn] = useState(false);
 
   const toggleSsn = () => setShowSsn(!showSsn);
-  // re-fetch profile data
-  useEffect(() => {
-    dispatch(getProfile());
-  }, [dispatch]);
 
   return (
     <>

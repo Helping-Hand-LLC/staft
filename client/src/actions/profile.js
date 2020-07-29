@@ -133,6 +133,8 @@ export const createOrUpdateProfile = (
   try {
     const res = await api.post(ApiRoutes.CREATE_PROFILE, body);
     dispatch(createUpdateProfileSuccess(res.data.profile));
+    // re-fetch profile data
+    dispatch(getProfile());
     dispatch(setAlert('Profile successfully updated', AlertType.SUCCESS));
   } catch (err) {
     dispatch(createUpdateProfileFailure());
