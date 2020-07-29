@@ -16,8 +16,6 @@ import {
   DELETE_PROFILE_FAILURE
 } from '../actions/profile';
 
-// REVIEW: move user to auth (authentication, local storage)?
-
 export default (
   state = {
     isLoading: false,

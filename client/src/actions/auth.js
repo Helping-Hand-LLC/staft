@@ -1,6 +1,7 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
+import { getMe, getProfileFailure } from './profile';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -64,6 +65,8 @@ export const loginUser = (email, password) => async dispatch => {
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     // set localStorage token
     localStorage.setItem('token', res.data.token);
+    // get basic user data
+    dispatch(getMe());
     // show success message to user
     dispatch(setAlert('Successfully logged in', AlertType.SUCCESS, 2000));
   } catch (err) {
@@ -86,6 +89,8 @@ export const registerUser = (
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     // set localStorage token
     localStorage.setItem('token', res.data.token);
+    // get basic user data
+    dispatch(getMe());
     // tell the user to complete their profile
     dispatch(
       setAlert(
@@ -105,6 +110,8 @@ export const logoutUser = () => async dispatch => {
   try {
     await api.get(ApiRoutes.LOGOUT);
     dispatch(logoutSuccess());
+    // remove profile.data & profile.user
+    dispatch(getProfileFailure());
     // remove axios auth header
     delete api.defaults.headers.common['Authorization'];
     // remove localStorage token
