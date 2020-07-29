@@ -38,7 +38,7 @@ export default function Profile({ handleClick }) {
   // re-fetch profile data
   useEffect(() => {
     dispatch(getProfile());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import api from './utils/api';
 
 // redux
 import { Provider } from 'react-redux';
 import store from './store';
+import { loginSuccess } from './actions/auth';
+import { getMe } from './actions/profile';
 
 // base styles
 import './App.css';
@@ -22,6 +25,16 @@ import Alerts from './components/Alerts';
 // const socket = io();
 
 export default function App() {
+  useEffect(() => {
+    // attempt to authenticate a user by their localStorage token
+    const token = localStorage.getItem('token');
+    if (token) {
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      store.dispatch(getMe());
+      store.dispatch(loginSuccess(token));
+    }
+  }, []);
+
   return (
     <>
       <Provider store={store}>

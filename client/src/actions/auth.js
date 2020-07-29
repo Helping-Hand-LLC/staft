@@ -60,8 +60,10 @@ export const loginUser = (email, password) => async dispatch => {
   try {
     const res = await api.post(ApiRoutes.LOGIN, body);
     dispatch(loginSuccess(res.data.token));
-    // set custom axios instance authorization to make subsequent authenticated requests
+    // set axios instance auth header to make authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    // set localStorage token
+    localStorage.setItem('token', res.data.token);
     // show success message to user
     dispatch(setAlert('Successfully logged in', AlertType.SUCCESS, 2000));
   } catch (err) {
@@ -80,8 +82,10 @@ export const registerUser = (
   try {
     const res = await api.post(ApiRoutes.REGISTER, body);
     dispatch(registerSuccess(res.data.token));
-    // set custom axios instance authorization to make subsequent authenticated requests
+    // set axios instance auth header to make authenticated requests
     api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+    // set localStorage token
+    localStorage.setItem('token', res.data.token);
     // tell the user to complete their profile
     dispatch(
       setAlert(
@@ -101,7 +105,10 @@ export const logoutUser = () => async dispatch => {
   try {
     await api.get(ApiRoutes.LOGOUT);
     dispatch(logoutSuccess());
+    // remove axios auth header
     delete api.defaults.headers.common['Authorization'];
+    // remove localStorage token
+    localStorage.removeItem('token');
     // show success message to user
     dispatch(setAlert('Successfully logged out', AlertType.SUCCESS, 2000));
   } catch (err) {
