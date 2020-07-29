@@ -3,7 +3,7 @@ const authRoute = path => `/auth/${path}`;
 // user
 const userRoute = path => `/user/${path}`;
 // org
-const orgRoute = path => `/organizations/${path}`;
+const orgRoute = path => `/org/${path}`;
 // worker
 const workerRoute = path => `${orgRoute(':org_id/workers')}/${path}`;
 // event
