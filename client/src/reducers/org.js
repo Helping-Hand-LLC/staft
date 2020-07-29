@@ -38,11 +38,12 @@ export default (
         isLoading: false,
         myOrgWorkers: [...state.myOrgWorkers, payload.worker]
       };
+    case GET_MY_ORG_FAILURE:
     case DELETE_ORG_SUCCESS:
       return { isLoading: false, myOrg: null, myOrgWorkers: [] };
-    case GET_MY_ORG_FAILURE:
-    case UPDATE_ORG_FAILURE:
     case ADD_WORKER_FAILURE:
+      return { ...state, isLoading: false, myOrgWorkers: [] };
+    case UPDATE_ORG_FAILURE:
     case DELETE_ORG_FAILURE:
       return { ...state, isLoading: false };
     default:

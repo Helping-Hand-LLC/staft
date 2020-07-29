@@ -2,6 +2,7 @@ import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
 import { getMe, getProfileFailure } from './profile';
+import { getMyOrgFailure } from './org';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -112,6 +113,8 @@ export const logoutUser = () => async dispatch => {
     dispatch(logoutSuccess());
     // remove profile.data & profile.user
     dispatch(getProfileFailure());
+    // remove org data
+    dispatch(getMyOrgFailure());
     // remove axios auth header
     delete api.defaults.headers.common['Authorization'];
     // remove localStorage token

@@ -17,7 +17,7 @@ import {
   formatBirthday,
   formatCreatedAt
 } from '../../utils/format';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 // import RefreshIcon from '@material-ui/icons/Refresh';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -29,7 +29,13 @@ import DashboardHeader from './DashboardHeader';
 import { ButtonLink, Outlined } from '../../lib/Button';
 
 export default function Profile({ handleClick }) {
-  const profile = useSelector(state => state.profile);
+  const { profile, org } = useSelector(
+    state => ({
+      profile: state.profile,
+      org: state.org
+    }),
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
   const [showSsn, setShowSsn] = useState(false);
@@ -75,13 +81,6 @@ export default function Profile({ handleClick }) {
                 Organizations allow you to participate in its events and
                 communicate with their team.
               </p>
-              <small
-                className='text-2xs font-medium'
-                style={{ position: 'absolute', top: 0, right: 0 }}
-              >
-                {/* TODO: link redux org data */}
-                247 Public Orgs
-              </small>
             </div>
             <ButtonLink
               to={ORG_JOIN_PATH}
@@ -165,8 +164,9 @@ export default function Profile({ handleClick }) {
               <div className='border border-gray-400 p-2 lg:rounded'>
                 <div className='mb-2'>
                   <h6 className='font-medium'>Organization</h6>
-                  {/* TODO: org comes back as ObjectId */}
-                  <p className='font-light text-gray-600'>Helping Hand LLC</p>
+                  <p className='font-light text-gray-600'>
+                    {org.myOrg ? org.myOrg.uid : 'none'}
+                  </p>
                 </div>
                 <div className='inline-block w-1/2'>
                   <h6 className='font-medium'>Manager</h6>

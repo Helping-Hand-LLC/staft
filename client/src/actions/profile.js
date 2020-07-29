@@ -1,7 +1,8 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
-import { logoutUser } from './auth';
 import * as ApiRoutes from '../constants/ApiRoutes';
+import { logoutUser } from './auth';
+import { getMyOrg } from './org';
 
 export const GET_ME_START = 'GET_ME_START';
 export const GET_ME_SUCCESS = 'GET_ME_SUCCESS';
@@ -109,6 +110,10 @@ export const getProfile = () => async dispatch => {
   try {
     const res = await api.get(ApiRoutes.GET_MY_PROFILE);
     dispatch(getProfileSuccess(res.data.populated));
+
+    if (res.data.populated.organization) {
+      dispatch(getMyOrg(res.data.populated.organization));
+    }
   } catch (err) {
     dispatch(getProfileFailure());
   }
