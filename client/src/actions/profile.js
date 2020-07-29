@@ -91,7 +91,7 @@ export const deleteProfileFailure = () => ({
   type: DELETE_PROFILE_FAILURE
 });
 
-// auth api calls
+// profile api calls
 export const getMe = () => async dispatch => {
   dispatch(getMeStart());
 
