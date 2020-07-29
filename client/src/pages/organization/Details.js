@@ -10,7 +10,7 @@ export default function Details() {
   const handleAccessTypeChange = e => setAccessType(e.target.value);
 
   return (
-    <div className='pt-10'>
+    <div className='pt-12'>
       <Header
         title='Details'
         secondaryIcon={

@@ -6,7 +6,7 @@ import api from './utils/api';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loginSuccess } from './actions/auth';
-import { getMe } from './actions/profile';
+import { getMe, getProfile } from './actions/profile';
 
 // base styles
 import './App.css';
@@ -32,6 +32,7 @@ export default function App() {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       store.dispatch(getMe());
       store.dispatch(loginSuccess(token));
+      store.dispatch(getProfile());
     }
   }, []);
 

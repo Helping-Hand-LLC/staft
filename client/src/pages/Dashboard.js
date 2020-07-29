@@ -5,6 +5,7 @@ import {
   dashboardMenuItemPath,
   dashboardSchedulePath
 } from '../constants/paths';
+// FIXME: import { OrgRoute } from '../components/ProtectedRoute';
 
 import DashboardSidebar from '../components/dashboard/DashboardSidebar';
 import DashboardMenuItem from '../components/dashboard/DashboardMenuItem';
