@@ -87,6 +87,7 @@ export default function CreateEvent() {
             links={links}
           />
         </section>
+        {/* FIXME: fixed at bottom so overflow content doesn't push buttons down */}
         <section
           className={`${
             currentStep === 4

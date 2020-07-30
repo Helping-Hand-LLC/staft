@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import api from '../../utils/api';
+import * as ApiRoutes from '../../constants/ApiRoutes';
+import { useSelector } from 'react-redux';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -8,9 +11,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import LanguageIcon from '@material-ui/icons/Language';
 import LaunchIcon from '@material-ui/icons/Launch';
 
+import Spinner from '../../lib/Spinner';
 import { Button } from '../../lib/Button';
-
-import _locations from '../../constants/locations.json';
 
 function EventLink({ name, handleClick }) {
   return (
@@ -44,12 +46,41 @@ export function Step1({ currentStep, eventTitle, handleChange }) {
 }
 
 export function Step2({ currentStep, location, handleChange }) {
+  const org = useSelector(state => state.org);
+
   const [newLocation, setNewLocation] = useState('');
+  const [storedLocations, setStoredLocations] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleNewLocationChange = e => setNewLocation(e.target.value);
 
+  useEffect(() => {
+    async function fetchStoredLocations() {
+      setLoading(true);
+
+      try {
+        const res = await api.get(
+          ApiRoutes.convertApiPath(
+            ApiRoutes.GET_STORED_LOCATIONS,
+            org.myOrg._id
+          )
+        );
+        setStoredLocations(res.data.locations);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    }
+
+    if (!org.myOrg) return;
+
+    fetchStoredLocations();
+  }, [org.myOrg]);
+
   return currentStep !== 2 ? null : (
     <>
+      <Spinner show={loading} />
       <div className='w-full flex justify-between items-center bg-gray-300 mb-8'>
         <LocationOnOutlinedIcon
           fontSize='small'
@@ -72,10 +103,10 @@ export function Step2({ currentStep, location, handleChange }) {
           <SearchIcon fontSize='small' />
         </Button>
       </div>
-      {_locations.map(l => (
+      {storedLocations.map(l => (
         <label
           htmlFor={l.name}
-          key={l.id}
+          key={l._id}
           className='flex items-center text-sm font-light mb-3'
         >
           <input
