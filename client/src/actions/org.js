@@ -99,7 +99,7 @@ export const updateOrg = (orgId, uid, isPrivate) => async dispatch => {
       body
     );
     dispatch(updateOrgSuccess(res.data.org));
-    setAlert('Organization successfully updated', AlertType.SUCCESS);
+    dispatch(setAlert('Organization successfully updated', AlertType.SUCCESS));
   } catch (err) {
     dispatch(updateOrgFailure());
   }
@@ -119,9 +119,11 @@ export const addWorkerToOrg = (
       body
     );
     dispatch(addWorkerSuccess(res.data.worker));
-    setAlert(
-      `${res.data.worker.email} successfully added to your organization`,
-      AlertType.SUCCESS
+    dispatch(
+      setAlert(
+        `${res.data.worker.email} successfully added to your organization`,
+        AlertType.SUCCESS
+      )
     );
   } catch (err) {
     dispatch(addWorkerFailure());
@@ -134,7 +136,7 @@ export const deleteOrg = orgId => async dispatch => {
   try {
     await api.delete(ApiRoutes.convertApiPath(ApiRoutes.DELETE_ORG, orgId));
     dispatch(deleteOrgSuccess());
-    setAlert('Organization successfully deleted', AlertType.SUCCESS);
+    dispatch(setAlert('Organization successfully deleted', AlertType.SUCCESS));
   } catch (err) {
     dispatch(deleteOrgFailure());
   }

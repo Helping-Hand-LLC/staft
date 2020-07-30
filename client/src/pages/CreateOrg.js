@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../utils/api';
 import * as ApiRoutes from '../constants/ApiRoutes';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { INDEX_PATH } from '../constants/paths';
 import { useDispatch } from 'react-redux';
 import { setAlert, AlertType } from '../actions/alerts';
@@ -21,10 +21,10 @@ import Info from '../components/createOrg/Info';
 import { BackButton } from '../lib/BackButton';
 
 export default function CreateOrg() {
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-  const [redirectToIndex, setRedirectToIndex] = useState(false);
 
   const [currentStep, setCurrentStep] = useState(1);
   const [uid, setUid] = useState('');
@@ -54,7 +54,7 @@ export default function CreateOrg() {
           AlertType.SUCCESS
         )
       );
-      setRedirectToIndex(true);
+      history.push(INDEX_PATH);
     } catch (err) {
       // error caught and show via api interceptor
       setLoading(false);
@@ -71,9 +71,7 @@ export default function CreateOrg() {
     setCurrentStep(currentStep >= 3 ? 4 : currentStep + 1);
   };
 
-  return redirectToIndex ? (
-    <Redirect push to={INDEX_PATH} />
-  ) : (
+  return (
     <>
       <Spinner show={loading} />
       <div className='h-screen flex flex-col p-4 relative md:p-6 lg:p-8'>

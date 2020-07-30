@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {
+  DASHBOARD_PATH,
+  dashboardOrgSettingsPath
+} from '../../constants/paths';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateOrg } from '../../actions/org';
 
 import Header from '../../lib/Header';
 
 export default function Details() {
-  const [uid, setUid] = useState('');
-  const [accessType, setAccessType] = useState('public');
+  const history = useHistory();
+  const org = useSelector(state => state.org);
+  const dispatch = useDispatch();
+
+  const [uid, setUid] = useState(org.myOrg ? org.myOrg.uid : '');
+  const [accessType, setAccessType] = useState(
+    org.myOrg ? (org.myOrg.isPrivate ? 'private' : 'public') : 'public'
+  );
 
   const handleUidChange = e => setUid(e.target.value);
   const handleAccessTypeChange = e => setAccessType(e.target.value);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const isPrivate = accessType === 'private';
+    dispatch(updateOrg(org.myOrg._id, uid, isPrivate));
+    history.push(dashboardOrgSettingsPath(DASHBOARD_PATH));
+  };
 
   return (
     <div className='pt-12'>
@@ -18,9 +38,10 @@ export default function Details() {
             className='text-teal-500 font-light'
             style={{ outline: 'none' }}
           >
-            Done
+            Update
           </span>
         }
+        handleClick={handleSubmit}
       />
 
       <form className='text-sm'>
