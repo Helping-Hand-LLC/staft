@@ -1,6 +1,7 @@
 import api from '../utils/api';
 import { AlertType, setAlert } from './alerts';
 import * as ApiRoutes from '../constants/ApiRoutes';
+import { logoutUser } from './auth';
 
 export const GET_MY_ORG_START = 'GET_MY_ORG_START';
 export const GET_MY_ORG_SUCCESS = 'GET_MY_ORG_SUCCESS';
@@ -136,7 +137,13 @@ export const deleteOrg = orgId => async dispatch => {
   try {
     await api.delete(ApiRoutes.convertApiPath(ApiRoutes.DELETE_ORG, orgId));
     dispatch(deleteOrgSuccess());
-    dispatch(setAlert('Organization successfully deleted', AlertType.SUCCESS));
+    dispatch(
+      setAlert(
+        'Organization successfully deleted. Please log in again',
+        AlertType.SUCCESS
+      )
+    );
+    dispatch(logoutUser());
   } catch (err) {
     dispatch(deleteOrgFailure());
   }
