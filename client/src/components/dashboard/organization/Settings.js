@@ -12,6 +12,7 @@ import {
 } from '../../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../../actions/alerts';
+import { getProfile } from '../../../actions/profile';
 import { deleteOrg } from '../../../actions/org';
 
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
@@ -46,6 +47,7 @@ export default function OrgSettings({ handleClick }) {
           AlertType.SUCCESS
         )
       );
+      dispatch(getProfile());
       history.push(DASHBOARD_PATH);
     } catch (err) {
       setLoading(false);
