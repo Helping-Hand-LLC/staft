@@ -119,9 +119,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
         </ul>
       </nav>
       {/* organization: managers & admins only */}
-      {profile.data &&
-      !profile.data.isAdmin &&
-      !profile.data.isManager ? null : (
+      {profile.data && profile.data.isManager ? (
         <nav>
           <h3 className='font-semibold uppercase text-sm p-3 pb-1'>
             Organization
@@ -187,7 +185,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
             </li>
           </ul>
         </nav>
-      )}
+      ) : null}
       {/* profile */}
       <div className='flex items-center py-4 px-3'>
         <NavLink

@@ -114,7 +114,9 @@ export const addWorkerToOrg: MiddlewareFn = async (req, res, next) => {
     const worker = await User.findOne({ email: workerEmail });
 
     if (!worker)
-      return res.status(404).json(routeError('Worker does not exist'));
+      return res
+        .status(404)
+        .json(routeError(`${workerEmail} is not a Staft user`));
 
     // check worker profile
     const workerProfile = await Profile.findOne({
@@ -126,7 +128,7 @@ export const addWorkerToOrg: MiddlewareFn = async (req, res, next) => {
         .status(400)
         .json(
           routeError(
-            'Worker must complete profile before being added to an organization'
+            `${workerEmail} must complete profile before being added to an organization`
           )
         );
 
@@ -135,7 +137,9 @@ export const addWorkerToOrg: MiddlewareFn = async (req, res, next) => {
       return res
         .status(400)
         .json(
-          routeError('Worker is already assigned to a different organization')
+          routeError(
+            `${workerEmail} is already assigned to a different organization`
+          )
         );
 
     // check that organization is private before adding worker
@@ -144,7 +148,7 @@ export const addWorkerToOrg: MiddlewareFn = async (req, res, next) => {
         .status(400)
         .json(
           routeError(
-            'Workers can join public organizations themselves. Assigning workers is reserved for private organizations only.'
+            `Workers can join public organizations themselves. Assigning workers is reserved for private organizations only.`
           )
         );
 

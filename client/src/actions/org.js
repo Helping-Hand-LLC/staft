@@ -11,10 +11,6 @@ export const UPDATE_ORG_START = 'UPDATE_ORG_START';
 export const UPDATE_ORG_SUCCESS = 'UPDATE_ORG_SUCCESS';
 export const UPDATE_ORG_FAILURE = 'UPDATE_ORG_FAILURE';
 
-export const ADD_WORKER_START = 'ADD_WORKER_START';
-export const ADD_WORKER_SUCCESS = 'ADD_WORKER_SUCCESS';
-export const ADD_WORKER_FAILURE = 'ADD_WORKER_FAILURE';
-
 export const DELETE_ORG_START = 'DELETE_ORG_START';
 export const DELETE_ORG_SUCCESS = 'DELETE_ORG_SUCCESS';
 export const DELETE_ORG_FAILURE = 'DELETE_ORG_FAILURE';
@@ -49,19 +45,6 @@ export const updateOrgSuccess = org => ({
 
 export const updateOrgFailure = () => ({
   type: UPDATE_ORG_FAILURE
-});
-
-export const addWorkerStart = () => ({
-  type: ADD_WORKER_START
-});
-
-export const addWorkerSuccess = worker => ({
-  type: ADD_WORKER_SUCCESS,
-  payload: { worker }
-});
-
-export const addWorkerFailure = () => ({
-  type: ADD_WORKER_FAILURE
 });
 
 export const deleteOrgStart = () => ({
@@ -103,31 +86,6 @@ export const updateOrg = (orgId, uid, isPrivate) => async dispatch => {
     dispatch(setAlert('Organization successfully updated', AlertType.SUCCESS));
   } catch (err) {
     dispatch(updateOrgFailure());
-  }
-};
-
-export const addWorkerToOrg = (
-  orgId,
-  workerEmail,
-  access
-) => async dispatch => {
-  dispatch(addWorkerStart());
-  const body = JSON.stringify({ workerEmail, access });
-
-  try {
-    const res = await api.patch(
-      ApiRoutes.convertApiPath(ApiRoutes.ADD_WORKER_TO_ORG, orgId),
-      body
-    );
-    dispatch(addWorkerSuccess(res.data.worker));
-    dispatch(
-      setAlert(
-        `${res.data.worker.email} successfully added to your organization`,
-        AlertType.SUCCESS
-      )
-    );
-  } catch (err) {
-    dispatch(addWorkerFailure());
   }
 };
 

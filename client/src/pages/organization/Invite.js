@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../utils/api';
+import * as ApiRoutes from '../../constants/ApiRoutes';
 import { useHistory } from 'react-router-dom';
 import { DASHBOARD_PATH, dashboardOrgWorkersPath } from '../../constants/paths';
 import { useSelector, useDispatch } from 'react-redux';
-// FIXME: remove addWorkerToOrg from redux
-import { addWorkerToOrg, WorkerAccess } from '../../actions/org';
+import { setAlert, AlertType } from '../../actions/alerts';
+import { WorkerAccess } from '../../actions/org';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -41,18 +43,40 @@ export default function Invite() {
 
   const handleMemberEmailChange = e => setMemberEmail(e.target.value);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-
     setLoading(true);
 
-    invitees.forEach(invitee => {
+    let errorOccurred = false;
+    for (const invitee of invitees) {
       // FIXME: allow input of admin, manager worker access
-      dispatch(addWorkerToOrg(org.myOrg._id, invitee, WorkerAccess.WORKER));
-    });
+      const body = JSON.stringify({
+        workerEmail: invitee,
+        access: WorkerAccess.WORKER
+      });
 
-    setLoading(false);
-    history.push(dashboardOrgWorkersPath(DASHBOARD_PATH));
+      try {
+        const res = await api.patch(
+          ApiRoutes.convertApiPath(ApiRoutes.ADD_WORKER_TO_ORG, org.myOrg._id),
+          body
+        );
+        setLoading(false);
+        dispatch(
+          setAlert(
+            `${res.data.worker.email} successfully added to your organization`,
+            AlertType.SUCCESS
+          )
+        );
+        // remove from invitees
+        setInvitees(invitees.filter(i => i !== invitee));
+      } catch (err) {
+        setLoading(false);
+        errorOccurred = true;
+      }
+    }
+
+    // redirect to org workers page if no errors
+    if (!errorOccurred) history.push(dashboardOrgWorkersPath(DASHBOARD_PATH));
   };
 
   const addInvitee = e => {
