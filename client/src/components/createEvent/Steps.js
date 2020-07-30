@@ -50,10 +50,30 @@ export function Step2({ currentStep, location, handleChange }) {
 
   const [newLocation, setNewLocation] = useState('');
   const [storedLocations, setStoredLocations] = useState([]);
+  const [queryResults, setQueryResults] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
   const handleNewLocationChange = e => setNewLocation(e.target.value);
+
+  const queryGoogleLocations = async () => {
+    setLoading(true);
+    const body = JSON.stringify({ query: newLocation });
+
+    try {
+      const res = await api.post(
+        ApiRoutes.convertApiPath(
+          ApiRoutes.QUERY_GOOGLE_LOCATIONS,
+          org.myOrg._id
+        ),
+        body
+      );
+      setQueryResults(res.data.response);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     async function fetchStoredLocations() {
@@ -98,35 +118,60 @@ export function Step2({ currentStep, location, handleChange }) {
         <Button
           bgColor='bg-blue-500 hover:bg-blue-300'
           padding='p-2'
-          onClick={() => console.log('new location', newLocation)}
+          onClick={queryGoogleLocations}
         >
           <SearchIcon fontSize='small' />
         </Button>
       </div>
-      {storedLocations.map(l => (
-        <label
-          htmlFor={l.name}
-          key={l._id}
-          className='flex items-center text-sm font-light mb-3'
-        >
-          <input
-            type='radio'
-            name='location'
-            id={l.name}
-            className='text-teal-500 mr-2 w-1/5'
-            checked={_.isEqual(location, l)}
-            value={JSON.stringify(l)}
-            onChange={handleChange}
-          />
-          <span className='flex-1 text-left'>
-            <span>{l.name}</span>
-            <br />
-            <span className='text-2xs text-gray-500'>
-              {l.formatted_address}
-            </span>
-          </span>
-        </label>
-      ))}
+      {queryResults.length > 0
+        ? queryResults.map(l => (
+            <label
+              htmlFor={l.name}
+              key={l.place_id}
+              className='flex items-center text-sm font-light mb-3'
+            >
+              <input
+                type='radio'
+                name='location'
+                id={l.name}
+                className='text-teal-500 mr-2 w-1/5'
+                checked={_.isEqual(location, l)}
+                value={JSON.stringify(l)}
+                onChange={handleChange}
+              />
+              <span className='flex-1 text-left'>
+                <span>{l.name}</span>
+                <br />
+                <span className='text-2xs text-gray-500'>
+                  {l.formatted_address}
+                </span>
+              </span>
+            </label>
+          ))
+        : storedLocations.map(l => (
+            <label
+              htmlFor={l.name}
+              key={l.place_id}
+              className='flex items-center text-sm font-light mb-3'
+            >
+              <input
+                type='radio'
+                name='location'
+                id={l.name}
+                className='text-teal-500 mr-2 w-1/5'
+                checked={_.isEqual(location, l)}
+                value={JSON.stringify(l)}
+                onChange={handleChange}
+              />
+              <span className='flex-1 text-left'>
+                <span>{l.name}</span>
+                <br />
+                <span className='text-2xs text-gray-500'>
+                  {l.formatted_address}
+                </span>
+              </span>
+            </label>
+          ))}
     </>
   );
 }

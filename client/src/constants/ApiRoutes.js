@@ -9,7 +9,7 @@ const workerRoute = path => `${orgRoute(':org_id/workers')}/${path}`;
 // event
 const eventRoute = path => `${orgRoute(':org_id/events')}/${path}`;
 // location
-const locationRoute = path => `${eventRoute('/locations')}/${path}`;
+const locationRoute = path => `${eventRoute('locations')}/${path}`;
 
 // REVIEW: api routes
 export const LOGIN = authRoute('login');
