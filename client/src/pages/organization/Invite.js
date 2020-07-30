@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { DASHBOARD_PATH, dashboardOrgWorkersPath } from '../../constants/paths';
+import { useSelector, useDispatch } from 'react-redux';
+// FIXME: remove addWorkerToOrg from redux
+import { addWorkerToOrg, WorkerAccess } from '../../actions/org';
 
 import CloseIcon from '@material-ui/icons/Close';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import Spinner from '../../lib/Spinner';
 import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
@@ -24,19 +30,33 @@ function Member({ name, handleClick }) {
 }
 
 export default function Invite() {
+  const history = useHistory();
+  const org = useSelector(state => state.org);
+  const dispatch = useDispatch();
+
   const [invitees, setInvitees] = useState([]);
   const [memberEmail, setMemberEmail] = useState('');
+
+  const [loading, setLoading] = useState(false);
 
   const handleMemberEmailChange = e => setMemberEmail(e.target.value);
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('form submitted');
+
+    setLoading(true);
+
+    invitees.forEach(invitee => {
+      // FIXME: allow input of admin, manager worker access
+      dispatch(addWorkerToOrg(org.myOrg._id, invitee, WorkerAccess.WORKER));
+    });
+
+    setLoading(false);
+    history.push(dashboardOrgWorkersPath(DASHBOARD_PATH));
   };
 
   const addInvitee = e => {
     e.preventDefault();
-    // TODO: email validation
     setInvitees([...invitees, memberEmail]);
     setMemberEmail('');
   };
@@ -45,54 +65,60 @@ export default function Invite() {
     setInvitees(invitees.filter((invitee, index) => index !== removeIndex));
 
   return (
-    <div className='pt-10'>
-      <Header title='Invite' primaryIcon={<CloseIcon />} />
+    <>
+      <Spinner show={loading} />
+      <div className='pt-10'>
+        <Header title='Invite' primaryIcon={<CloseIcon />} />
 
-      <p className='text-sm p-4 text-gray-700 text-center font-light md:w-5/6 md:mx-auto md:my-2'>
-        Add members to your organization via email. These members must be a
-        registered Staft user who has completed their profile and is not already
-        assigned to another organization.
-      </p>
+        <p className='text-sm p-4 text-gray-700 text-center font-light md:w-5/6 md:mx-auto md:my-2'>
+          Add members to your organization via email. These members must be a
+          registered Staft user who has completed their profile and is not
+          already assigned to another organization.
+        </p>
 
-      <form className='text-sm md:text-base' onSubmit={handleSubmit}>
-        <div className='w-full flex justify-between items-center bg-gray-300 lg:w-2/3 lg:mx-auto'>
-          <AlternateEmailIcon fontSize='small' className='text-gray-500 mx-2' />
-          <input
-            className='p-2 w-full outline-none text-teal-500 bg-gray-300'
-            type='email'
-            name='memberEmail'
-            id='memberEmail'
-            placeholder='Member Email'
-            value={memberEmail}
-            onChange={handleMemberEmailChange}
-          />
-          <Button onClick={addInvitee}>Add</Button>
-        </div>
-        <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center lg:w-2/3 lg:mx-auto'>
-          <span className='h-px bg-gray-400 flex-1 mr-2'></span>
-          Members
-          <span className='h-px bg-gray-400 flex-1 ml-2'></span>
-        </h4>
-        <ul>
-          {invitees.map((invitee, index) => (
-            <Member
-              key={index}
-              name={invitee}
-              handleClick={() => removeInvitee(index)}
+        <form className='text-sm md:text-base' onSubmit={handleSubmit}>
+          <div className='w-full flex justify-between items-center bg-gray-300 lg:w-2/3 lg:mx-auto'>
+            <AlternateEmailIcon
+              fontSize='small'
+              className='text-gray-500 mx-2'
             />
-          ))}
-        </ul>
-        <Button
-          type='submit'
-          bgColor='bg-teal-300 hover:bg-teal-100'
-          borderRadius='rounded-none'
-          textTransform='uppercase'
-          extras='block w-full text-center my-4 lg:w-2/3 lg:mx-auto lg:rounded'
-        >
-          Send
-        </Button>
-      </form>
-    </div>
+            <input
+              className='p-2 w-full outline-none text-teal-500 bg-gray-300'
+              type='email'
+              name='memberEmail'
+              id='memberEmail'
+              placeholder='Member Email'
+              value={memberEmail}
+              onChange={handleMemberEmailChange}
+            />
+            <Button onClick={addInvitee}>Add</Button>
+          </div>
+          <h4 className='uppercase text-gray-500 p-2 mt-2 flex justify-between items-center lg:w-2/3 lg:mx-auto'>
+            <span className='h-px bg-gray-400 flex-1 mr-2'></span>
+            Members
+            <span className='h-px bg-gray-400 flex-1 ml-2'></span>
+          </h4>
+          <ul>
+            {invitees.map((invitee, index) => (
+              <Member
+                key={index}
+                name={invitee}
+                handleClick={() => removeInvitee(index)}
+              />
+            ))}
+          </ul>
+          <Button
+            type='submit'
+            bgColor='bg-teal-300 hover:bg-teal-100'
+            borderRadius='rounded-none'
+            textTransform='uppercase'
+            extras='block w-full text-center my-4 lg:w-2/3 lg:mx-auto lg:rounded'
+          >
+            Send
+          </Button>
+        </form>
+      </div>
+    </>
   );
 }
 
