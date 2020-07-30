@@ -118,8 +118,8 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
           </li>
         </ul>
       </nav>
-      {/* organization: managers & admins only */}
-      {profile.data && profile.data.isManager ? (
+      {/* organization */}
+      {profile.data && profile.data.organization && (
         <nav>
           <h3 className='font-semibold uppercase text-sm p-3 pb-1'>
             Organization
@@ -143,36 +143,40 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
               &nbsp; Posts
             </NavLink>
           </li> */}
-            <li className='p-2 block text-white border-l-4 border-purple-500'>
-              <NavLink
-                to={dashboardOrgEventsPath(url)}
-                className='flex items-center p-1 rounded text-sm'
-                activeClassName='bg-white text-blue-500'
-                onClick={handleClick}
-              >
-                &nbsp; Events
-              </NavLink>
-            </li>
-            <li className='p-2 block text-white border-l-4 border-purple-500'>
-              <NavLink
-                to={dashboardOrgChannelsPath(url)}
-                className='flex items-center p-1 rounded text-sm'
-                activeClassName='bg-white text-blue-500'
-                onClick={handleClick}
-              >
-                &nbsp; Channels
-              </NavLink>
-            </li>
-            <li className='p-2 block text-white border-l-4 border-purple-500'>
-              <NavLink
-                to={dashboardOrgWorkersPath(url)}
-                className='flex items-center p-1 rounded text-sm'
-                activeClassName='bg-white text-blue-500'
-                onClick={handleClick}
-              >
-                &nbsp; Workers
-              </NavLink>
-            </li>
+            {profile.data.isManager && (
+              <>
+                <li className='p-2 block text-white border-l-4 border-purple-500'>
+                  <NavLink
+                    to={dashboardOrgEventsPath(url)}
+                    className='flex items-center p-1 rounded text-sm'
+                    activeClassName='bg-white text-blue-500'
+                    onClick={handleClick}
+                  >
+                    &nbsp; Events
+                  </NavLink>
+                </li>
+                <li className='p-2 block text-white border-l-4 border-purple-500'>
+                  <NavLink
+                    to={dashboardOrgChannelsPath(url)}
+                    className='flex items-center p-1 rounded text-sm'
+                    activeClassName='bg-white text-blue-500'
+                    onClick={handleClick}
+                  >
+                    &nbsp; Channels
+                  </NavLink>
+                </li>
+                <li className='p-2 block text-white border-l-4 border-purple-500'>
+                  <NavLink
+                    to={dashboardOrgWorkersPath(url)}
+                    className='flex items-center p-1 rounded text-sm'
+                    activeClassName='bg-white text-blue-500'
+                    onClick={handleClick}
+                  >
+                    &nbsp; Workers
+                  </NavLink>
+                </li>
+              </>
+            )}
             <li className='p-2 block text-white border-l-4 border-purple-500'>
               <NavLink
                 to={dashboardOrgSettingsPath(url)}
@@ -185,7 +189,7 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
             </li>
           </ul>
         </nav>
-      ) : null}
+      )}
       {/* profile */}
       <div className='flex items-center py-4 px-3'>
         <NavLink
