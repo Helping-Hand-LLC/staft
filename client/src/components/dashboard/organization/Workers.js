@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import api from '../../../utils/api';
+import * as ApiRoutes from '../../../constants/ApiRoutes';
 import { ORG_INVITE_PATH } from '../../../constants/paths';
+import { useSelector } from 'react-redux';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+import Spinner from '../../../lib/Spinner';
 import { ButtonLink } from '../../../lib/Button';
-
 import DashboardHeader from '../DashboardHeader';
-
-import _workers from '../../../constants/workers.json';
 
 function Worker({ name }) {
   return (
@@ -20,51 +21,75 @@ function Worker({ name }) {
 }
 
 export default function OrgWorker({ handleClick }) {
+  const org = useSelector(state => state.org);
+
+  const [loading, setLoading] = useState(false);
+  const [allOrgWorkers, setAllOrgWorkers] = useState([]);
+
+  useEffect(() => {
+    async function fetchOrgWorkers() {
+      setLoading(true);
+      try {
+        const res = await api.get(
+          ApiRoutes.convertApiPath(ApiRoutes.GET_ORG_WORKERS, org.myOrg._id)
+        );
+        setAllOrgWorkers(res.data.orgUsers);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    }
+    fetchOrgWorkers();
+  }, [org.myOrg._id]);
+
   return (
-    <div className='pt-16'>
-      <DashboardHeader
-        title='Workers'
-        subtitle='helpinghandllc'
-        handleClick={handleClick}
-      />
-      <section className='lg:w-4/5 lg:mx-auto'>
-        <div>
-          <h3 className='font-semibold p-2 text-sm'>Admins</h3>
-          {_workers
-            .filter(m => m.isAdmin)
-            .map((m, i) => (
-              <Worker name={m.name} key={i} />
-            ))}
-        </div>
-        <div>
-          <h3 className='font-semibold p-2 text-sm'>Managers</h3>
-          {_workers
-            .filter(m => !m.isAdmin && m.isManager)
-            .map((m, i) => (
-              <Worker name={m.name} key={i} />
-            ))}
-        </div>
-        <div>
-          <h3 className='font-semibold p-2 text-sm'>Workers</h3>
-          {_workers
-            .filter(m => !m.isAdmin && !m.isManager)
-            .map((m, i) => (
-              <Worker name={m.name} key={i} />
-            ))}
-        </div>
-      </section>
-      <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
-        <ButtonLink
-          to={ORG_INVITE_PATH}
-          bgColor='bg-teal-300 hover:bg-teal-100'
-          textTransform='uppercase'
-          fontWeight='font-semibold'
-          extras='block w-full text-center lg:w-5/6 lg:mx-auto'
-        >
-          Invite Workers
-        </ButtonLink>
-      </section>
-    </div>
+    <>
+      <Spinner show={loading} />
+      <div className='pt-16'>
+        <DashboardHeader
+          title='Workers'
+          subtitle={org.myOrg.uid}
+          handleClick={handleClick}
+        />
+        <section className='lg:w-4/5 lg:mx-auto'>
+          <div>
+            <h3 className='font-semibold p-2 text-sm'>Admins</h3>
+            {allOrgWorkers
+              .filter(m => m.isAdmin)
+              .map((m, i) => (
+                <Worker name={m.name} key={i} />
+              ))}
+          </div>
+          <div>
+            <h3 className='font-semibold p-2 text-sm'>Managers</h3>
+            {allOrgWorkers
+              .filter(m => !m.isAdmin && m.isManager)
+              .map((m, i) => (
+                <Worker name={m.name} key={i} />
+              ))}
+          </div>
+          <div>
+            <h3 className='font-semibold p-2 text-sm'>Workers</h3>
+            {allOrgWorkers
+              .filter(m => !m.isAdmin && !m.isManager)
+              .map((m, i) => (
+                <Worker name={m.name} key={i} />
+              ))}
+          </div>
+        </section>
+        <section className='fixed bottom-0 w-full py-3 px-2 bg-white shadow-topSm'>
+          <ButtonLink
+            to={ORG_INVITE_PATH}
+            bgColor='bg-teal-300 hover:bg-teal-100'
+            textTransform='uppercase'
+            fontWeight='font-semibold'
+            extras='block w-full text-center lg:w-5/6 lg:mx-auto'
+          >
+            Invite Workers
+          </ButtonLink>
+        </section>
+      </div>
+    </>
   );
 }
 
