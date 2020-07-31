@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { createLocation } from '../../actions/locations';
 
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -11,9 +13,19 @@ import {
 import { Step1, Step2, Step3, Step4 } from '../../components/createEvent/Steps';
 import Info from '../../components/createEvent/Info';
 
+import Spinner from '../../lib/Spinner';
 import { BackButton } from '../../lib/BackButton';
 
 export default function CreateEvent() {
+  const dispatch = useDispatch();
+  const { org, locations } = useSelector(
+    state => ({
+      org: state.org,
+      locations: state.locations
+    }),
+    shallowEqual
+  );
+
   const [currentStep, setCurrentStep] = useState(1);
   const [eventTitle, setEventTitle] = useState('');
   const [location, setLocation] = useState({});
@@ -35,7 +47,15 @@ export default function CreateEvent() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('form submitted', eventTitle, location, links);
+
+    // create a new location, if necessary
+    if (
+      !locations.storedLocations.find(l => l.place_id === location.place_id)
+    ) {
+      dispatch(createLocation(org.myOrg._id, location));
+    }
+
+    // TODO: create event
   };
 
   // stepper functionality
@@ -49,57 +69,60 @@ export default function CreateEvent() {
   };
 
   return (
-    <div className='h-screen flex flex-col p-4 relative md:p-6 lg:p-8'>
-      <ProgressIndicator currentStep={currentStep} />
-      <section className='mb-2'>
-        <BackButton>
-          <CloseIcon />
-        </BackButton>
-      </section>
-      <Info currentStep={currentStep} />
-      <form
-        className='text-center flex-1 flex flex-col justify-between pt-12'
-        onSubmit={handleSubmit}
-      >
-        <section className='md:w-2/3 md:mx-auto lg:w-1/2'>
-          <Step1
-            currentStep={currentStep}
-            eventTitle={eventTitle}
-            handleChange={handleEventTitleChange}
-          />
-          <Step2
-            currentStep={currentStep}
-            location={location}
-            handleChange={handleLocationChange}
-          />
-          <Step3
-            currentStep={currentStep}
-            singleLink={singleLink}
-            links={links}
-            addLink={addLink}
-            removeLink={removeLink}
-            handleChange={handleSingleLinkChange}
-          />
-          <Step4
-            currentStep={currentStep}
-            eventTitle={eventTitle}
-            location={location}
-            links={links}
-          />
+    <>
+      <Spinner show={locations.isLoading} />
+      <div className='h-screen flex flex-col p-4 relative md:p-6 lg:p-8'>
+        <ProgressIndicator currentStep={currentStep} />
+        <section className='mb-2'>
+          <BackButton>
+            <CloseIcon />
+          </BackButton>
         </section>
-        {/* FIXME: fixed at bottom so overflow content doesn't push buttons down */}
-        <section
-          className={`${
-            currentStep === 4
-              ? ''
-              : 'flex justify-between md:w-3/4 md:mx-auto lg:w-2/3'
-          }`}
+        <Info currentStep={currentStep} />
+        <form
+          className='text-center flex-1 flex flex-col justify-between pt-12'
+          onSubmit={handleSubmit}
         >
-          <PrevButton currentStep={currentStep} prev={prev} />
-          <NextButton currentStep={currentStep} next={next} />
-          <FinishButton currentStep={currentStep} />
-        </section>
-      </form>
-    </div>
+          <section className='md:w-2/3 md:mx-auto lg:w-1/2'>
+            <Step1
+              currentStep={currentStep}
+              eventTitle={eventTitle}
+              handleChange={handleEventTitleChange}
+            />
+            <Step2
+              currentStep={currentStep}
+              location={location}
+              handleChange={handleLocationChange}
+            />
+            <Step3
+              currentStep={currentStep}
+              singleLink={singleLink}
+              links={links}
+              addLink={addLink}
+              removeLink={removeLink}
+              handleChange={handleSingleLinkChange}
+            />
+            <Step4
+              currentStep={currentStep}
+              eventTitle={eventTitle}
+              location={location}
+              links={links}
+            />
+          </section>
+          {/* FIXME: fixed at bottom so overflow content doesn't push buttons down */}
+          <section
+            className={`${
+              currentStep === 4
+                ? ''
+                : 'flex justify-between md:w-3/4 md:mx-auto lg:w-2/3'
+            }`}
+          >
+            <PrevButton currentStep={currentStep} prev={prev} />
+            <NextButton currentStep={currentStep} next={next} />
+            <FinishButton currentStep={currentStep} />
+          </section>
+        </form>
+      </div>
+    </>
   );
 }
