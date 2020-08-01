@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { DASHBOARD_PATH } from '../../constants/paths';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAlert, AlertType } from '../../actions/alerts';
 
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
@@ -28,6 +32,9 @@ function WorkerCheckbox({ label, isSelected, handleChange }) {
 }
 
 export default function InviteParticipant() {
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.profile);
+
   const [participants, setParticipants] = useState(
     _workers.reduce(
       (workers, worker) => ({
@@ -52,6 +59,17 @@ export default function InviteParticipant() {
       .filter(p => participants[p])
       .forEach(p => console.log(p, 'is selected'));
   };
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <div style={{ paddingTop: '3.1rem' }}>

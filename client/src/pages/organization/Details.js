@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import {
   DASHBOARD_PATH,
   dashboardOrgSettingsPath
 } from '../../constants/paths';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { setAlert, AlertType } from '../../actions/alerts';
 import { updateOrg } from '../../actions/org';
 
 import Header from '../../lib/Header';
 
 export default function Details() {
   const history = useHistory();
-  const org = useSelector(state => state.org);
+  const { profile, org } = useSelector(
+    state => ({
+      profile: state.profile,
+      org: state.org
+    }),
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
   const [uid, setUid] = useState(org.myOrg ? org.myOrg.uid : '');
@@ -28,6 +35,17 @@ export default function Details() {
     dispatch(updateOrg(org.myOrg._id, uid, isPrivate));
     history.push(dashboardOrgSettingsPath(DASHBOARD_PATH));
   };
+
+  // ADMIN ACCESS ONLY
+  if (!profile.data || !profile.data.isAdmin) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <div className='pt-12'>

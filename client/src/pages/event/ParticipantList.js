@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { DASHBOARD_PATH } from '../../constants/paths';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAlert, AlertType } from '../../actions/alerts';
 
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
@@ -23,6 +27,9 @@ function Worker({ name, handleClick }) {
 }
 
 export default function ParticipantList() {
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.profile);
+
   const [participants, setParticipants] = useState(_workers.map(w => w.name));
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -35,6 +42,17 @@ export default function ParticipantList() {
     e.preventDefault();
     console.log(participants);
   };
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <div style={{ paddingTop: '3.1rem' }}>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { useLocation } from 'react-router-dom';
-import { buildUrl } from '../../constants/paths';
+import { useLocation, Redirect } from 'react-router-dom';
+import { DASHBOARD_PATH, buildUrl } from '../../constants/paths';
 import api from '../../utils/api';
 import * as ApiRoutes from '../../constants/ApiRoutes';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { setAlert, AlertType } from '../../actions/alerts';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -42,7 +43,14 @@ function EventLink({ url, handleClick }) {
 }
 
 export default function EditEvent() {
-  const org = useSelector(state => state.org);
+  const dispatch = useDispatch();
+  const { profile, org } = useSelector(
+    state => ({
+      profile: state.profile,
+      org: state.org
+    }),
+    shallowEqual
+  );
 
   const routerLocation = useLocation();
   const { oldTitle, oldLocation, oldLinks } = routerLocation.state;
@@ -98,6 +106,17 @@ export default function EditEvent() {
 
     fetchStoredLocations();
   }, [org.myOrg]);
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <>

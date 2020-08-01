@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import api from '../../../utils/api';
 import * as ApiRoutes from '../../../constants/ApiRoutes';
-import { ORG_INVITE_PATH } from '../../../constants/paths';
-import { useSelector } from 'react-redux';
+import { DASHBOARD_PATH, ORG_INVITE_PATH } from '../../../constants/paths';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { setAlert, AlertType } from '../../../actions/alerts';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -21,7 +23,14 @@ function Worker({ name }) {
 }
 
 export default function OrgWorker({ handleClick }) {
-  const org = useSelector(state => state.org);
+  const dispatch = useDispatch();
+  const { profile, org } = useSelector(
+    state => ({
+      profile: state.profile,
+      org: state.org
+    }),
+    shallowEqual
+  );
 
   const [loading, setLoading] = useState(false);
   const [allOrgWorkers, setAllOrgWorkers] = useState([]);
@@ -41,6 +50,17 @@ export default function OrgWorker({ handleClick }) {
     }
     fetchOrgWorkers();
   }, [org.myOrg._id]);
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <>

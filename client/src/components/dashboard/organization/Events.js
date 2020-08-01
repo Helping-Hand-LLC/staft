@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CREATE_EVENT_PATH } from '../../../constants/paths';
+import { Redirect } from 'react-router-dom';
+import { DASHBOARD_PATH, CREATE_EVENT_PATH } from '../../../constants/paths';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAlert, AlertType } from '../../../actions/alerts';
 
 import AddIcon from '@material-ui/icons/Add';
 
 import DashboardHeader from '../DashboardHeader';
-
 import { FloatingActionLink } from '../../../lib/Button';
 import EventCard from '../../../lib/EventCard';
 import Badge from '../../../lib/Badge';
@@ -13,6 +15,20 @@ import Badge from '../../../lib/Badge';
 import _events from '../../../constants/events.json';
 
 export default function OrgEvents({ isOpen, handleClick }) {
+  const dispatch = useDispatch();
+  const profile = useSelector(state => state.profile);
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
+
   return (
     <div className='pt-16'>
       <DashboardHeader

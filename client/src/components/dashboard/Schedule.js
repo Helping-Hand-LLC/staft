@@ -17,6 +17,7 @@ import {
   dashboardScheduleDraftsPath,
   dashboardScheduleFilterPath
 } from '../../constants/paths';
+import { useSelector } from 'react-redux';
 
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import AddIcon from '@material-ui/icons/Add';
@@ -78,6 +79,8 @@ function DFilter() {
 }
 
 export default function Schedule({ isOpen, handleClick }) {
+  const profile = useSelector(state => state.profile);
+
   let { url, path } = useRouteMatch();
 
   return (
@@ -123,12 +126,14 @@ export default function Schedule({ isOpen, handleClick }) {
           </Route>
         </Switch>
       </div>
-      <FloatingActionLink
-        to={CREATE_EVENT_PATH}
-        style={{ display: isOpen ? 'none' : 'inline-block' }}
-      >
-        <AddIcon />
-      </FloatingActionLink>
+      {profile.data && profile.data.isManager && (
+        <FloatingActionLink
+          to={CREATE_EVENT_PATH}
+          style={{ display: isOpen ? 'none' : 'inline-block' }}
+        >
+          <AddIcon />
+        </FloatingActionLink>
+      )}
     </div>
   );
 }

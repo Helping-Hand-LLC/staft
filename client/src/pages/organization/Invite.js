@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import api from '../../utils/api';
 import * as ApiRoutes from '../../constants/ApiRoutes';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import { DASHBOARD_PATH, dashboardOrgWorkersPath } from '../../constants/paths';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../actions/alerts';
 import { WorkerAccess } from '../../actions/org';
 
@@ -33,7 +33,13 @@ function Member({ name, handleClick }) {
 
 export default function Invite() {
   const history = useHistory();
-  const org = useSelector(state => state.org);
+  const { profile, org } = useSelector(
+    state => ({
+      profile: state.profile,
+      org: state.org
+    }),
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
   const [invitees, setInvitees] = useState([]);
@@ -87,6 +93,17 @@ export default function Invite() {
 
   const removeInvitee = removeIndex =>
     setInvitees(invitees.filter((invitee, index) => index !== removeIndex));
+
+  // ADMIN ACCESS ONLY
+  if (!profile.data || !profile.data.isAdmin) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <>

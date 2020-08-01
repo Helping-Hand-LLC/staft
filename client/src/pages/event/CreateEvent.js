@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { DASHBOARD_PATH } from '../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { setAlert, AlertType } from '../../actions/alerts';
 import { createLocation } from '../../actions/locations';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -18,8 +21,9 @@ import { BackButton } from '../../lib/BackButton';
 
 export default function CreateEvent() {
   const dispatch = useDispatch();
-  const { org, locations } = useSelector(
+  const { profile, org, locations } = useSelector(
     state => ({
+      profile: state.profile,
       org: state.org,
       locations: state.locations
     }),
@@ -67,6 +71,17 @@ export default function CreateEvent() {
     e.preventDefault();
     setCurrentStep(currentStep >= 3 ? 4 : currentStep + 1);
   };
+
+  // MANAGER ACCESS ONLY
+  if (!profile.data || !profile.data.isManager) {
+    dispatch(
+      setAlert(
+        'You do not have access to the route you requested',
+        AlertType.WARNING
+      )
+    );
+    return <Redirect to={DASHBOARD_PATH} />;
+  }
 
   return (
     <>
