@@ -23,7 +23,9 @@ export const checkProfile: MiddlewareFn = async (req, res, next) => {
   const reqUser = req.user as IJwtUser;
 
   try {
-    const profile = await Profile.findOne({ user: reqUser.id });
+    const profile = await Profile.findOne({ user: reqUser.id })
+      .populate('user', ['type', 'email'])
+      .populate('organization', 'uid');
 
     if (!profile)
       return res
@@ -51,7 +53,17 @@ export const checkOrg: MiddlewareFn = async (req, res, next) => {
 };
 export const checkEvent: MiddlewareFn = async (req, res, next) => {
   try {
-    const event = await Event.findById(req.params.event_id);
+    const event = await Event.findById(req.params.event_id)
+      .populate('organization', 'uid')
+      .populate('location', '-organization')
+      .populate('createdBy', 'email')
+      .populate({
+        path: 'participants',
+        populate: {
+          path: 'worker',
+          select: 'email'
+        }
+      });
 
     if (!event) return res.status(404).json(routeError('Event does not exist'));
 
