@@ -62,13 +62,13 @@ function EventCard({
 }
 
 EventCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  // id: PropTypes.string.isRequired,
   badge: PropTypes.element,
   location: PropTypes.string.isRequired,
   title: PropTypes.string,
   creator: PropTypes.string.isRequired,
-  startDate: PropTypes.string.isRequired,
-  startTime: PropTypes.string.isRequired,
+  // startDate: PropTypes.string.isRequired,
+  // startTime: PropTypes.string.isRequired,
   links: PropTypes.array.isRequired
 };
 
