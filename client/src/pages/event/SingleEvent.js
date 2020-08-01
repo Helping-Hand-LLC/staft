@@ -52,6 +52,11 @@ export default function SingleEvent() {
     links
   } = location.state;
 
+  const deadLinkPath = {
+    pathname: history.location.pathname,
+    state: location.state
+  };
+
   return (
     <div className='pt-10 pb-3 bg-gray-200'>
       <Header title={title || 'Event'} />
@@ -77,9 +82,7 @@ export default function SingleEvent() {
             <p className='text-sm'>
               <span>{address.street}</span>
               <br />
-              <span>
-                {address.city}&nbsp;{address.state}&nbsp;{address.zip}
-              </span>
+              <span>{address.rest}</span>
             </p>
           </section>
           <section className='w-full p-4 bg-white flex items-center text-sm text-center'>
@@ -113,18 +116,7 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
             <Link
-              to={{
-                pathname: history.location.pathname,
-                state: {
-                  eventLocation,
-                  title,
-                  creator,
-                  startDate,
-                  startTime,
-                  address,
-                  links
-                }
-              }}
+              to={deadLinkPath}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -134,18 +126,7 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
             <Link
-              to={{
-                pathname: history.location.pathname,
-                state: {
-                  eventLocation,
-                  title,
-                  creator,
-                  startDate,
-                  startTime,
-                  address,
-                  links
-                }
-              }}
+              to={deadLinkPath}
               className='flex justify-between items-center w-full bg-white p-2 text-sm font-light'
             >
               <div>
@@ -160,18 +141,7 @@ export default function SingleEvent() {
               Event Details
             </h4>
             <Link
-              to={{
-                pathname: history.location.pathname,
-                state: {
-                  eventLocation,
-                  title,
-                  creator,
-                  startDate,
-                  startTime,
-                  address,
-                  links
-                }
-              }}
+              to={deadLinkPath}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
             >
               Add Event Details
@@ -187,18 +157,7 @@ export default function SingleEvent() {
               ))}
             </ul>
             <Link
-              to={{
-                pathname: history.location.pathname,
-                state: {
-                  eventLocation,
-                  title,
-                  creator,
-                  startDate,
-                  startTime,
-                  address,
-                  links
-                }
-              }}
+              to={deadLinkPath}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
             >
               Add Link

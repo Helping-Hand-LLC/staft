@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { singleEventPath } from '../constants/paths';
 
@@ -17,6 +17,10 @@ function EventCard({
   startTime,
   links
 }) {
+  // const streetSplit = location.formatted_address.indexOf(',');
+  // const street = location.slice(0, streetSplit);
+  // const rest = location.slice(streetSplit + 2);
+
   return (
     <div className='rounded overflow-hidden border border-gray-300 mb-2 shadow'>
       <div className='px-6 mt-4 flex justify-between'>
@@ -32,18 +36,13 @@ function EventCard({
             creator,
             startDate,
             startTime,
-            address: {
-              street: '123 Main St',
-              city: 'New York City',
-              state: 'NY',
-              zip: '56789'
-            },
+            address: { street: '789 Main St', rest: 'New York City, NY 54321' },
             links
           }
         }}
         className='block px-6 py-2 border-l-4 border-teal-500'
       >
-        <h3 className='font-bold text-xl mb-2'>{location}</h3>
+        <h3 className='font-bold text-xl mb-2'>{location.name}</h3>
         <p className='text-gray-700 font-light'>{title}</p>
         <small className='block text-gray-500 text-sm font-light'>
           Creator: {creator}
@@ -61,15 +60,15 @@ function EventCard({
   );
 }
 
-EventCard.propTypes = {
-  // id: PropTypes.string.isRequired,
-  badge: PropTypes.element,
-  location: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  creator: PropTypes.string.isRequired,
-  // startDate: PropTypes.string.isRequired,
-  // startTime: PropTypes.string.isRequired,
-  links: PropTypes.array.isRequired
-};
+// EventCard.propTypes = {
+//   id: PropTypes.string.isRequired,
+//   badge: PropTypes.element,
+//   location: PropTypes.object.isRequired,
+//   title: PropTypes.string,
+//   creator: PropTypes.string.isRequired,
+//   startDate: PropTypes.string.isRequired,
+//   startTime: PropTypes.string.isRequired,
+//   links: PropTypes.array.isRequired
+// };
 
 export default EventCard;

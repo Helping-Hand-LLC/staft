@@ -112,7 +112,7 @@ export const getProfile = () => async dispatch => {
     dispatch(getProfileSuccess(res.data.populated));
 
     if (res.data.populated.organization) {
-      dispatch(getMyOrg(res.data.populated.organization));
+      dispatch(getMyOrg(res.data.populated.organization._id));
     }
   } catch (err) {
     dispatch(getProfileFailure());

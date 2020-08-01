@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Redirect } from 'react-router-dom';
 import { DASHBOARD_PATH, CREATE_EVENT_PATH } from '../../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
@@ -51,7 +52,6 @@ export default function OrgEvents({ isOpen, handleClick }) {
         />
         <div className='px-3 py-4 lg:w-4/5 lg:mx-auto'>
           {events.allOrgEvents.map(event => (
-            // TODO: format data sent to EventCard
             <EventCard
               key={event._id}
               id={event._id}
@@ -63,9 +63,9 @@ export default function OrgEvents({ isOpen, handleClick }) {
               }
               location={event.location}
               title={event.title}
-              creator={event.createdBy}
-              startDate={event.startDateTime}
-              startTime={event.startTime}
+              creator={event.createdBy.email}
+              startDate={moment(event.startDateTime).format('MMM D, YYYY')}
+              startTime={moment(event.startDateTime).format('hh:mm A')}
               links={event.links}
             />
           ))}
