@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { singleEventPath } from '../constants/paths';
 
@@ -17,9 +17,9 @@ function EventCard({
   startTime,
   links
 }) {
-  // const streetSplit = location.formatted_address.indexOf(',');
-  // const street = location.slice(0, streetSplit);
-  // const rest = location.slice(streetSplit + 2);
+  const streetSplit = location.formatted_address.indexOf(',');
+  const street = location.formatted_address.slice(0, streetSplit);
+  const rest = location.formatted_address.slice(streetSplit + 2);
 
   return (
     <div className='rounded overflow-hidden border border-gray-300 mb-2 shadow'>
@@ -31,12 +31,12 @@ function EventCard({
         to={{
           pathname: singleEventPath(id),
           state: {
-            eventLocation: location,
+            eventLocation: location.name,
             title,
             creator,
             startDate,
             startTime,
-            address: { street: '789 Main St', rest: 'New York City, NY 54321' },
+            address: { street, rest },
             links
           }
         }}
@@ -60,15 +60,15 @@ function EventCard({
   );
 }
 
-// EventCard.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   badge: PropTypes.element,
-//   location: PropTypes.object.isRequired,
-//   title: PropTypes.string,
-//   creator: PropTypes.string.isRequired,
-//   startDate: PropTypes.string.isRequired,
-//   startTime: PropTypes.string.isRequired,
-//   links: PropTypes.array.isRequired
-// };
+EventCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  badge: PropTypes.element,
+  location: PropTypes.object.isRequired,
+  title: PropTypes.string,
+  creator: PropTypes.string.isRequired,
+  startDate: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  links: PropTypes.array.isRequired
+};
 
 export default EventCard;
