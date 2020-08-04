@@ -58,7 +58,7 @@ export const getAllMyOrgEvents: MiddlewareFn = async (req, res, next) => {
     for (let i = 0; i < orgEvents.length; i++) {
       const event = orgEvents[i];
       const participant = event.participants.find(
-        el => el.worker == reqUser.id
+        el => el.worker._id == reqUser.id
       );
       if (participant) myOrgEvents.push(event);
     }
