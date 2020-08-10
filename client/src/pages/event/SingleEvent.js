@@ -111,6 +111,7 @@ export default function SingleEvent() {
             >
               <div>
                 <small className='block text-gray-600'>Participants:</small>
+                {/* TODO: get count of unconfirmed/accepted participants */}
                 <p>0 Invited, 0 Attending</p>
               </div>
               <KeyboardArrowRightIcon />
@@ -136,6 +137,7 @@ export default function SingleEvent() {
               <KeyboardArrowRightIcon />
             </Link>
           </section>
+          {/* TODO: publish event, set startDateTime, set endDateTime */}
           <section className='w-full p-4 border-t border-b border-gray-400 my-1 bg-white'>
             <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
               Event Details
@@ -156,6 +158,7 @@ export default function SingleEvent() {
                 <EventLink key={index} url={link} />
               ))}
             </ul>
+            {/* TODO: update event */}
             <Link
               to={deadLinkPath}
               className='bg-transparent hover:bg-transparent text-teal-500 text-xs'
@@ -183,6 +186,7 @@ export default function SingleEvent() {
                 <br />
                 Edit Event
               </Link>
+              {/* TODO: delete event action */}
               <button
                 className='inline-block p-4 text-red-500 flex-1 hover:bg-red-500 hover:text-white'
                 style={{ outline: 'none' }}

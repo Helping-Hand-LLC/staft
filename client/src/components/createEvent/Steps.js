@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import api from '../../utils/api';
 import * as ApiRoutes from '../../constants/ApiRoutes';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { getStoredLocations } from '../../actions/locations';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -46,10 +47,16 @@ export function Step1({ currentStep, eventTitle, handleChange }) {
 }
 
 export function Step2({ currentStep, location, handleChange }) {
-  const org = useSelector(state => state.org);
+  const dispatch = useDispatch();
+  const { org, locations } = useSelector(
+    state => ({
+      org: state.org,
+      locations: state.locations
+    }),
+    shallowEqual
+  );
 
   const [newLocation, setNewLocation] = useState('');
-  const [storedLocations, setStoredLocations] = useState([]);
   const [queryResults, setQueryResults] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -76,27 +83,10 @@ export function Step2({ currentStep, location, handleChange }) {
   };
 
   useEffect(() => {
-    async function fetchStoredLocations() {
-      setLoading(true);
-
-      try {
-        const res = await api.get(
-          ApiRoutes.convertApiPath(
-            ApiRoutes.GET_STORED_LOCATIONS,
-            org.myOrg._id
-          )
-        );
-        setStoredLocations(res.data.locations);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-      }
-    }
-
     if (!org.myOrg) return;
 
-    fetchStoredLocations();
-  }, [org.myOrg]);
+    dispatch(getStoredLocations(org.myOrg._id));
+  }, [dispatch, org.myOrg]);
 
   return currentStep !== 2 ? null : (
     <>
@@ -148,7 +138,7 @@ export function Step2({ currentStep, location, handleChange }) {
               </span>
             </label>
           ))
-        : storedLocations.map(l => (
+        : locations.storedLocations.map(l => (
             <label
               htmlFor={l.name}
               key={l.place_id}

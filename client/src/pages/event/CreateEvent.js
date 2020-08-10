@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { DASHBOARD_PATH } from '../../constants/paths';
+import moment from 'moment';
+import { Redirect, useHistory } from 'react-router-dom';
+import { DASHBOARD_PATH, dashboardOrgEventsPath } from '../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../actions/alerts';
+import { createEvent } from '../../actions/events';
 import { createLocation } from '../../actions/locations';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -20,6 +22,7 @@ import Spinner from '../../lib/Spinner';
 import { BackButton } from '../../lib/BackButton';
 
 export default function CreateEvent() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const { profile, org, locations } = useSelector(
     state => ({
@@ -59,7 +62,17 @@ export default function CreateEvent() {
       dispatch(createLocation(org.myOrg._id, location));
     }
 
-    // TODO: create event
+    // create event
+    const eventData = {
+      // FIXME: isPublished: false,
+      title: eventTitle,
+      location: location._id,
+      startDateTime: moment().add(5, 'h').format(),
+      endDateTime: moment().add(10, 'h').format(),
+      links
+    };
+    dispatch(createEvent(org.myOrg._id, eventData));
+    history.push(dashboardOrgEventsPath(DASHBOARD_PATH));
   };
 
   // stepper functionality
