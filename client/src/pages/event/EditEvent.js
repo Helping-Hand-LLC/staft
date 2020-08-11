@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { useLocation, Redirect } from 'react-router-dom';
-import { DASHBOARD_PATH, buildUrl } from '../../constants/paths';
+import moment from 'moment';
+import { useParams, useLocation, useHistory, Redirect } from 'react-router-dom';
+import {
+  DASHBOARD_PATH,
+  buildUrl,
+  dashboardOrgEventsPath
+} from '../../constants/paths';
 import api from '../../utils/api';
 import * as ApiRoutes from '../../constants/ApiRoutes';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../actions/alerts';
+import { updateEvent } from '../../actions/events';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -43,6 +49,7 @@ function EventLink({ url, handleClick }) {
 }
 
 export default function EditEvent() {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const { profile, org } = useSelector(
     state => ({
@@ -52,6 +59,7 @@ export default function EditEvent() {
     shallowEqual
   );
 
+  const history = useHistory();
   const routerLocation = useLocation();
   const { oldTitle, oldLocation, oldLinks } = routerLocation.state;
 
@@ -60,6 +68,7 @@ export default function EditEvent() {
   const [newLocation, setNewLocation] = useState('');
   const [singleLink, setSingleLink] = useState('');
   const [links, setLinks] = useState(oldLinks);
+  // TODO: publish, startDateTime, endDateTime
 
   const [storedLocations, setStoredLocations] = useState([]);
 
@@ -79,9 +88,19 @@ export default function EditEvent() {
   const removeLink = removeIndex =>
     setLinks(links.filter((link, i) => i !== removeIndex));
 
-  const handleSubmit = e => {
+  const handleUpdateEvent = e => {
     e.preventDefault();
-    console.log('form submitted', eventTitle, location, links);
+
+    const updatedData = {
+      // FIXME: isPublished: false,
+      title: eventTitle,
+      location: location._id,
+      startDateTime: moment().add(5, 'h').format(),
+      endDateTime: moment().add(10, 'h').format(),
+      links
+    };
+    dispatch(updateEvent(org.myOrg._id, id, updatedData));
+    history.push(dashboardOrgEventsPath(DASHBOARD_PATH));
   };
 
   useEffect(() => {
@@ -133,9 +152,10 @@ export default function EditEvent() {
               Done
             </span>
           }
+          handleClick={handleUpdateEvent}
         />
 
-        <form className='md:px-6 lg:w-4/5 lg:mx-auto' onSubmit={handleSubmit}>
+        <form className='md:px-6 lg:w-4/5 lg:mx-auto'>
           {/* event title */}
           <section className='mb-4'>
             <h4 className='uppercase text-gray-500 p-2 mb-2 flex justify-between items-center'>
