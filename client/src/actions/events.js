@@ -22,7 +22,20 @@ export const DELETE_EVENT_START = 'DELETE_EVENT_START';
 export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
 export const DELETE_EVENT_FAILURE = 'DELETE_EVENT_FAILURE';
 
-// TODO: confirm status constant
+export const ADD_PARTICIPANT_START = 'ADD_PARTICIPANT_START';
+export const ADD_PARTICIPANT_SUCCESS = 'ADD_PARTICIPANT_SUCCESS';
+export const ADD_PARTICIPANT_FAILURE = 'ADD_PARTICIPANT_FAILURE';
+
+export const REMOVE_PARTICIPANT_START = 'REMOVE_PARTICIPANT_START';
+export const REMOVE_PARTICIPANT_SUCCESS = 'REMOVE_PARTICIPANT_SUCCESS';
+export const REMOVE_PARTICIPANT_FAILURE = 'REMOVE_PARTICIPANT_FAILURE';
+
+export const UPDATE_PARTICIPANT_STATUS_START =
+  'UPDATE_PARTICIPANT_STATUS_START';
+export const UPDATE_PARTICIPANT_STATUS_SUCCESS =
+  'UPDATE_PARTICIPANT_STATUS_SUCCESS';
+export const UPDATE_PARTICIPANT_STATUS_FAILURE =
+  'UPDATE_PARTICIPANT_STATUS_FAILURE';
 
 export const getAllOrgEventsStart = () => ({
   type: GET_ALL_ORG_EVENTS_START
@@ -87,6 +100,45 @@ export const deleteEventSuccess = id => ({
 
 export const deleteEventFailure = () => ({
   type: DELETE_EVENT_FAILURE
+});
+
+export const addParticipantStart = () => ({
+  type: ADD_PARTICIPANT_START
+});
+
+export const addParticipantSuccess = (id, participants) => ({
+  type: ADD_PARTICIPANT_SUCCESS,
+  payload: { id, participants }
+});
+
+export const addParticipantFailure = () => ({
+  type: ADD_PARTICIPANT_FAILURE
+});
+
+export const removeParticipantStart = () => ({
+  type: REMOVE_PARTICIPANT_START
+});
+
+export const removeParticipantSuccess = (id, workerId) => ({
+  type: REMOVE_PARTICIPANT_SUCCESS,
+  payload: { id, workerId }
+});
+
+export const removeParticipantFailure = () => ({
+  type: REMOVE_PARTICIPANT_FAILURE
+});
+
+export const updateParticipantStatusStart = () => ({
+  type: UPDATE_PARTICIPANT_STATUS_START
+});
+
+export const updateParticipantStatusSuccess = (id, updatedWorker) => ({
+  type: UPDATE_PARTICIPANT_STATUS_SUCCESS,
+  payload: { id, updatedWorker }
+});
+
+export const updateParticipantStatusFailure = () => ({
+  type: UPDATE_PARTICIPANT_STATUS_FAILURE
 });
 
 // event api calls
@@ -165,5 +217,74 @@ export const deleteEvent = (orgId, eventId) => async dispatch => {
     dispatch(getMyOrgEvents(orgId));
   } catch (err) {
     dispatch(deleteEventFailure());
+  }
+};
+
+export const addParticipant = (orgId, eventId, workerId) => async dispatch => {
+  dispatch(addParticipantStart());
+  const body = JSON.stringify({ worker: workerId });
+
+  try {
+    const res = await api.patch(
+      ApiRoutes.convertApiPath(ApiRoutes.ADD_WORKER_TO_EVENT, orgId, eventId),
+      body
+    );
+    dispatch(addParticipantSuccess(eventId, res.data.participants));
+    dispatch(setAlert('Worker successfully added', AlertType.SUCCESS));
+    // re-fetch myOrgEvents
+    dispatch(getMyOrgEvents(orgId));
+  } catch (err) {
+    dispatch(addParticipantFailure());
+  }
+};
+
+export const removeParticipant = (
+  orgId,
+  eventId,
+  workerId
+) => async dispatch => {
+  dispatch(removeParticipantStart());
+  const body = JSON.stringify({ worker: workerId });
+
+  try {
+    await api.patch(
+      ApiRoutes.convertApiPath(
+        ApiRoutes.REMOVE_WORKER_FROM_EVENT,
+        orgId,
+        eventId
+      ),
+      body
+    );
+    dispatch(removeParticipantSuccess(eventId, workerId));
+    dispatch(setAlert('Worker successfully removed', AlertType.SUCCESS));
+    // re-fetch myOrgEvents
+    dispatch(getMyOrgEvents(orgId));
+  } catch (err) {
+    dispatch(removeParticipantFailure());
+  }
+};
+
+export const updateParticipantStatus = (
+  orgId,
+  eventId,
+  statusData
+) => async dispatch => {
+  dispatch(updateParticipantStatusStart());
+  const body = JSON.stringify(statusData);
+
+  try {
+    const res = await api.patch(
+      ApiRoutes.convertApiPath(
+        ApiRoutes.UPDATE_PARTICIPANT_STATUS,
+        orgId,
+        eventId
+      ),
+      body
+    );
+    dispatch(updateParticipantStatusSuccess(eventId, res.data.participant));
+    // re-fetch myOrgEvents
+    dispatch(getMyOrgEvents(orgId));
+  } catch (err) {
+    dispatch(updateParticipantStatusFailure());
   }
 };
