@@ -2,10 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, useLocation, useParams, useHistory } from 'react-router-dom';
 import {
+  DASHBOARD_PATH,
+  dashboardOrgEventsPath,
   editEventPath,
   inviteParticipantPath,
   participantListPath
 } from '../../constants/paths';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { deleteEvent } from '../../actions/events';
 
 import LanguageIcon from '@material-ui/icons/Language';
 import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
@@ -41,6 +45,14 @@ export default function SingleEvent() {
   const { id } = useParams();
   const location = useLocation();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { org, events } = useSelector(
+    state => ({
+      org: state.org,
+      events: state.events
+    }),
+    shallowEqual
+  );
 
   const {
     eventLocation,
@@ -55,6 +67,13 @@ export default function SingleEvent() {
   const deadLinkPath = {
     pathname: history.location.pathname,
     state: location.state
+  };
+
+  const handleDeleteEvent = e => {
+    e.preventDefault();
+
+    dispatch(deleteEvent(org.myOrg._id, id));
+    history.push(dashboardOrgEventsPath(DASHBOARD_PATH));
   };
 
   return (
@@ -186,10 +205,11 @@ export default function SingleEvent() {
                 <br />
                 Edit Event
               </Link>
-              {/* TODO: delete event action */}
+              {/* delete event */}
               <button
                 className='inline-block p-4 text-red-500 flex-1 hover:bg-red-500 hover:text-white'
                 style={{ outline: 'none' }}
+                onClick={handleDeleteEvent}
               >
                 <DeleteForeverIcon className='mb-1' />
                 <br />
