@@ -16,7 +16,7 @@
     "prettier": "prettier 'src/**/*.{js,ts}'",
     "format": "npm run prettier -- --write",
     "check-format": "npm run prettier -- --check",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build -- prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
