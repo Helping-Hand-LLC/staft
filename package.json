@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A Staffing Organization's Operations Automation Web Application",
   "main": "server.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
