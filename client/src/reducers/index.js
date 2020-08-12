@@ -11,8 +11,8 @@ const rootReducer = combineReducers({
   auth,
   profile,
   org,
-  locations,
-  events
+  events,
+  locations
 });
 
 export default rootReducer;

@@ -38,6 +38,7 @@ export default function CreateEvent() {
   const [location, setLocation] = useState({});
   const [singleLink, setSingleLink] = useState('');
   const [links, setLinks] = useState([]);
+  // TODO: isPublished, startDateTime, endDateTime
 
   const handleEventTitleChange = e => setEventTitle(e.target.value);
   const handleLocationChange = e => setLocation(JSON.parse(e.target.value));
@@ -64,11 +65,10 @@ export default function CreateEvent() {
 
     // create event
     const eventData = {
-      // FIXME: isPublished: false,
       title: eventTitle,
       location: location._id,
-      startDateTime: moment().add(5, 'h').format(),
-      endDateTime: moment().add(10, 'h').format(),
+      startDateTime: moment().add(5, 'h').format(), // FIXME: remove static data
+      endDateTime: moment().add(10, 'h').format(), // FIXME: remove static data
       links
     };
     dispatch(createEvent(org.myOrg._id, eventData));

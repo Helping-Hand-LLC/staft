@@ -41,6 +41,7 @@ export default function Team({ handleClick }) {
           subtitle={org.myOrg.uid}
           handleClick={handleClick}
         />
+        {/* TODO: show email to communicate with team members */}
         <section className='lg:w-4/5 lg:mx-auto'>
           <div>
             <h3 className='font-semibold p-2 text-sm lg:text-base'>Admins</h3>

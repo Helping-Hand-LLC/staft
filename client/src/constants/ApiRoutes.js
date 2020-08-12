@@ -11,7 +11,6 @@ const eventRoute = path => `${orgRoute(':org_id/events')}/${path}`;
 // location
 const locationRoute = path => `${eventRoute('locations')}/${path}`;
 
-// REVIEW: api routes
 export const LOGIN = authRoute('login');
 export const REGISTER = authRoute('register');
 export const LOGOUT = authRoute('logout');

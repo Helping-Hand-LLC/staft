@@ -4,7 +4,7 @@ import { DASHBOARD_PATH } from '../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../actions/alerts';
 import { getAllOrgWorkers } from '../../actions/org';
-import { addParticipant } from '../../actions/events';
+// TODO: import { addParticipant } from '../../actions/events';
 
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
@@ -14,7 +14,7 @@ import Header from '../../lib/Header';
 import { Button } from '../../lib/Button';
 
 export default function InviteParticipant() {
-  const { id } = useParams();
+  // TODO: const { id } = useParams();
   const dispatch = useDispatch();
   const { profile, org } = useSelector(
     state => ({

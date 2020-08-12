@@ -33,6 +33,7 @@ function Member({ name, handleClick }) {
 
 export default function Invite() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { profile, org } = useSelector(
     state => ({
       profile: state.profile,
@@ -40,11 +41,9 @@ export default function Invite() {
     }),
     shallowEqual
   );
-  const dispatch = useDispatch();
 
   const [invitees, setInvitees] = useState([]);
   const [memberEmail, setMemberEmail] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const handleMemberEmailChange = e => setMemberEmail(e.target.value);
@@ -107,7 +106,7 @@ export default function Invite() {
 
   return (
     <>
-      <Spinner show={loading} />
+      <Spinner show={loading || profile.isLoading || org.isLoading} />
       <div className='pt-10'>
         <Header title='Invite' primaryIcon={<CloseIcon />} />
 

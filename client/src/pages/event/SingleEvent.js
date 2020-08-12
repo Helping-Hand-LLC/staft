@@ -25,7 +25,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Spinner from '../../lib/Spinner';
 import Header from '../../lib/Header';
 import { ButtonLink } from '../../lib/Button';
-import Badge, { BadgeType } from '../../lib/Badge';
+import Badge from '../../lib/Badge'; // TODO: { BadgeType }
 
 import StaftIcon from '../../assets/A_WebVersion.png';
 
@@ -183,7 +183,7 @@ export default function SingleEvent() {
                 <KeyboardArrowRightIcon />
               </Link>
             </section>
-            {/* TODO: publish event, set startDateTime, set endDateTime */}
+            {/* TODO: publish event, set startDateTime, set endDateTime? */}
             <section className='w-full p-4 border-t border-b border-gray-400 my-1 bg-white'>
               <h4 className='text-sm text-gray-600 font-light uppercase mb-2'>
                 Event Details

@@ -29,6 +29,7 @@ import DashboardHeader from './DashboardHeader';
 import { ButtonLink, Outlined } from '../../lib/Button';
 
 export default function Profile({ handleClick }) {
+  const dispatch = useDispatch();
   const { profile, org } = useSelector(
     state => ({
       profile: state.profile,
@@ -36,7 +37,6 @@ export default function Profile({ handleClick }) {
     }),
     shallowEqual
   );
-  const dispatch = useDispatch();
 
   const [showSsn, setShowSsn] = useState(false);
 

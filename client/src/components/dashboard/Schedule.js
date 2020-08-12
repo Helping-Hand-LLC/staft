@@ -35,7 +35,8 @@ function Current({ currentEvents }) {
     event => event.isPublished === true
   );
 
-  if (displayEvents.length <= 0) return <p>No current events.</p>;
+  if (displayEvents.length <= 0)
+    return <p className='text-gray-600 text-center mt-2'>No current events.</p>;
 
   return displayEvents.map(event => (
     <EventCard
@@ -57,7 +58,8 @@ function Drafts({ eventDrafts }) {
     event => event.isPublished === false
   );
 
-  if (displayEvents.length <= 0) return <p>No event drafts.</p>;
+  if (displayEvents.length <= 0)
+    return <p className='text-gray-600 text-center mt-2'>No event drafts.</p>;
 
   return displayEvents.map(event => (
     <EventCard

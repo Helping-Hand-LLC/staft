@@ -88,7 +88,6 @@ export function Step4({ currentStep, uid, accessType, adminEmail }) {
       <p className='flex justify-between mb-2'>
         <span className='w-2/5 md:w-1/4 font-light'>UID:</span>
         <span className='text-teal-500 flex-1'>
-          {/* TODO: needs extra validation */}
           {uid.toLowerCase().split(' ').join('')}
         </span>
       </p>

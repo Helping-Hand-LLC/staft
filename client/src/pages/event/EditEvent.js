@@ -68,10 +68,9 @@ export default function EditEvent() {
   const [newLocation, setNewLocation] = useState('');
   const [singleLink, setSingleLink] = useState('');
   const [links, setLinks] = useState(oldLinks);
-  // TODO: publish, startDateTime, endDateTime
+  // TODO: isPublished, startDateTime, endDateTime
 
   const [storedLocations, setStoredLocations] = useState([]);
-
   const [loading, setLoading] = useState(false);
 
   const handleEventTitleChange = e => setEventTitle(e.target.value);
@@ -92,7 +91,6 @@ export default function EditEvent() {
     e.preventDefault();
 
     const updatedData = {
-      // FIXME: isPublished: false,
       title: eventTitle,
       location: location._id,
       startDateTime: moment().add(5, 'h').format(),

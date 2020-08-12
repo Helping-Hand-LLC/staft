@@ -60,7 +60,6 @@ export default function DashboardSidebar({ isOpen, handleClick }) {
               &nbsp; Activity
             </NavLink>
           </li> */}
-          {/* TODO: custom indicator icon */}
           <li className='p-2 block text-white border-l-4 border-teal-500'>
             <NavLink
               to={dashboardSchedulePath(url)}

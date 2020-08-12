@@ -21,7 +21,7 @@ function Worker({ name }) {
   );
 }
 
-export default function OrgWorker({ handleClick }) {
+export default function OrgWorkers({ handleClick }) {
   const dispatch = useDispatch();
   const { profile, org } = useSelector(
     state => ({
@@ -55,6 +55,7 @@ export default function OrgWorker({ handleClick }) {
           subtitle={org.myOrg.uid}
           handleClick={handleClick}
         />
+        {/* TODO: show email to communicate with workers; show modal/page of worker info */}
         <section className='lg:w-4/5 lg:mx-auto'>
           <div>
             <h3 className='font-semibold p-2 text-sm'>Admins</h3>
@@ -101,6 +102,6 @@ Worker.propTypes = {
   name: PropTypes.string.isRequired
 };
 
-OrgWorker.propTypes = {
+OrgWorkers.propTypes = {
   handleClick: PropTypes.func.isRequired
 };
