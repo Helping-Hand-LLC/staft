@@ -23,7 +23,7 @@ export default function Info({ currentStep }) {
       return (
         <InfoContent
           title='Event Location'
-          body='Choose from an exisiting event location or search for a new location.'
+          body='Choose from an exisiting event location or search for a new location. For best results, enter the company name, city, and state.'
         />
       );
     case 3:

@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import api from '../../utils/api';
+import * as ApiRoutes from '../../constants/ApiRoutes';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { getStoredLocations } from '../../actions/locations';
 
 import CloseIcon from '@material-ui/icons/Close';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
@@ -8,9 +12,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import LanguageIcon from '@material-ui/icons/Language';
 import LaunchIcon from '@material-ui/icons/Launch';
 
+import Spinner from '../../lib/Spinner';
 import { Button } from '../../lib/Button';
-
-import _locations from '../../constants/locations.json';
 
 function EventLink({ name, handleClick }) {
   return (
@@ -44,12 +47,50 @@ export function Step1({ currentStep, eventTitle, handleChange }) {
 }
 
 export function Step2({ currentStep, location, handleChange }) {
+  const dispatch = useDispatch();
+  const { org, locations } = useSelector(
+    state => ({
+      org: state.org,
+      locations: state.locations
+    }),
+    shallowEqual
+  );
+
   const [newLocation, setNewLocation] = useState('');
+  const [queryResults, setQueryResults] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const handleNewLocationChange = e => setNewLocation(e.target.value);
 
+  const queryGoogleLocations = async () => {
+    setLoading(true);
+    const body = JSON.stringify({ query: newLocation });
+
+    try {
+      const res = await api.post(
+        ApiRoutes.convertApiPath(
+          ApiRoutes.QUERY_GOOGLE_LOCATIONS,
+          org.myOrg._id
+        ),
+        body
+      );
+      setQueryResults(res.data.response);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!org.myOrg) return;
+
+    dispatch(getStoredLocations(org.myOrg._id));
+  }, [dispatch, org.myOrg]);
+
   return currentStep !== 2 ? null : (
     <>
+      <Spinner show={loading} />
       <div className='w-full flex justify-between items-center bg-gray-300 mb-8'>
         <LocationOnOutlinedIcon
           fontSize='small'
@@ -67,35 +108,60 @@ export function Step2({ currentStep, location, handleChange }) {
         <Button
           bgColor='bg-blue-500 hover:bg-blue-300'
           padding='p-2'
-          onClick={() => console.log('new location', newLocation)}
+          onClick={queryGoogleLocations}
         >
           <SearchIcon fontSize='small' />
         </Button>
       </div>
-      {_locations.map(l => (
-        <label
-          htmlFor={l.name}
-          key={l.id}
-          className='flex items-center text-sm font-light mb-3'
-        >
-          <input
-            type='radio'
-            name='location'
-            id={l.name}
-            className='text-teal-500 mr-2 w-1/5'
-            checked={_.isEqual(location, l)}
-            value={JSON.stringify(l)}
-            onChange={handleChange}
-          />
-          <span className='flex-1 text-left'>
-            <span>{l.name}</span>
-            <br />
-            <span className='text-2xs text-gray-500'>
-              {l.formatted_address}
-            </span>
-          </span>
-        </label>
-      ))}
+      {queryResults.length > 0
+        ? queryResults.map(l => (
+            <label
+              htmlFor={l.name}
+              key={l.place_id}
+              className='flex items-center text-sm font-light mb-3'
+            >
+              <input
+                type='radio'
+                name='location'
+                id={l.name}
+                className='text-teal-500 mr-2 w-1/5'
+                checked={_.isEqual(location, l)}
+                value={JSON.stringify(l)}
+                onChange={handleChange}
+              />
+              <span className='flex-1 text-left'>
+                <span>{l.name}</span>
+                <br />
+                <span className='text-2xs text-gray-500'>
+                  {l.formatted_address}
+                </span>
+              </span>
+            </label>
+          ))
+        : locations.storedLocations.map(l => (
+            <label
+              htmlFor={l.name}
+              key={l.place_id}
+              className='flex items-center text-sm font-light mb-3'
+            >
+              <input
+                type='radio'
+                name='location'
+                id={l.name}
+                className='text-teal-500 mr-2 w-1/5'
+                checked={_.isEqual(location, l)}
+                value={JSON.stringify(l)}
+                onChange={handleChange}
+              />
+              <span className='flex-1 text-left'>
+                <span>{l.name}</span>
+                <br />
+                <span className='text-2xs text-gray-500'>
+                  {l.formatted_address}
+                </span>
+              </span>
+            </label>
+          ))}
     </>
   );
 }

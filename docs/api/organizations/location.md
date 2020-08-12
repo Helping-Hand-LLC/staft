@@ -57,7 +57,7 @@
     - database connection errors
     - no locations found
 
-- `GET /organizations/:org_id/events/locations/query`
+- `POST /organizations/:org_id/events/locations/query`
 
   - **_ACCESS: PRIVATE - managers only_**
   - Makes a Google Places API query for a provided location
@@ -66,7 +66,7 @@
   - _Example Request:_
 
     ```http
-    GET /organizations/<org_id>/events/locations/query HTTP/1.1
+    POST /organizations/<org_id>/events/locations/query HTTP/1.1
     Host: http://localhost:5000
     Content-Type: application/json
     Authorization: Bearer <token>

@@ -140,7 +140,7 @@ _ACCESS: PRIVATE - all users_
   - _Possible Errors:_
     - database connection errors
 
-- `DELETE /user/profile`
+- `DELETE /user/profile/me`
   - Deletes a user and their corresponding profile
   - _Dependencies:_
     - Must be a logged in user with a valid JWT token

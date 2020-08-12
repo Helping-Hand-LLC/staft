@@ -20,7 +20,7 @@ router.get(
   LocationController.getAllStoredLocations
 );
 
-router.get(
+router.post(
   '/query',
   checkObjectId('org_id'),
   jwtAuth,

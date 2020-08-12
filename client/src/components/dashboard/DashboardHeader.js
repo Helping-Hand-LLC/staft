@@ -47,7 +47,7 @@ export default function DashboardHeader({
 
 DashboardHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  subtitle: PropTypes.string,
+  subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   secondaryIcon: PropTypes.element,
   secondaryPath: PropTypes.string,
   handleClick: PropTypes.func.isRequired

@@ -34,7 +34,7 @@ export function Button(props) {
       type={props.type || 'button'}
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
-      style={{ ...props.style, outline: 'none' }}
+      style={{ outline: 'none', ...props.style }}
     >
       {props.children}
     </button>
@@ -48,7 +48,7 @@ export function ButtonLink(props) {
     <Link
       to={props.to}
       className={Object.values(_.omit(props, ignore)).join(' ')}
-      style={{ ...props.style, outline: 'none' }}
+      style={{ outline: 'none', ...props.style }}
     >
       {props.children}
     </Link>
@@ -63,7 +63,7 @@ export function Outlined(props) {
       type='button'
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
-      style={{ ...props.style, outline: 'none' }}
+      style={{ outline: 'none', ...props.style }}
     >
       {props.children}
     </button>
@@ -79,11 +79,11 @@ export function FloatingAction(props) {
       className={Object.values(_.omit(props, ignore)).join(' ')}
       onClick={props.onClick}
       style={{
-        ...props.style,
         outline: 'none',
         position: 'fixed',
         bottom: '1rem',
-        right: '0.5rem'
+        right: '0.5rem',
+        ...props.style
       }}
     >
       {props.children}
@@ -99,11 +99,11 @@ export function FloatingActionLink(props) {
       to={props.to}
       className={Object.values(_.omit(props, ignore)).join(' ')}
       style={{
-        ...props.style,
         outline: 'none',
         position: 'fixed',
         bottom: '1rem',
-        right: '0.5rem'
+        right: '0.5rem',
+        ...props.style
       }}
     >
       {props.children}

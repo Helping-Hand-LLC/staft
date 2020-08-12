@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export const BadgeType = {
+  DANGER: 'danger',
+  SUCCESS: 'success'
+};
+
 export default function Badge({ type, text }) {
   let bgColor;
 
   switch (type) {
-    case 'danger':
+    case BadgeType.DANGER:
       bgColor = 'bg-red-100';
       break;
-    case 'success':
+    case BadgeType.SUCCESS:
       bgColor = 'bg-green-200';
       break;
     default:

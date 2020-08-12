@@ -31,7 +31,7 @@ export default {
   Dashboard,
   CreateOrg,
   Archive,
-  EditProfile,
+  EditProfile, // FIXME: convert from connect to redux hooks
   Settings,
   Help,
   About,

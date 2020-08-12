@@ -5,10 +5,8 @@ import MiddlewareFn, { IJwtUser } from '../config/middleware';
 export const getUser: MiddlewareFn = (_req, res) =>
   res.json({ user: res.locals.user });
 
-export const getUserProfile: MiddlewareFn = (_req, res) => {
-  const populated = res.locals.profile.populate('user', ['type', 'email']);
-  return res.json({ populated });
-};
+export const getUserProfile: MiddlewareFn = (_req, res) =>
+  res.json({ populated: res.locals.profile });
 
 export const createOrUpdateProfile: MiddlewareFn = async (req, res, next) => {
   let { organization } = req.body;

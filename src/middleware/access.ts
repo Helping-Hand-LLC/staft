@@ -28,7 +28,7 @@ export const managerIsEventCreator: MiddlewareFn = (req, res, next) => {
   const user = req.user as IJwtUser;
 
   const event: IEvent = res.locals.event;
-  if (!req.header('Override-createdBy') && event.createdBy != user.id)
+  if (!req.header('Override-createdBy') && event.createdBy._id != user.id)
     return res
       .status(403)
       .json(routeError('Access Denied: You are not the creator of this event'));

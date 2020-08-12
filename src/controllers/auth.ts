@@ -1,12 +1,13 @@
 import passport from 'passport';
 import MiddlewareFn from '../config/middleware';
+import routeError from '../utils/error';
 
 export const login: MiddlewareFn = (req, res, next) => {
   passport.authenticate('login', { session: false }, (err, user, info) => {
     // db error
     if (err) return next(err);
     // bad request
-    if (!user) return res.status(400).json(info);
+    if (!user) return res.status(400).json(routeError(info.message));
 
     req.login(user, { session: false }, async err => {
       if (err) next(err);
@@ -26,7 +27,7 @@ export const register: MiddlewareFn = (req, res, next) => {
     // db error
     if (err) return next(err);
     // bad request
-    if (!user) return res.status(400).json(info);
+    if (!user) return res.status(400).json(routeError(info.message));
 
     // login newly registered user
     req.login(user, { session: false }, async err => {

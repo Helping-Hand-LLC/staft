@@ -7,23 +7,20 @@ type ValidatorFn = () => ValidationChain[];
 
 export const loginRules: ValidatorFn = () => {
   return [
-    check('email').notEmpty().isEmail().normalizeEmail(),
-    check('password').notEmpty().escape().withMessage('Password is required')
+    check('email', 'Please enter a valid email').isEmail().normalizeEmail(),
+    check('password', 'Password is required').notEmpty().escape()
   ];
 };
 
 export const registerRules: ValidatorFn = () => {
   return [
-    check('email').notEmpty().isEmail().normalizeEmail(),
-    check('password')
+    check('email', 'Please enter a valid email').isEmail().normalizeEmail(),
+    check('password', 'Password must be at least 6 characters')
+      .escape()
+      .isLength({ min: 6 }),
+    check('passwordConfirm', 'Password confirmation is required')
       .notEmpty()
       .escape()
-      .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters'),
-    check('passwordConfirm')
-      .notEmpty()
-      .escape()
-      .withMessage('Password confirmation is required')
       .custom((value, { req }) => {
         if (value !== req.body.password) {
           throw new Error('Passwords do not match');
@@ -35,34 +32,28 @@ export const registerRules: ValidatorFn = () => {
 
 export const createOrUpdateProfileRules: ValidatorFn = () => {
   return [
-    check('name').escape().notEmpty().withMessage('Name is required'),
-    check('address.street')
+    check('name', 'Name is required').escape().notEmpty(),
+    check('address.street', 'Street address is required').notEmpty().escape(),
+    check('address.city', 'City is required').notEmpty().escape(),
+    check('address.state', 'State is required').notEmpty().escape(),
+    check('address.zip', 'Zip code is required').notEmpty().escape(),
+    check('phone', 'Please enter a valid phone number')
+      .notEmpty()
+      .isMobilePhone('any'),
+    check('birthday', 'Birthday is required').notEmpty().toDate(),
+    check('gender', 'Gender is required').notEmpty().isIn([0, 1]),
+    check('ssn', 'Social Security Number is required')
       .escape()
-      .notEmpty()
-      .withMessage('Please enter a valid street address'),
-    check('address.city')
-      .escape()
-      .notEmpty()
-      .withMessage('Please enter a valid city'),
-    check('address.state').escape().notEmpty(),
-    check('address.zip').notEmpty().withMessage('Zip code is required'),
-    check('phone')
-      .notEmpty()
-      .isMobilePhone('any')
-      .withMessage('Please enter a valid phone number'),
-    check('birthday').notEmpty().toDate().withMessage('Birthday is required'),
-    check('gender').notEmpty().isIn([0, 1]).withMessage('Gender is required'),
-    check('ssn').escape().notEmpty().isLength({ min: 9, max: 9 }).isNumeric()
+      .isLength({ min: 9, max: 9 })
+      .isNumeric()
   ];
 };
 
 export const createOrgRules: ValidatorFn = () => {
   return [
-    check('uid')
-      .notEmpty()
+    check('uid', 'uid is required and must have at least 4 characters')
       .escape()
       .isLength({ min: 4 })
-      .withMessage('uid is required and must have at least 4 characters')
       .custom(value => {
         if (value.indexOf(' ') >= 0) {
           throw new Error(
@@ -72,16 +63,17 @@ export const createOrgRules: ValidatorFn = () => {
         return true;
       }),
     check('isPrivate').toBoolean(),
-    check('adminEmail').notEmpty().isEmail().normalizeEmail()
+    check('adminEmail', 'Please enter a valid administrator email')
+      .isEmail()
+      .normalizeEmail()
   ];
 };
 
 export const updateOrgRules: ValidatorFn = () => {
   return [
-    check('uid')
+    check('uid', 'uid must have at least 4 characters')
       .escape()
       .isLength({ min: 4 })
-      .withMessage('uid must have at least 4 characters')
       .custom(value => {
         if (value.indexOf(' ') >= 0) {
           throw new Error(
@@ -96,15 +88,12 @@ export const updateOrgRules: ValidatorFn = () => {
 
 export const addWorkerToOrgRules: ValidatorFn = () => {
   return [
-    check('workerEmail')
+    check('workerEmail', 'Please enter a valid email for this worker')
       .isEmail()
-      .normalizeEmail()
-      .withMessage('Please enter a valid email for this worker'),
-    check('access')
+      .normalizeEmail(),
+    check('access', 'Please enter a valid access level for this worker')
       .escape()
-      .notEmpty()
       .isIn(['admin', 'manager', 'worker'])
-      .withMessage('Please enter a valid access level for this worker')
   ];
 };
 
@@ -112,7 +101,7 @@ export const createOrUpdateOrgEventRules: ValidatorFn = () => {
   return [
     check('isPublished').toBoolean(),
     check('title').escape(),
-    check('location').notEmpty().withMessage('Location is required'),
+    check('location', 'Location is required').notEmpty(),
     // ensure start and end are not equal or overlapping
     check('startDateTime')
       .toDate()
@@ -154,16 +143,15 @@ export const createOrUpdateOrgEventRules: ValidatorFn = () => {
         return true;
       }), // null if not valid Date
     check('links').isArray().optional(),
-    check('links.*').escape().isURL()
+    check('links.*', 'Ensure all links are valid URLs').escape().isURL()
   ];
 };
 
 export const addOrRemoveEventParticipantRules: ValidatorFn = () => {
   return [
-    check('worker')
-      .escape()
+    check('worker', 'Worker is required')
       .notEmpty()
-      .withMessage('Worker is required')
+      .escape()
       .custom(value => {
         if (!mongoose.Types.ObjectId.isValid(value)) {
           throw new Error('Invalid ObjectId');
@@ -187,26 +175,19 @@ export const updateEventParticipantRules: ValidatorFn = () => {
 
 export const queryOrgEventLocationRules: ValidatorFn = () => {
   return [
-    check('query')
-      .escape()
-      .notEmpty()
-      .withMessage('location search term is required')
+    check('query', 'location search term is required').notEmpty().escape()
   ];
 };
 
 export const createOrgEventLocationRules: ValidatorFn = () => {
   return [
-    check('formatted_address')
-      .escape()
+    check('formatted_address', 'Formatted address is required')
       .notEmpty()
-      .withMessage('Formatted address is required'),
+      .escape(),
     check('location.*').isDecimal(),
     check('icon').escape(),
-    check('name')
-      .escape()
-      .notEmpty()
-      .withMessage('Event location name is required'),
-    check('place_id').escape().notEmpty().withMessage('Place ID is required')
+    check('name', 'Event location name is required').notEmpty().escape(),
+    check('place_id', 'Place ID is required').notEmpty().escape()
   ];
 };
 

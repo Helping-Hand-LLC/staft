@@ -5,7 +5,7 @@ import { singleEventPath } from '../constants/paths';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-import StaftIcon from '../images/A_WebVersion.png';
+import StaftIcon from '../assets/A_WebVersion.png';
 
 function EventCard({
   id,
@@ -17,6 +17,10 @@ function EventCard({
   startTime,
   links
 }) {
+  const streetSplit = location.formatted_address.indexOf(',');
+  const street = location.formatted_address.slice(0, streetSplit);
+  const rest = location.formatted_address.slice(streetSplit + 2);
+
   return (
     <div className='rounded overflow-hidden border border-gray-300 mb-2 shadow'>
       <div className='px-6 mt-4 flex justify-between'>
@@ -27,23 +31,18 @@ function EventCard({
         to={{
           pathname: singleEventPath(id),
           state: {
-            eventLocation: location,
+            eventLocation: location.name,
             title,
             creator,
             startDate,
             startTime,
-            address: {
-              street: '123 Main St',
-              city: 'New York City',
-              state: 'NY',
-              zip: '56789'
-            },
+            address: { street, rest },
             links
           }
         }}
         className='block px-6 py-2 border-l-4 border-teal-500'
       >
-        <h3 className='font-bold text-xl mb-2'>{location}</h3>
+        <h3 className='font-bold text-xl mb-2'>{location.name}</h3>
         <p className='text-gray-700 font-light'>{title}</p>
         <small className='block text-gray-500 text-sm font-light'>
           Creator: {creator}
@@ -62,9 +61,9 @@ function EventCard({
 }
 
 EventCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   badge: PropTypes.element,
-  location: PropTypes.string.isRequired,
+  location: PropTypes.object.isRequired,
   title: PropTypes.string,
   creator: PropTypes.string.isRequired,
   startDate: PropTypes.string.isRequired,

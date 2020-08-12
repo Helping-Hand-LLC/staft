@@ -9,7 +9,17 @@ export const getAllOrgEvents: MiddlewareFn = async (_req, res, next) => {
   try {
     const orgEvents = await Event.find({
       organization: res.locals.org.id
-    });
+    })
+      .populate('organization', 'uid')
+      .populate('location', '-organization')
+      .populate('createdBy', 'email')
+      .populate({
+        path: 'participants',
+        populate: {
+          path: 'worker',
+          select: 'email'
+        }
+      });
 
     res.json({ orgEvents });
   } catch (err) {
@@ -25,7 +35,17 @@ export const getAllMyOrgEvents: MiddlewareFn = async (req, res, next) => {
     const reqUser = req.user as IJwtUser;
     const orgEvents = await Event.find({
       organization: res.locals.org._id
-    });
+    })
+      .populate('organization', 'uid')
+      .populate('location', '-organization')
+      .populate('createdBy', 'email')
+      .populate({
+        path: 'participants',
+        populate: {
+          path: 'worker',
+          select: 'email'
+        }
+      });
 
     if (_.isEmpty(orgEvents))
       return res
@@ -38,7 +58,7 @@ export const getAllMyOrgEvents: MiddlewareFn = async (req, res, next) => {
     for (let i = 0; i < orgEvents.length; i++) {
       const event = orgEvents[i];
       const participant = event.participants.find(
-        el => el.worker == reqUser.id
+        el => el.worker._id == reqUser.id
       );
       if (participant) myOrgEvents.push(event);
     }
@@ -84,7 +104,18 @@ export const createOrgEvent: MiddlewareFn = async (req, res, next) => {
       links
     });
     await event.save();
-    res.json({ event });
+    const resEvent = await Event.findById(event._id)
+      .populate('organization', 'uid')
+      .populate('location', '-organization')
+      .populate('createdBy', 'email')
+      .populate({
+        path: 'participants',
+        populate: {
+          path: 'worker',
+          select: 'email'
+        }
+      });
+    res.json({ event: resEvent });
   } catch (err) {
     return next(err);
   }
@@ -132,7 +163,19 @@ export const updateOrgEvent: MiddlewareFn = async (req, res, next) => {
     res.locals.event.repeatOptions = repeatOptions;
     res.locals.event.links = links;
     await res.locals.event.save();
-    res.json({ event: res.locals.event });
+    res.json({
+      event: res.locals.event
+        .populate('organization', 'uid')
+        .populate('location', '-organization')
+        .populate('createdBy', 'email')
+        .populate({
+          path: 'participants',
+          populate: {
+            path: 'worker',
+            select: 'email'
+          }
+        })
+    });
   } catch (err) {
     return next(err);
   }

@@ -27,6 +27,7 @@
   "homepage": "https://github.com/Helping-Hand-LLC/staft#readme",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^2.6.1",
+    "@types/socket.io": "^2.1.10",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
@@ -36,7 +37,8 @@
     "mongoose": "^5.9.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
