@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import api from '../../utils/api';
-import * as ApiRoutes from '../../constants/ApiRoutes';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllOrgWorkers } from '../../actions/org';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -19,29 +18,12 @@ function Member({ name }) {
 }
 
 export default function Team({ handleClick }) {
+  const dispatch = useDispatch();
   const org = useSelector(state => state.org);
 
-  const [loading, setLoading] = useState(false);
-  const [allOrgWorkers, setAllOrgWorkers] = useState([]);
-
   useEffect(() => {
-    async function fetchOrgWorkers() {
-      setLoading(true);
-      try {
-        const res = await api.get(
-          ApiRoutes.convertApiPath(ApiRoutes.GET_ORG_WORKERS, org.myOrg._id)
-        );
-        setAllOrgWorkers(res.data.orgUsers);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-      }
-    }
-
-    if (!org.myOrg) return;
-
-    fetchOrgWorkers();
-  }, [org.myOrg]);
+    dispatch(getAllOrgWorkers(org.myOrg._id));
+  }, [dispatch, org.myOrg]);
 
   return !org.myOrg ? (
     <div className='pt-16'>
@@ -52,7 +34,7 @@ export default function Team({ handleClick }) {
     </div>
   ) : (
     <>
-      <Spinner show={loading} />
+      <Spinner show={org.isLoading} />
       <div className='pt-16'>
         <DashboardHeader
           title='Team'
@@ -62,7 +44,7 @@ export default function Team({ handleClick }) {
         <section className='lg:w-4/5 lg:mx-auto'>
           <div>
             <h3 className='font-semibold p-2 text-sm lg:text-base'>Admins</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => m.isAdmin)
               .map((m, i) => (
                 <Member name={m.name} key={i} />
@@ -70,7 +52,7 @@ export default function Team({ handleClick }) {
           </div>
           <div>
             <h3 className='font-semibold p-2 text-sm lg:text-base'>Managers</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => !m.isAdmin && m.isManager)
               .map((m, i) => (
                 <Member name={m.name} key={i} />
@@ -78,7 +60,7 @@ export default function Team({ handleClick }) {
           </div>
           <div>
             <h3 className='font-semibold p-2 text-sm lg:text-base'>Workers</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => !m.isAdmin && !m.isManager)
               .map((m, i) => (
                 <Member name={m.name} key={i} />

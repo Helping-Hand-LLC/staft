@@ -24,7 +24,6 @@ import {
   UPDATE_PARTICIPANT_STATUS_SUCCESS,
   UPDATE_PARTICIPANT_STATUS_FAILURE
 } from '../actions/events';
-import { stat } from 'fs';
 
 export default (
   state = {

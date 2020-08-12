@@ -98,7 +98,9 @@ export default function CreateEvent() {
 
   return (
     <>
-      <Spinner show={locations.isLoading} />
+      <Spinner
+        show={profile.isLoading || org.isLoading || locations.isLoading}
+      />
       <div className='h-screen flex flex-col p-4 relative md:p-6 lg:p-8'>
         <ProgressIndicator currentStep={currentStep} />
         <section className='mb-2'>

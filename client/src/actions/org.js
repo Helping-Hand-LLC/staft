@@ -7,6 +7,10 @@ export const GET_MY_ORG_START = 'GET_MY_ORG_START';
 export const GET_MY_ORG_SUCCESS = 'GET_MY_ORG_SUCCESS';
 export const GET_MY_ORG_FAILURE = 'GET_MY_ORG_FAILURE';
 
+export const GET_ALL_ORG_WORKERS_START = 'GET_ALL_ORG_WORKERS_START';
+export const GET_ALL_ORG_WORKERS_SUCCESS = 'GET_ALL_ORG_WORKERS_SUCCESS';
+export const GET_ALL_ORG_WORKERS_FAILURE = 'GET_ALL_ORG_WORKERS_FAILURE';
+
 export const UPDATE_ORG_START = 'UPDATE_ORG_START';
 export const UPDATE_ORG_SUCCESS = 'UPDATE_ORG_SUCCESS';
 export const UPDATE_ORG_FAILURE = 'UPDATE_ORG_FAILURE';
@@ -20,6 +24,19 @@ export const WorkerAccess = {
   MANAGER: 'manager',
   WORKER: 'worker'
 };
+
+export const getAllOrgWorkersStart = () => ({
+  type: GET_ALL_ORG_WORKERS_START
+});
+
+export const getAllOrgWorkersSuccess = allOrgWorkers => ({
+  type: GET_ALL_ORG_WORKERS_SUCCESS,
+  payload: { allOrgWorkers }
+});
+
+export const getAllOrgWorkersFailure = () => ({
+  type: GET_ALL_ORG_WORKERS_FAILURE
+});
 
 export const getMyOrgStart = () => ({
   type: GET_MY_ORG_START
@@ -70,6 +87,19 @@ export const getMyOrg = orgId => async dispatch => {
     dispatch(getMyOrgSuccess(res.data.org));
   } catch (err) {
     dispatch(getMyOrgFailure());
+  }
+};
+
+export const getAllOrgWorkers = orgId => async dispatch => {
+  dispatch(getAllOrgWorkersStart());
+
+  try {
+    const res = await api.get(
+      ApiRoutes.convertApiPath(ApiRoutes.GET_ORG_WORKERS, orgId)
+    );
+    dispatch(getAllOrgWorkersSuccess(res.data.orgUsers));
+  } catch (err) {
+    dispatch(getAllOrgWorkersFailure());
   }
 };
 

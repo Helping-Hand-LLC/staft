@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import api from '../../../utils/api';
-import * as ApiRoutes from '../../../constants/ApiRoutes';
 import { DASHBOARD_PATH, ORG_INVITE_PATH } from '../../../constants/paths';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { setAlert, AlertType } from '../../../actions/alerts';
+import { getAllOrgWorkers } from '../../../actions/org';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -32,24 +31,9 @@ export default function OrgWorker({ handleClick }) {
     shallowEqual
   );
 
-  const [loading, setLoading] = useState(false);
-  const [allOrgWorkers, setAllOrgWorkers] = useState([]);
-
   useEffect(() => {
-    async function fetchOrgWorkers() {
-      setLoading(true);
-      try {
-        const res = await api.get(
-          ApiRoutes.convertApiPath(ApiRoutes.GET_ORG_WORKERS, org.myOrg._id)
-        );
-        setAllOrgWorkers(res.data.orgUsers);
-        setLoading(false);
-      } catch (err) {
-        setLoading(false);
-      }
-    }
-    fetchOrgWorkers();
-  }, [org.myOrg._id]);
+    dispatch(getAllOrgWorkers(org.myOrg._id));
+  }, [dispatch, org.myOrg]);
 
   // MANAGER ACCESS ONLY
   if (!profile.data || !profile.data.isManager) {
@@ -64,7 +48,7 @@ export default function OrgWorker({ handleClick }) {
 
   return (
     <>
-      <Spinner show={loading} />
+      <Spinner show={org.isLoading} />
       <div className='pt-16'>
         <DashboardHeader
           title='Workers'
@@ -74,7 +58,7 @@ export default function OrgWorker({ handleClick }) {
         <section className='lg:w-4/5 lg:mx-auto'>
           <div>
             <h3 className='font-semibold p-2 text-sm'>Admins</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => m.isAdmin)
               .map((m, i) => (
                 <Worker name={m.name} key={i} />
@@ -82,7 +66,7 @@ export default function OrgWorker({ handleClick }) {
           </div>
           <div>
             <h3 className='font-semibold p-2 text-sm'>Managers</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => !m.isAdmin && m.isManager)
               .map((m, i) => (
                 <Worker name={m.name} key={i} />
@@ -90,7 +74,7 @@ export default function OrgWorker({ handleClick }) {
           </div>
           <div>
             <h3 className='font-semibold p-2 text-sm'>Workers</h3>
-            {allOrgWorkers
+            {org.allOrgWorkers
               .filter(m => !m.isAdmin && !m.isManager)
               .map((m, i) => (
                 <Worker name={m.name} key={i} />

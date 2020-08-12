@@ -37,6 +37,12 @@ export const UPDATE_PARTICIPANT_STATUS_SUCCESS =
 export const UPDATE_PARTICIPANT_STATUS_FAILURE =
   'UPDATE_PARTICIPANT_STATUS_FAILURE';
 
+export const ParticipantStatus = {
+  UNCONFIRMED: 'unconfirmed',
+  ACCEPTED: 'accepted',
+  REJECTED: 'rejected'
+};
+
 export const getAllOrgEventsStart = () => ({
   type: GET_ALL_ORG_EVENTS_START
 });

@@ -139,7 +139,7 @@ export default function EditEvent() {
 
   return (
     <>
-      <Spinner show={loading} />
+      <Spinner show={loading || profile.isLoading || org.isLoading} />
       <div className='py-16'>
         <Header
           title='Edit Event'
